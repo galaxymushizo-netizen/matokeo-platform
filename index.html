@@ -231,6 +231,28 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
   .filters-bar{flex-direction:column}
   .filter-sel{width:100%}
 }
+
+@media print {
+  #sidebar,.mob-btn,#toast,#modal-ov,.exp-btns,.fa,.filters-bar,.t-toolbar,.nav-divider,.sb-ft,.sync-badge,.btn-logout,.act,.search-inp,.sw-r{display:none!important}
+  #content{margin-left:0!important;padding:0!important}
+  #app{display:block!important}
+  .view{display:block!important;animation:none!important}
+  body{background:#fff;color:#000;min-height:auto}
+  .stat-card,.tw,.form-card,.cc,.cmp,.settings-card,.import-preview{border:1px solid #ddd;background:#fff;break-inside:avoid}
+  .stat-value,.avg-cell{color:#000!important}
+  table{font-size:10px}
+  thead th{background:#f0f0f0!important;color:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .gb,.lgr{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .ph h1{color:#000}
+  .ph p{color:#555}
+  .view:not(.print-active){display:none!important}
+}
+
+.skeleton{background:linear-gradient(90deg,var(--s2) 25%,var(--s3) 50%,var(--s2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-stat{height:90px}
+.skel-row{height:42px;margin-bottom:6px}
+.skel-chart{height:220px}
 </style>
 </head>
 <body>
@@ -279,6 +301,10 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
         <span class="sync-dot"></span>
         <span id="sync-text">Offline Mode</span>
       </div>
+      <div class="sync-badge sync-off" id="session-badge" style="margin-bottom:8px">
+        <span class="sync-dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></span>
+        <span id="session-text" style="color:var(--amber)">Session: 30:00</span>
+      </div>
       <button class="btn-logout" onclick="doLogout()"><span>🚪</span> Toka Mfumo</button>
     </div>
   </aside>
@@ -291,10 +317,12 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
         <select class="filter-sel" id="f-class-dash" onchange="onDashFilterChange()"><option value="">Madarasa Yote</option></select>
         <select class="filter-sel" id="f-term-dash" onchange="onDashFilterChange()"><option value="">Muda Wote</option></select>
       </div>
-      <div class="stats-grid" id="stats-grid"></div>
+      <div class="stats-grid" id="stats-grid">
+        <div class="skeleton skel-stat"></div><div class="skeleton skel-stat"></div><div class="skeleton skel-stat"></div><div class="skeleton skel-stat"></div>
+      </div>
       <div class="cmp">
         <div class="cmp-title">📊 Wastani wa Kila Somo</div>
-        <div class="ch"><canvas id="cmp-chart"></canvas></div>
+        <div class="ch"><canvas id="cmp-chart"></canvas><div class="skeleton skel-chart" id="skel-cmp" style="position:absolute;inset:0"></div></div>
       </div>
       <div class="tw">
         <div class="t-toolbar">
@@ -344,6 +372,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           <div class="exp-btns">
             <button class="btn-exp bp" onclick="expPDF()">📄 PDF</button>
             <button class="btn-exp bx" onclick="expExcel()">📊 Excel</button>
+            <button class="btn-exp" onclick="window.print()" style="background:rgba(201,151,31,.1);color:var(--gold2);border-color:rgba(201,151,31,.3)">🖨️ Print</button>
           </div>
         </div>
         <div style="overflow-x:auto">
@@ -487,8 +516,13 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
         <h3>💾 Data Management</h3>
         <div class="fa" style="margin-top:0">
           <button class="btn-exp bx" onclick="exportAllData()">📤 Export Data Yote (Backup)</button>
+          <button class="btn-exp bx" onclick="document.getElementById('json-inp').click()" style="background:rgba(75,140,247,.1);color:var(--blue);border-color:rgba(75,140,247,.3)">📥 Import Backup (JSON)</button>
+          <input type="file" id="json-inp" accept=".json" style="display:none" onchange="importBackup(this.files[0])">
           <button class="btn-exp bp" onclick="confirmClearAll()" style="border-color:rgba(239,68,68,.3)">🗑️ Futa Data Yote</button>
         </div>
+        <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6">
+          Import ita-merge data ya backup na data ya sasa. Wanafunzi walio na jina, darasa na muda sawa wata-update badala ya ku-duplicate.
+        </p>
       </div>
     </section>
 
@@ -638,6 +672,7 @@ function doLogin() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'flex';
     load();
+    startSessionTimer();
     buildSubjInputs();
     refreshSettingsUI();
     refreshAllSelects();
@@ -651,6 +686,7 @@ function doLogin() {
   }
 }
 function doLogout() {
+  clearInterval(SESSION_T);
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('inp-u').value = '';
@@ -767,12 +803,15 @@ function liveGrade(k) {
   const v = inp.value;
   const n = Number(v);
   const valid = v !== '' && !isNaN(n) && n >= 0 && n <= 100;
+  const invalid = v !== '' && (!isNaN(n) && (n < 0 || n > 100));
   const g = valid ? (n>=75?'A':n>=60?'B':n>=45?'C':n>=30?'D':'F') : '–';
   const el = document.getElementById('gr-' + k);
   const bar = document.getElementById('bar-' + k);
   el.textContent = g;
-  if (g !== '–') { const c = gColor(g); el.style.background = c + '22'; el.style.color = c; }
-  else { el.style.background = ''; el.style.color = ''; }
+  if (invalid) { inp.style.borderColor = 'var(--red)'; el.textContent = '!'; el.style.background = 'rgba(239,68,68,.15)'; el.style.color = 'var(--red)'; }
+  else { inp.style.borderColor = ''; }
+  if (g !== '–' && !invalid) { const c = gColor(g); el.style.background = c + '22'; el.style.color = c; }
+  else if (!invalid) { el.style.background = ''; el.style.color = ''; }
   const pct = valid ? n : 0;
   bar.style.width = pct + '%';
   bar.style.background = pct >= 75 ? '#22c55e' : pct >= 60 ? '#4b8cf7' : pct >= 45 ? '#f59e0b' : pct >= 30 ? '#f97316' : '#ef4444';
@@ -791,6 +830,8 @@ function saveStudent() {
     const v = document.getElementById('sc-' + sub.key).value;
     scores[sub.key] = v !== '' ? Number(v) : null;
   });
+  const scoreErrors = validateScores(scores);
+  if (scoreErrors.length) { toast('⚠️','Alama si sahihi: ' + scoreErrors[0]); return; }
   if (eid) {
     const i = DATA.findIndex(s => s.id === eid);
     if (i !== -1) DATA[i] = {...DATA[i], name, class:cls, term, scores};
@@ -856,6 +897,7 @@ function confirmClearAll() {
 function closeModal() { document.getElementById('modal-ov').style.display = 'none'; }
 
 function renderDash() {
+  showSkeletons(false);
   const d = getFilteredForDash();
   const total = d.length;
   const avgAll = total ? Math.round(d.reduce((a,b) => a + avg(b), 0) / total * 10) / 10 : 0;
@@ -984,7 +1026,9 @@ function handleFile(file) {
         const scores = {};
         SUBS.forEach(sub => {
           const v = row[sub.label] || row[sub.key] || '';
-          scores[sub.key] = v !== '' && !isNaN(Number(v)) ? Number(v) : null;
+          const n = v !== '' ? Number(v) : null;
+          if (n !== null && (isNaN(n) || n < 0 || n > 100)) { scores[sub.key] = null; }
+          else { scores[sub.key] = n; }
         });
         return {id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), name: String(name), class: cls, term, year: SETTINGS.year, scores};
       }).filter(r => r.name && r.name !== 'undefined');
@@ -1006,9 +1050,15 @@ function showImportPreview() {
 }
 function confirmImport() {
   if (!IMPORT_DATA.length) { toast('⚠️','Hakuna data ya kuingiza'); return; }
-  DATA = DATA.concat(IMPORT_DATA);
+  let added = 0, skipped = 0;
+  IMPORT_DATA.forEach(bs => {
+    const dup = DATA.findIndex(s => s.name.toLowerCase() === bs.name.toLowerCase() && s.class === bs.class && s.term === bs.term);
+    if (dup !== -1) { skipped++; }
+    else { DATA.push(bs); added++; }
+  });
   save();
-  toast('✅', IMPORT_DATA.length + ' wanafunzi wameingizwa!');
+  const msg = added + ' wameingizwa!' + (skipped ? ' ' + skipped + ' wamerukwa (duplicate)' : '');
+  toast('✅', msg);
   cancelImport();
   showView('students');
 }
@@ -1206,6 +1256,83 @@ function toast(ico, msg) {
   TOAST_T = setTimeout(() => el.classList.remove('show'), 3500);
 }
 let TOAST_T;
+
+let SESSION_T;
+let SESSION_SEC = 30 * 60;
+let SESSION_WARN = false;
+function startSessionTimer() {
+  SESSION_SEC = 30 * 60;
+  SESSION_WARN = false;
+  updateSessionBadge();
+  clearInterval(SESSION_T);
+  SESSION_T = setInterval(() => {
+    SESSION_SEC--;
+    if (SESSION_SEC <= 0) { clearInterval(SESSION_T); doLogout(); toast('⏰','Session imeisha — umetoka kiotomatiki'); return; }
+    if (SESSION_SEC <= 120 && !SESSION_WARN) { SESSION_WARN = true; toast('⏰','Session inaisha baada ya sekunde ' + SESSION_SEC); }
+    updateSessionBadge();
+  }, 1000);
+}
+function resetSessionTimer() { if (SESSION_SEC > 0) { SESSION_SEC = 30 * 60; SESSION_WARN = false; } }
+function updateSessionBadge() {
+  const m = Math.floor(SESSION_SEC / 60);
+  const s = SESSION_SEC % 60;
+  const txt = m + ':' + (s < 10 ? '0' : '') + s;
+  const badge = document.getElementById('session-badge');
+  const text = document.getElementById('session-text');
+  if (!badge || !text) return;
+  text.textContent = 'Session: ' + txt;
+  if (SESSION_SEC <= 120) { badge.className = 'sync-badge'; badge.style.background = 'rgba(239,68,68,.1)'; badge.style.borderColor = 'rgba(239,68,68,.2)'; text.style.color = 'var(--red)'; badge.querySelector('.sync-dot').style.background = 'var(--red)'; }
+  else if (SESSION_SEC <= 300) { badge.className = 'sync-badge'; badge.style.background = 'rgba(245,158,11,.1)'; badge.style.borderColor = 'rgba(245,158,11,.2)'; text.style.color = 'var(--amber)'; badge.querySelector('.sync-dot').style.background = 'var(--amber)'; }
+  else { badge.className = 'sync-badge sync-off'; badge.style.background = ''; badge.style.borderColor = ''; text.style.color = 'var(--muted)'; badge.querySelector('.sync-dot').style.background = 'var(--muted)'; }
+}
+['click','keydown','mousemove','touchstart'].forEach(ev => document.addEventListener(ev, () => { if (document.getElementById('app').style.display !== 'none') resetSessionTimer(); }));
+
+function showSkeletons(show) {
+  const skelCmp = document.getElementById('skel-cmp');
+  if (skelCmp) skelCmp.style.display = show ? 'block' : 'none';
+  const grid = document.getElementById('stats-grid');
+  if (show && grid && !grid.querySelector('.skeleton')) {
+    grid.querySelectorAll('.stat-card').forEach(c => c.style.opacity = '0.3');
+  } else if (!show && grid) {
+    grid.querySelectorAll('.stat-card').forEach(c => c.style.opacity = '1');
+    grid.querySelectorAll('.skeleton').forEach(s => s.remove());
+  }
+}
+
+function importBackup(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const backup = JSON.parse(e.target.result);
+      if (!backup.students || !Array.isArray(backup.students)) { toast('❌','File si backup ya Matokeo'); return; }
+      let added = 0, updated = 0;
+      backup.students.forEach(bs => {
+        const existing = DATA.findIndex(s => s.name === bs.name && s.class === bs.class && s.term === bs.term);
+        if (existing !== -1) { DATA[existing] = {...DATA[existing], ...bs, id: DATA[existing].id}; updated++; }
+        else { if (!bs.id) bs.id = Date.now().toString(36) + Math.random().toString(36).slice(2,6) + added; DATA.push(bs); added++; }
+      });
+      if (backup.settings) { SETTINGS = {...SETTINGS, ...backup.settings}; localStorage.setItem('matokeo_settings', JSON.stringify(SETTINGS)); refreshSettingsUI(); refreshAllSelects(); }
+      save();
+      renderDash(); renderTable();
+      toast('✅', added + ' wameongezwa, ' + updated + ' wamesasishwa!');
+    } catch(err) { toast('❌','File si JSON sahihi: ' + err.message); }
+  };
+  reader.readAsText(file);
+  document.getElementById('json-inp').value = '';
+}
+
+function validateScores(scores) {
+  const errors = [];
+  SUBS.forEach(sub => {
+    const v = scores[sub.key];
+    if (v !== null && v !== undefined && v !== '') {
+      const n = Number(v);
+      if (isNaN(n) || n < 0 || n > 100) errors.push(sub.label + ': ' + v + ' (lazima 0-100)');
+    }
+  });
+  return errors;
+}
 
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function fmt(v) { return v !== null && v !== undefined ? v : '–'; }
