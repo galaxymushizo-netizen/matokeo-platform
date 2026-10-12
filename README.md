@@ -1,66 +1,50 @@
-# 🎓 Matokeo Platform
+# Matokeo Platform v2.0
 
-**School Results Management System** | *Mfumo wa Matokeo ya Shule*
+> Mfumo wa Kisasa wa Kusimamia Matokeo ya Wanafunzi
 
----
+Sistema ya usimamizi wa matokeo ya shule inayokua na vipengele vya kisasa.
 
-## 🌐 Live Demo
+## Vipengele (Features)
 
-**👉 [View Live Website](https://galaxymushizo-netizen.github.io/matokeo-platform/)**
+### v2.0 - Vipengele Vipya
+- **Firebase Cloud Sync** — Sync data kati ya devices kwa usalama
+- **Report Cards PDF** — Tengeneza report card ya PDF kwa mwanafunzi mmoja au darasa nzima
+- **Multi-Class & Terms** — Simamia madarasa na terms nyingi, filter kwa class/term
+- **Bulk Import** — Import wanafunzi wengi kupitia Excel (.xlsx) au CSV
+- **Data Backup** — Export data yako kama JSON file
 
----
+### v1.0 - Msingi
+- Dashboard ya matokeo na analytics
+- Kuongeza wanafunzi na alama za masomo 6
+- Orodha ya wanafunzi na positions
+- Grafu za analytics (Chart.js)
+- Dark gold theme ya kisasa
+- Progressive Web App (PWA)
 
-## Overview
+## Matumizi (Usage)
 
-Matokeo Platform is an interactive, single-page web application for managing school student results. Built with a clean gold-and-dark UI, it provides a complete dashboard for teachers to enter, analyze, and export student performance data.
+1. Fungua [Live Demo](https://galaxymushizo-netizen.github.io/matokeo-platform/)
+2. Ingia: username `zarem` / password `zarem`
+3. Ongeza wanafunzi na alama zao
+4. Tazama analytics na report cards
 
-## ✨ Features
+## Masomo (Subjects)
+1. Hisabati
+2. Kiswahili
+3. English
+4. Jiografia na Michezo
+5. Sayansi
+6. Historia na Maadili
 
-- **📊 Dashboard** — Overview statistics: total students, class average, highest/lowest averages
-- **➕ Add Students** — Enter marks for 6 subjects: Hisabati, Kiswahili, English, Jiografia na Michezo, Sayansi, Historia na Maadili
-- **👥 Student Management** — View, edit, and delete student records with search
-- **📈 Analytics** — Per-subject performance charts powered by Chart.js
-- **📄 PDF Export** — Generate professional PDF reports with jsPDF
-- **📊 Excel Export** — Export data to Excel spreadsheets
-- **📱 Responsive** — Works on desktop and mobile devices
-- **💾 Offline Storage** — Data persisted in localStorage
+## Teknolojia (Tech Stack)
+- HTML5 / CSS3 / Vanilla JavaScript
+- Chart.js 4.4 — Analytics
+- jsPDF + AutoTable — PDF Report Cards
+- SheetJS (xlsx) — Excel Import/Export
+- Firebase Firestore — Cloud Sync (optional)
 
-## 🔐 Login Credentials
+## Live Demo
+https://galaxymushizo-netizen.github.io/matokeo-platform/
 
-| Field    | Value |
-|----------|-------|
-| Username | zarem |
-| Password | zarem |
-
-## 🛠️ Tech Stack
-
-| Technology | Purpose |
-|------------|----------|
-| HTML5 + CSS3 | Structure & styling (single-file app) |
-| Vanilla JavaScript | Application logic |
-| Chart.js | Data visualization |
-| jsPDF + AutoTable | PDF report generation |
-| SheetJS (xlsx) | Excel export |
-
-## 🚀 Running Locally
-
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/galaxymushizo-netizen/matokeo-platform.git
-   ```
-2. Open `index.html` in any modern browser
-
-No build tools or server required — it runs directly in the browser.
-
-## 📂 Project Structure
-
-```
-matokeo-platform/
-├── index.html    # Complete application (HTML + CSS + JS)
-├── LICENSE       # MIT License
-└── README.md     # This file
-```
-
-## 📝 License
-
-MIT © [Galaxy Mushizo](https://github.com/galaxymushizo-netizen)
+## License
+MIT
