@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mfumo wa Matokeo</title>
+
+<meta name="theme-color" content="#06060c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Matokeo%20Core%22,%22short_name%22:%22Matokeo%22,%22start_url%22:%22index.html%22,%22display%22:%22standalone%22,%22background_color%22:%22#06060c%22,%22theme_color%22:%22#c9971f%22,%22icons%22:[{%22src%22:%22https://via.placeholder.com/192/c9971f/000000?text=MC%22,%22sizes%22:%22192x192%22,%22type%22:%22image/png%22}]}">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<style>
+:root {
+  --bg:#06060c; --s1:#0f0f1a; --s2:#181826; --s3:#1f1f30;
+  --border:#282838; --gold:#c9971f; --gold2:#e8b835;
+  --text:#ddd8c8; --muted:#6a6480;
+  --green:#22c55e; --blue:#4b8cf7; --amber:#f59e0b; --orange:#f97316; --red:#ef4444;
+  --sw:250px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--s1)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* ===== LOGIN ===== */
+#login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;overflow:hidden}
+.l-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(201,151,31,.07) 0,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(75,140,247,.04) 0,transparent 40%)}
+.l-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:44px 44px;opacity:.2;animation:gp 4s ease-in-out infinite}
+@keyframes gp{0%,100%{opacity:.12}50%{opacity:.28}}
+.l-card{position:relative;background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 25px 60px rgba(0,0,0,.55),0 0 0 1px rgba(201,151,31,.1);animation:ci .6s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes ci{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.l-icon{width:58px;height:58px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 8px 22px rgba(201,151,31,.35);animation:ip 2.5s ease-in-out infinite}
+@keyframes ip{0%,100%{box-shadow:0 8px 22px rgba(201,151,31,.3)}50%{box-shadow:0 8px 32px rgba(201,151,31,.55)}}
+.l-title{font-family:'Cinzel',serif;font-size:22px;font-weight:600;text-align:center;letter-spacing:1px;margin-bottom:4px}
+.l-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:32px}
+.fw{margin-bottom:16px}
+.fw label{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.fw input{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:11px 14px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
+.fw input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,151,31,.12)}
+.l-err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:14px;display:none}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.btn-login{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1200;font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;border:none;border-radius:8px;padding:13px;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:6px}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(201,151,31,.38)}
+
+/* ===== APP ===== */
+#app{display:flex;min-height:100vh}
+#sidebar{width:var(--sw);background:var(--s1);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s}
+.sb-hd{padding:22px 18px;border-bottom:1px solid var(--border)}
+.sb-logo{display:flex;align-items:center;gap:10px}
+.sb-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.sb-name{font-family:'Cinzel',serif;font-size:13px;font-weight:600;line-height:1.3}
+.sb-name small{font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400}
+.sb-nav{flex:1;padding:14px 10px;display:flex;flex-direction:column;gap:4px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:9px;cursor:pointer;transition:background .15s,color .15s;color:var(--muted);font-size:14px;font-weight:500;user-select:none;border:1px solid transparent}
+.nav-item:hover{background:var(--s2);color:var(--text)}
+.nav-item.active{background:rgba(201,151,31,.1);color:var(--gold2);border-color:rgba(201,151,31,.2)}
+.nav-icon{font-size:17px;width:22px;text-align:center}
+.sb-ft{padding:14px 10px;border-top:1px solid var(--border)}
+.btn-logout{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;background:none;border:1px solid var(--border);color:var(--muted);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.btn-logout:hover{background:rgba(239,68,68,.08);color:var(--red);border-color:rgba(239,68,68,.3)}
+#content{margin-left:var(--sw);flex:1;padding:32px;min-width:0}
+.view{display:none}
+.view.active{display:block;animation:vi .3s ease}
+@keyframes vi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ph{margin-bottom:26px}
+.ph h1{font-family:'Cinzel',serif;font-size:24px;font-weight:600;margin-bottom:4px}
+.ph p{color:var(--muted);font-size:14px}
+
+/* ===== STATS ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px;margin-bottom:24px}
+.stat-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color .2s,transform .2s}
+.stat-card:hover{border-color:rgba(201,151,31,.3);transform:translateY(-2px)}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:8px}
+.stat-value{font-family:'Cinzel',serif;font-size:30px;font-weight:700;color:var(--gold2)}
+.stat-sub{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* ===== TABLE ===== */
+.tw{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.t-toolbar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);gap:12px;flex-wrap:wrap}
+.sw{position:relative;display:flex;align-items:center}
+.sw .si{position:absolute;left:10px;color:var(--muted);font-size:14px;pointer-events:none}
+.search-inp{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:8px 14px 8px 36px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:220px;transition:border-color .2s}
+.search-inp:focus{border-color:var(--gold)}
+table{width:100%;border-collapse:collapse}
+thead th{padding:11px 14px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);text-align:left;background:var(--s2);border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr{border-bottom:1px solid rgba(40,40,60,.5);transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(201,151,31,.025)}
+td{padding:11px 14px;font-size:13px;vertical-align:middle}
+.gb{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-weight:700;font-size:11px}
+.gA{background:rgba(34,197,94,.15);color:var(--green)}
+.gB{background:rgba(75,140,247,.15);color:var(--blue)}
+.gC{background:rgba(245,158,11,.15);color:var(--amber)}
+.gD{background:rgba(249,115,22,.15);color:var(--orange)}
+.gF{background:rgba(239,68,68,.15);color:var(--red)}
+.avg-cell{font-weight:700;color:var(--gold2)}
+.act{display:flex;gap:7px}
+.btn-e,.btn-d{padding:5px 11px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid;font-family:'DM Sans',sans-serif;transition:all .15s}
+.btn-e{background:rgba(75,140,247,.1);color:var(--blue);border-color:rgba(75,140,247,.3)}
+.btn-e:hover{background:rgba(75,140,247,.2)}
+.btn-d{background:rgba(239,68,68,.1);color:var(--red);border-color:rgba(239,68,68,.3)}
+.btn-d:hover{background:rgba(239,68,68,.2)}
+.exp-btns{display:flex;gap:9px;flex-wrap:wrap}
+.btn-exp{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid;font-family:'DM Sans',sans-serif;transition:all .15s}
+.bp{background:rgba(239,68,68,.1);color:var(--red);border-color:rgba(239,68,68,.3)}
+.bp:hover{background:rgba(239,68,68,.2);transform:translateY(-1px)}
+.bx{background:rgba(34,197,94,.1);color:var(--green);border-color:rgba(34,197,94,.3)}
+.bx:hover{background:rgba(34,197,94,.2);transform:translateY(-1px)}
+.empty-row td{text-align:center;padding:40px;color:var(--muted);font-style:italic}
+
+/* ===== FORM ===== */
+.form-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:26px;max-width:740px}
+.fsec{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:1px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.fg label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:6px}
+.fg input{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:10px 13px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
+.fg input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,151,31,.1)}
+.fg input.err{border-color:var(--red)}
+.subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+.sbox{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:13px;transition:border-color .2s}
+.sbox:focus-within{border-color:rgba(201,151,31,.4)}
+.sname{font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.srow{display:flex;align-items:center;gap:9px}
+.sinp{width:72px;background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;outline:none;text-align:center;transition:border-color .2s}
+.sinp:focus{border-color:var(--gold)}
+.sinp.err{border-color:var(--red)}
+.lgr{font-size:12px;font-weight:700;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all .2s;background:var(--s3);color:var(--muted)}
+.sbar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.sbfill{height:100%;border-radius:2px;transition:width .3s,background .3s;background:var(--gold);width:0%}
+.fa{display:flex;gap:11px;align-items:center;margin-top:4px}
+.btn-pri{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1200;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:1.5px;border:none;border-radius:8px;padding:12px 26px;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn-pri:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(201,151,31,.32)}
+.btn-sec{background:var(--s2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:11px 18px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
+.btn-sec:hover{background:var(--s3)}
+
+/* ===== ANALYTICS ===== */
+.an-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;margin-bottom:24px}
+.cc{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px}
+.ct{font-family:'Cinzel',serif;font-size:13px;font-weight:600;margin-bottom:3px}
+.ca{font-size:12px;color:var(--muted);margin-bottom:14px}
+.ca span{color:var(--gold2);font-weight:700}
+.ch{position:relative;height:185px}
+.cmp{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px}
+.cmp-title{font-family:'Cinzel',serif;font-size:14px;margin-bottom:16px}
+
+/* ===== DASHBOARD ===== */
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+.sec-t{font-family:'Cinzel',serif;font-size:14px}
+.va{font-size:12px;color:var(--gold);cursor:pointer}
+.va:hover{color:var(--gold2)}
+.rank{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;background:var(--s3);color:var(--muted)}
+.r1{background:rgba(201,151,31,.2);color:var(--gold2)}
+.r2{background:rgba(200,200,215,.15);color:#c0c0d0}
+.r3{background:rgba(180,100,40,.2);color:#cd7f32}
+
+/* ===== TOAST ===== */
+#toast{position:fixed;bottom:22px;right:22px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:11px 16px;font-size:13px;color:var(--text);display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.45);z-index:9999;transform:translateY(80px);opacity:0;transition:transform .3s cubic-bezier(.16,1,.3,1),opacity .3s;max-width:300px}
+#toast.show{transform:translateY(0);opacity:1}
+
+/* ===== MODAL ===== */
+#modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:500}
+.mbox{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:28px;max-width:380px;width:90%;animation:mi .25s cubic-bezier(.16,1,.3,1)}
+@keyframes mi{from{transform:scale(.95) translateY(8px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.mt{font-family:'Cinzel',serif;font-size:16px;margin-bottom:10px}
+.mb{font-size:14px;color:var(--muted);margin-bottom:22px;line-height:1.6}
+.ma{display:flex;gap:10px;justify-content:flex-end}
+
+/* ===== MOBILE ===== */
+.mob-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:8px 11px;cursor:pointer;font-size:18px;color:var(--text)}
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%)}
+  #sidebar.open{transform:translateX(0)}
+  #content{margin-left:0;padding:16px;padding-top:56px}
+  .subj-grid,.frow{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .mob-btn{display:flex}
+  .an-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="l-bg"><div class="l-grid"></div></div>
+  <div class="l-card">
+    <div class="l-icon">🎓</div>
+    <h1 class="l-title">Mfumo wa Matokeo</h1>
+    <p class="l-sub">School Results Management System</p>
+    <div class="fw">
+      <label>Jina la Mtumiaji</label>
+      <input type="text" id="inp-u" placeholder="Weka jina lako..." onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="fw">
+      <label>Nywila</label>
+      <input type="password" id="inp-p" placeholder="Weka nywila..." onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="l-err" id="l-err">Jina au nywila si sahihi. Jaribu tena.</div>
+    <button class="btn-login" onclick="doLogin()">INGIA →</button>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+  <button class="mob-btn" onclick="toggleSB()">☰</button>
+  <aside id="sidebar">
+    <div class="sb-hd">
+      <div class="sb-logo">
+        <div class="sb-icon">🎓</div>
+        <div class="sb-name">Matokeo<br><small>Mfumo wa Shule</small></div>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-item active" onclick="showView('dashboard')" id="nav-dashboard"><span class="nav-icon">📊</span> Dashboard</div>
+      <div class="nav-item" onclick="showView('add')" id="nav-add"><span class="nav-icon">➕</span> Ongeza Mwanafunzi</div>
+      <div class="nav-item" onclick="showView('students')" id="nav-students"><span class="nav-icon">👥</span> Wanafunzi Wote</div>
+      <div class="nav-item" onclick="showView('analytics')" id="nav-analytics"><span class="nav-icon">📈</span> Uchambuzi</div>
+    </nav>
+    <div class="sb-ft">
+      <button class="btn-logout" onclick="doLogout()"><span>🚪</span> Toka Mfumo</button>
+    </div>
+  </aside>
+
+  <main id="content">
+
+    <section class="view active" id="view-dashboard">
+      <div class="ph"><h1>Dashboard</h1><p>Muhtasari wa matokeo ya darasa</p></div>
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="cmp">
+        <div class="cmp-title">📊 Wastani wa Kila Somo</div>
+        <div class="ch"><canvas id="cmp-chart"></canvas></div>
+      </div>
+      <div class="tw">
+        <div class="t-toolbar">
+          <span class="sec-t">🏆 Wanafunzi Bora (Top 5)</span>
+          <a class="va" onclick="showView('students')">Ona wote →</a>
+        </div>
+        <table>
+          <thead><tr><th>#</th><th>Jina</th><th>Hisabati</th><th>Kiswahili</th><th>English</th><th>Sayansi</th><th>Wastani</th></tr></thead>
+          <tbody id="top-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="view" id="view-add">
+      <div class="ph"><h1 id="form-title">Ongeza Mwanafunzi</h1><p>Weka taarifa za mwanafunzi na matokeo yake</p></div>
+      <div class="form-card">
+        <input type="hidden" id="edit-id">
+        <p class="fsec">TAARIFA ZA MWANAFUNZI</p>
+        <div class="frow">
+          <div class="fg"><label>Jina Kamili *</label><input type="text" id="f-name" placeholder="Mfano: Amina Hassan"></div>
+          <div class="fg"><label>Darasa (Hiari)</label><input type="text" id="f-class" placeholder="Mfano: Darasa la 7A"></div>
+        </div>
+        <p class="fsec">MATOKEO YA MASOMO (0 – 100)</p>
+        <div class="subj-grid" id="subj-grid"></div>
+        <div class="fa">
+          <button class="btn-pri" onclick="saveStudent()">💾 HIFADHI MATOKEO</button>
+          <button class="btn-sec" onclick="resetForm()">✖ Futa Fomu</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-students">
+      <div class="ph"><h1>Wanafunzi Wote</h1><p id="stu-sub">Orodha kamili ya wanafunzi na matokeo</p></div>
+      <div class="tw">
+        <div class="t-toolbar">
+          <div class="sw">
+            <span class="si">🔍</span>
+            <input class="search-inp" type="text" id="srch" placeholder="Tafuta jina au darasa..." oninput="filterStu()">
+          </div>
+          <div class="exp-btns">
+            <button class="btn-exp bp" onclick="expPDF()">📄 PDF</button>
+            <button class="btn-exp bx" onclick="expExcel()">📊 Excel</button>
+          </div>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>#</th><th>Jina</th><th>Darasa</th><th>Hisabati</th><th>Kiswahili</th><th>English</th><th>Jiografia</th><th>Sayansi</th><th>Historia</th><th>Wastani</th><th>Vitendo</th></tr></thead>
+            <tbody id="stu-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-analytics">
+      <div class="ph"><h1>Uchambuzi wa Masomo</h1><p>Grafu na takwimu za kila somo kwa undani</p></div>
+      <div class="an-grid" id="an-grid"></div>
+    </section>
+
+  </main>
+</div>
+
+<div id="modal-ov" onclick="closeModal()">
+  <div class="mbox" onclick="event.stopPropagation()">
+    <h3 class="mt">⚠️ Thibitisha Kufuta</h3>
+    <p class="mb">Je, una uhakika unataka kufuta mwanafunzi huyu? Hatua hii haiwezi kurudishwa.</p>
+    <div class="ma">
+      <button class="btn-sec" onclick="closeModal()">Hapana</button>
+      <button class="btn-d" id="del-btn">Ndio, Futa</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"><span id="t-ico">✅</span><span id="t-msg">Imehifadhiwa!</span></div>
+
+<script>
+// =============================================
+//  SERVICE WORKER (APP LOADER)
+// =============================================
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        const swCode = `self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));`;
+        const blob = new Blob([swCode], {type: 'text/javascript'});
+        const url = URL.createObjectURL(blob);
+        navigator.serviceWorker.register(url);
+    });
+}
+
+// =============================================
+//  CONSTANTS & DATA HANDLING
+// =============================================
+const SUBS = [
+  {key:'hisabati', label:'Hisabati'},
+  {key:'kiswahili', label:'Kiswahili'},
+  {key:'english', label:'English'},
+  {key:'jiografia', label:'Jiografia na Michezo'},
+  {key:'sayansi', label:'Sayansi'},
+  {key:'historia', label:'Historia na Maadili ya Tanzania'},
+];
+const CREDS = {u:'zarem', p:'zarem'};
+let DATA = [];
+let CHARTS = {};
+let CMP_CHART = null;
+let PENDING_DEL = null;
+let TOAST_T = null;
+
+function load() {
+  try { DATA = JSON.parse(localStorage.getItem('matokeo_v1') || '[]'); }
+  catch(e) { DATA = []; }
+}
+function save() {
+  localStorage.setItem('matokeo_v1', JSON.stringify(DATA));
+}
+
+// =============================================
+//  APP LOGIC (LOGIN, NAV, RENDER)
+// =============================================
+function doLogin() {
+  const u = (document.getElementById('inp-u').value || '').trim();
+  const p = (document.getElementById('inp-p').value || '').trim();
+  const errEl = document.getElementById('l-err');
+  if (u === CREDS.u && p === CREDS.p) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    load();
+    buildSubjInputs();
+    renderDash();
+  } else {
+    errEl.style.display = 'block';
+    errEl.style.animation = 'none';
+    void errEl.offsetWidth;
+    errEl.style.animation = 'shake .4s ease';
+  }
+}
+
+function doLogout() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('inp-u').value = '';
+  document.getElementById('inp-p').value = '';
+}
+
+function showView(v) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  document.getElementById('nav-' + v).classList.add('active');
+  if (v === 'dashboard') renderDash();
+  if (v === 'students') renderTable();
+  if (v === 'analytics') renderAnalytics();
+  if (v === 'add' && !document.getElementById('edit-id').value) resetForm();
+  if (window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
+}
+
+function toggleSB() { document.getElementById('sidebar').classList.toggle('open'); }
+
+// =============================================
+//  CALCULATIONS & TABLES
+// =============================================
+function grade(s) {
+  const n = Number(s);
+  if (s === '' || isNaN(n)) return '-';
+  if (n >= 75) return 'A';
+  if (n >= 60) return 'B';
+  if (n >= 45) return 'C';
+  if (n >= 30) return 'D';
+  return 'F';
+}
+function gColor(g) {
+  return {A:'#22c55e',B:'#4b8cf7',C:'#f59e0b',D:'#f97316',F:'#ef4444'}[g] || '#6a6480';
+}
+function avg(stu) {
+  const vals = SUBS.map(s => stu.scores[s.key]).filter(v => v !== null && v !== undefined && !isNaN(Number(v)));
+  if (!vals.length) return 0;
+  return Math.round((vals.reduce((a,b) => a + Number(b), 0) / vals.length) * 10) / 10;
+}
+
+function buildSubjInputs() {
+  const g = document.getElementById('subj-grid');
+  if (!g) return;
+  g.innerHTML = '';
+  SUBS.forEach(sub => {
+    const d = document.createElement('div');
+    d.className = 'sbox';
+    d.innerHTML = `
+      <div class="sname">📚 ${esc(sub.label)}</div>
+      <div class="srow">
+        <input class="sinp" type="number" id="sc-${sub.key}" min="0" max="100" placeholder="0-100" oninput="liveGrade('${sub.key}')">
+        <div class="lgr gb" id="gr-${sub.key}">–</div>
+        <div class="sbar"><div class="sbfill" id="bar-${sub.key}"></div></div>
+      </div>`;
+    g.appendChild(d);
+  });
+}
+
+function liveGrade(k) {
+  const inp = document.getElementById('sc-' + k);
+  const v = inp.value;
+  const n = Number(v);
+  const valid = v !== '' && !isNaN(n) && n >= 0 && n <= 100;
+  const g = valid ? (n>=75?'A':n>=60?'B':n>=45?'C':n>=30?'D':'F') : '–';
+  const el = document.getElementById('gr-' + k);
+  const bar = document.getElementById('bar-' + k);
+  el.textContent = g;
+  if (g !== '–') {
+    const c = gColor(g);
+    el.style.background = c + '22';
+    el.style.color = c;
+  } else {
+    el.style.background = '';
+    el.style.color = '';
+  }
+  const pct = valid ? n : 0;
+  bar.style.width = pct + '%';
+  bar.style.background = pct >= 75 ? '#22c55e' : pct >= 60 ? '#4b8cf7' : pct >= 45 ? '#f59e0b' : pct >= 30 ? '#f97316' : '#ef4444';
+}
+
+function saveStudent() {
+  const name = (document.getElementById('f-name').value || '').trim();
+  const cls = (document.getElementById('f-class').value || '').trim();
+  const eid = document.getElementById('edit-id').value;
+  if (!name) { document.getElementById('f-name').classList.add('err'); return; }
+  
+  const scores = {};
+  SUBS.forEach(sub => {
+    const v = document.getElementById('sc-' + sub.key).value;
+    scores[sub.key] = v !== '' ? Number(v) : null;
+  });
+
+  if (eid) {
+    const i = DATA.findIndex(s => s.id === eid);
+    if (i !== -1) DATA[i] = {...DATA[i], name, class:cls, scores};
+  } else {
+    DATA.push({id: Date.now().toString(), name, class:cls, scores});
+  }
+  save(); resetForm(); showView('students'); toast('✅','Imehifadhiwa!');
+}
+
+function renderTable(list) {
+  const d = list || DATA;
+  const body = document.getElementById('stu-body');
+  body.innerHTML = d.map((s, i) => {
+    const a = avg(s);
+    return `<tr>
+      <td>${i+1}</td>
+      <td><strong>${esc(s.name)}</strong></td>
+      <td>${esc(s.class || '–')}</td>
+      ${SUBS.map(sub => `<td>${fmt(s.scores[sub.key])}</td>`).join('')}
+      <td class="avg-cell">${a}</td>
+      <td><div class="act">
+        <button class="btn-e" onclick="editStu('${s.id}')">✏️</button>
+        <button class="btn-d" onclick="confirmDel('${s.id}')">🗑️</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function resetForm() {
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-class').value = '';
+  document.getElementById('edit-id').value = '';
+  SUBS.forEach(sub => { document.getElementById('sc-' + sub.key).value = ''; liveGrade(sub.key); });
+}
+
+function editStu(id) {
+  const s = DATA.find(x => x.id === id);
+  if (!s) return;
+  document.getElementById('edit-id').value = id;
+  document.getElementById('f-name').value = s.name;
+  document.getElementById('f-class').value = s.class || '';
+  SUBS.forEach(sub => {
+    document.getElementById('sc-' + sub.key).value = s.scores[sub.key] !== null ? s.scores[sub.key] : '';
+    liveGrade(sub.key);
+  });
+  showView('add');
+}
+
+function confirmDel(id) {
+  PENDING_DEL = id;
+  document.getElementById('modal-ov').style.display = 'flex';
+}
+
+document.getElementById('del-btn').onclick = () => {
+  DATA = DATA.filter(s => s.id !== PENDING_DEL);
+  save(); closeModal(); renderTable();
+};
+
+function closeModal() { document.getElementById('modal-ov').style.display = 'none'; }
+
+function renderDash() {
+  const total = DATA.length;
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Wanafunzi</div><div class="stat-value">${total}</div></div>
+    <div class="stat-card"><div class="stat-label">Wastani Darasa</div><div class="stat-value">${total ? Math.round(DATA.reduce((a,b)=>a+avg(b),0)/total*10)/10 : 0}</div></div>
+  `;
+}
+
+function filterStu() {
+  const q = document.getElementById('srch').value.toLowerCase();
+  renderTable(DATA.filter(s => s.name.toLowerCase().includes(q)));
+}
+
+function toast(ico, msg) {
+  const el = document.getElementById('toast');
+  document.getElementById('t-ico').textContent = ico;
+  document.getElementById('t-msg').textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+function esc(s) { return String(s).replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmt(v) { return v !== null ? v : '–'; }
+
+window.addEventListener('DOMContentLoaded', () => document.getElementById('inp-u').focus());
+</script>
+</body>
+</html>
