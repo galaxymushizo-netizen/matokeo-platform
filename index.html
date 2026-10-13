@@ -313,11 +313,143 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 @media(min-width:769px){
   .stu-cards{display:none!important}
 }
+
+/* ===== LANDING PAGE ===== */
+#landing-page{position:fixed;inset:0;background:linear-gradient(135deg,#e8f5e9 0%,#f1f8e9 35%,#e0f2f1 70%,#e8f5e9 100%);z-index:1000;overflow-y:auto;overflow-x:hidden}
+.lp-bg{position:fixed;inset:0;pointer-events:none;z-index:0}
+.lp-blob{position:absolute;border-radius:50%;filter:blur(60px)}
+.lp-b1{width:400px;height:400px;top:-10%;left:-5%;background:rgba(129,199,132,0.30);animation:lpFloat 10s ease-in-out infinite}
+.lp-b2{width:350px;height:350px;bottom:-8%;right:-5%;background:rgba(165,214,167,0.25);animation:lpFloat 12s ease-in-out infinite 2s}
+.lp-b3{width:250px;height:250px;top:40%;left:60%;background:rgba(200,230,201,0.20);animation:lpFloat 8s ease-in-out infinite 4s}
+@keyframes lpFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,15px) scale(0.95)}}
+.lp-grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.35) 1px,transparent 1px);background-size:50px 50px;opacity:.18;pointer-events:none;z-index:0}
+
+.lp-nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;max-width:1200px;margin:0 auto}
+.lp-nav-logo{display:flex;align-items:center;gap:12px}
+.lp-nav-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--green),var(--green3));border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 14px rgba(76,175,80,.25)}
+.lp-nav-name{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--accent2)}
+.lp-nav-name small{font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400;display:block}
+.lp-nav-btn{background:rgba(255,255,255,0.55);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.6);border-radius:10px;padding:10px 24px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--accent);cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(50,120,70,.06)}
+.lp-nav-btn:hover{background:rgba(255,255,255,0.75);transform:translateY(-1px);box-shadow:0 6px 20px rgba(50,120,70,.1)}
+
+.lp-hero{position:relative;z-index:10;text-align:center;padding:80px 24px 60px;max-width:800px;margin:0 auto}
+.lp-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.5);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.6);border-radius:50px;padding:8px 20px;font-size:12px;font-weight:600;color:var(--green);letter-spacing:1px;margin-bottom:28px;box-shadow:0 2px 12px rgba(50,120,70,.06);animation:lpFadeUp .8s ease forwards}
+.lp-badge-dot{width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+.lp-hero h1{font-family:'Cinzel',serif;font-size:clamp(32px,5vw,52px);font-weight:700;color:var(--accent2);line-height:1.15;margin-bottom:18px;animation:lpFadeUp .8s ease .15s both}
+.lp-hero h1 span{background:linear-gradient(135deg,var(--green),var(--green2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lp-hero p{font-size:clamp(15px,2vw,18px);color:var(--muted);line-height:1.7;max-width:600px;margin:0 auto 36px;animation:lpFadeUp .8s ease .3s both}
+.lp-hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:lpFadeUp .8s ease .45s both}
+.lp-cta{background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:2px;border:none;border-radius:12px;padding:16px 36px;cursor:pointer;transition:all .2s;box-shadow:0 8px 24px rgba(76,175,80,.25)}
+.lp-cta:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(76,175,80,.35)}
+.lp-cta-sec{background:rgba(255,255,255,0.5);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.6);color:var(--accent);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;border-radius:12px;padding:16px 36px;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(50,120,70,.06)}
+.lp-cta-sec:hover{background:rgba(255,255,255,0.7);transform:translateY(-2px);box-shadow:0 8px 24px rgba(50,120,70,.1)}
+
+.lp-stats{position:relative;z-index:10;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding:20px 24px 60px;max-width:800px;margin:0 auto}
+.lp-stat{text-align:center;animation:lpFadeUp .8s ease .6s both}
+.lp-stat-val{font-family:'Cinzel',serif;font-size:32px;font-weight:700;color:var(--accent2)}
+.lp-stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+.lp-features{position:relative;z-index:10;max-width:1000px;margin:0 auto;padding:0 24px 80px}
+.lp-features-title{text-align:center;font-family:'Cinzel',serif;font-size:22px;font-weight:600;color:var(--accent2);margin-bottom:12px}
+.lp-features-sub{text-align:center;font-size:14px;color:var(--muted);margin-bottom:40px}
+.lp-features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.lp-feat{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:16px;padding:28px 24px;transition:all .3s;box-shadow:0 4px 20px rgba(50,120,70,.05)}
+.lp-feat:hover{transform:translateY(-4px);border-color:rgba(76,175,80,.25);box-shadow:0 12px 36px rgba(50,120,70,.1)}
+.lp-feat-icon{width:48px;height:48px;background:linear-gradient(135deg,rgba(76,175,80,.12),rgba(129,199,132,.12));border:1px solid rgba(76,175,80,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+.lp-feat h3{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:var(--accent2);margin-bottom:8px}
+.lp-feat p{font-size:13px;color:var(--muted);line-height:1.6}
+
+.lp-footer{position:relative;z-index:10;text-align:center;padding:24px;border-top:1px solid rgba(255,255,255,0.3);max-width:1000px;margin:0 auto}
+.lp-footer p{font-size:12px;color:var(--muted)}
+.lp-footer a{color:var(--green);text-decoration:none;font-weight:600}
+.lp-footer a:hover{color:var(--accent)}
+
+@keyframes lpFadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:768px){
+  .lp-nav{padding:16px 20px}
+  .lp-hero{padding:50px 20px 40px}
+  .lp-stats{gap:28px;padding:10px 20px 40px}
+  .lp-features{padding:0 16px 60px}
+  .lp-features-grid{grid-template-columns:1fr}
+  .lp-hero-btns{flex-direction:column;align-items:center}
+}
 </style>
 </head>
 <body>
 
-<div id="login-screen">
+<div id="landing-page">
+  <div class="lp-bg"><div class="lp-blob lp-b1"></div><div class="lp-blob lp-b2"></div><div class="lp-blob lp-b3"></div></div>
+  <div class="lp-grid-bg"></div>
+
+  <nav class="lp-nav">
+    <div class="lp-nav-logo">
+      <div class="lp-nav-icon">🎓</div>
+      <div class="lp-nav-name">Matokeo<small>Platform v2.2</small></div>
+    </div>
+    <button class="lp-nav-btn" onclick="goToLogin()">Ingia →</button>
+  </nav>
+
+  <div class="lp-hero">
+    <div class="lp-badge"><span class="lp-badge-dot"></span> MFUMO WA KUSIMAMIA MATOKEO</div>
+    <h1>Simamia Matokeo ya Shule <span>Kwa Urahisi</span></h1>
+    <p>Jukwaa la kisasa la kusimamia matokeo ya wanafunzi, kutengeneza report cards, na kuchambua data ya shule yako — yote katika mfumo mmoja rahisi na wa kuaminika.</p>
+    <div class="lp-hero-btns">
+      <button class="lp-cta" onclick="goToLogin()">ANZA SASA →</button>
+      <button class="lp-cta-sec" onclick="document.querySelector('.lp-features').scrollIntoView({behavior:'smooth'})">JIFUNZE ZAIDI</button>
+    </div>
+  </div>
+
+  <div class="lp-stats">
+    <div class="lp-stat"><div class="lp-stat-val">100%</div><div class="lp-stat-label">Bure kutumia</div></div>
+    <div class="lp-stat"><div class="lp-stat-val">Offline</div><div class="lp-stat-label">Inafanya kazi bila mtandao</div></div>
+    <div class="lp-stat"><div class="lp-stat-val">Cloud</div><div class="lp-stat-label">Sync ya data kwenye cloud</div></div>
+    <div class="lp-stat"><div class="lp-stat-val">PDF</div><div class="lp-stat-label">Report cards za kitaalamu</div></div>
+  </div>
+
+  <div class="lp-features">
+    <div class="lp-features-title">Vipengele Vikuu</div>
+    <p class="lp-features-sub">Zana zote unazohitaji kusimamia matokeo ya shule yako</p>
+    <div class="lp-features-grid">
+      <div class="lp-feat">
+        <div class="lp-feat-icon">📊</div>
+        <h3>Dashboard ya Matokeo</h3>
+        <p>Tazama muhtasari wa matokeo ya wanafunzi wote kwa mtazamo mmoja — wastani, kiwango cha kufaulu, na mwenendo wa kila darasa.</p>
+      </div>
+      <div class="lp-feat">
+        <div class="lp-feat-icon">📄</div>
+        <h3>Report Cards PDF</h3>
+        <p>Tengeneza report cards za kitaalamu kwa PDF — zina grade, nafasi, wastani, na maoni ya mwalimu. Tayari kuchapishwa.</p>
+      </div>
+      <div class="lp-feat">
+        <div class="lp-feat-icon">📥</div>
+        <h3>Import Data kwa Pamoja</h3>
+        <p>Pakia wanafunzi wengi kwa mara moja kupitia faili ya Excel au CSV. Hakuna haja ya kuandika mwanafunzi mmoja mmoja.</p>
+      </div>
+      <div class="lp-feat">
+        <div class="lp-feat-icon">📈</div>
+        <h3>Uchambuzi wa Kina</h3>
+        <p>Grafu na takwimu za kila somo — wastani, kiwango cha kufaulu, na mwenendo wa matokeo kwa muda.</p>
+      </div>
+      <div class="lp-feat">
+        <div class="lp-feat-icon">☁️</div>
+        <h3>Cloud Sync</h3>
+        <p>Data yako inahifadhiwa kwenye cloud kupitia Firebase — inapatikana popote ulipo, kwenye kifaa chochote.</p>
+      </div>
+      <div class="lp-feat">
+        <div class="lp-feat-icon">📋</div>
+        <h3>Export Excel & Backup</h3>
+        <p>Export data yako kwenda Excel au hifadhi backup ya JSON kwa usalama wa data yako.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-footer">
+    <p>Matokeo Platform v2.2 — Imetengenezwa kwa ❤️ kwa walimu wa Tanzania</p>
+  </div>
+</div>
+
+<div id="login-screen" style="display:none">
   <div class="l-bg"><div class="l-grid"></div></div>
   <div class="l-card">
     <div class="l-icon">🎓</div>
@@ -334,6 +466,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
     </div>
     <div class="l-err" id="l-err">Jina au nywila si sahihi. Jaribu tena.</div>
     <button class="btn-login" onclick="doLogin()">INGIA →</button>
+    <p style="text-align:center;margin-top:16px"><a href="#" onclick="event.preventDefault();document.getElementById('login-screen').style.display='none';document.getElementById('landing-page').style.display='block'" style="color:var(--muted);font-size:12px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">← Rudi Nyumbani</a></p>
   </div>
 </div>
 
@@ -749,9 +882,14 @@ function doLogin() {
 function doLogout() {
   clearInterval(SESSION_T);
   document.getElementById('app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('landing-page').style.display = 'block';
   document.getElementById('inp-u').value = '';
   document.getElementById('inp-p').value = '';
+}
+function goToLogin() {
+  document.getElementById('landing-page').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  setTimeout(() => document.getElementById('inp-u').focus(), 100);
 }
 
 function showView(v) {
@@ -1421,7 +1559,7 @@ function validateScores(scores) {
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function fmt(v) { return v !== null && v !== undefined ? v : '–'; }
 
-window.addEventListener('DOMContentLoaded', () => document.getElementById('inp-u').focus());
+window.addEventListener('DOMContentLoaded', () => { /* landing page shown first */ });
 </script>
 </body>
 </html>
