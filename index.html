@@ -18,6 +18,7 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <style>
@@ -697,8 +698,8 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
     <!-- LOGIN FORM -->
     <div id="login-form">
       <div class="fw">
-        <label>Jina la Mtumiaji</label>
-        <input type="text" id="inp-u" placeholder="Weka jina lako..." onkeydown="if(event.key==='Enter')doLogin()">
+        <label>Barua Pepe (Email)</label>
+        <input type="email" id="inp-email" placeholder="mfano@email.com" onkeydown="if(event.key==='Enter')document.getElementById('inp-p').focus()">
       </div>
       <div class="fw">
         <label>Nywila</label>
@@ -712,19 +713,36 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
       <p style="text-align:center;margin-top:10px"><a href="#" onclick="event.preventDefault();goToLanding()" style="color:var(--muted);font-size:12px;text-decoration:none" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">← Rudi Nyumbani</a></p>
     </div>
 
+    <!-- FIREBASE SETUP (shown when no config) -->
+    <div id="fb-setup-form" style="display:none">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6">
+        Matokeo Platform inahitaji Firebase kwa ajili ya usalama wa data yako. Weka Firebase config yako hapa chini.
+      </p>
+      <div class="fw">
+        <label>Firebase Config (JSON)</label>
+        <textarea id="fb-config-login" placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","messagingSenderId":"...","appId":"..."}' style="width:100%;min-height:100px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.6);border-radius:10px;padding:10px;font-size:11px;font-family:monospace;color:var(--text);outline:none;resize:vertical"></textarea>
+      </div>
+      <div class="l-err" id="fb-setup-err"></div>
+      <button class="btn-login" onclick="setupFirebaseFromLogin()">🔗 UNGANISHA FIREBASE →</button>
+      <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6">
+        Nenda <strong>Firebase Console</strong> → Create Project → Authentication → Enable Email/Password → Firestore Database → Project Settings → Web app → Copy config JSON.
+      </p>
+      <p style="text-align:center;margin-top:10px"><a href="#" onclick="event.preventDefault();goToLanding()" style="color:var(--muted);font-size:12px;text-decoration:none" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">← Rudi Nyumbani</a></p>
+    </div>
+
     <!-- SIGNUP FORM -->
     <div id="signup-form" style="display:none">
       <div class="fw">
         <label>Jina Kamili</label>
-        <input type="text" id="su-name" placeholder="Mfano: Mwl. Amina Hassan" onkeydown="if(event.key==='Enter')document.getElementById('su-user').focus()">
+        <input type="text" id="su-name" placeholder="Mfano: Mwl. Amina Hassan" onkeydown="if(event.key==='Enter')document.getElementById('su-email').focus()">
       </div>
       <div class="fw">
-        <label>Jina la Mtumiaji</label>
-        <input type="text" id="su-user" placeholder="Chagua jina la akaunti..." onkeydown="if(event.key==='Enter')document.getElementById('su-pass').focus()">
+        <label>Barua Pepe (Email)</label>
+        <input type="email" id="su-email" placeholder="mfano@email.com" onkeydown="if(event.key==='Enter')document.getElementById('su-pass').focus()">
       </div>
       <div class="fw">
         <label>Nywila</label>
-        <input type="password" id="su-pass" placeholder="Angalau herufi 4..." onkeydown="if(event.key==='Enter')document.getElementById('su-pass2').focus()">
+        <input type="password" id="su-pass" placeholder="Angalau herufi 6..." onkeydown="if(event.key==='Enter')document.getElementById('su-pass2').focus()">
       </div>
       <div class="fw">
         <label>Thibitisha Nywila</label>
@@ -988,7 +1006,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           Import ita-merge data ya backup na data ya sasa. Wanafunzi walio na jina, darasa na muda sawa wata-update badala ya ku-duplicate.
         </p>
       </div>
-    </section>
+    </div>
 
   </main>
 </div>
@@ -1007,6 +1025,8 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 <div id="toast"><div class="toast-body"><span id="t-ico">✅</span><span id="t-msg">Imehifadhiwa!</span></div><div class="toast-progress" id="toast-progress"></div></div>
 
 <script>
+/* ===== MATOKEO PLATFORM v3.0 — SECURED WITH FIREBASE AUTH ===== */
+
 const SUBS = [
   {key:'hisabati', label:'Hisabati'},
   {key:'kiswahili', label:'Kiswahili'},
@@ -1015,45 +1035,322 @@ const SUBS = [
   {key:'sayansi', label:'Sayansi'},
   {key:'historia', label:'Historia na Maadili'},
 ];
-let CURRENT_USER = null;
 
-// Simple hash (not cryptographic, but sufficient for local password storage)
-function simpleHash(str) {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) {
-    const c = str.charCodeAt(i);
-    h = ((h << 5) - h) + c;
-    h = h & h; // Convert to 32-bit int
-  }
-  // Add a second pass for better distribution
-  let h2 = 5381;
-  for (let i = 0; i < str.length; i++) {
-    h2 = ((h2 << 5) + h2) + str.charCodeAt(i);
-    h2 = h2 & h2;
-  }
-  return 'h_' + Math.abs(h).toString(36) + '_' + Math.abs(h2).toString(36);
-}
-
-function getUsers() {
-  try { return JSON.parse(localStorage.getItem('matokeo_users') || '[]'); } catch(e) { return []; }
-}
-function saveUsers(users) {
-  localStorage.setItem('matokeo_users', JSON.stringify(users));
-}
-
-function getUserStorageKey(suffix) {
-  if (!CURRENT_USER) return 'matokeo_v2_anon_' + suffix;
-  return 'matokeo_v2_' + CURRENT_USER.id + '_' + suffix;
-}
+let CURRENT_USER = null;   // {uid, email, fullName}
+let FB_APP = null;
+let FB_AUTH = null;
+let FB_DB = null;
+let FB_CONNECTED = false;
 
 let DATA = [];
 let SETTINGS = {classes:['7A','7B','8A','8B'], terms:['Term 1','Term 2','Term 3'], year:'2026', schoolName:'Shule Yako', teacherName:'Mwl. Mwalimu'};
-let FB_DB = null;
-let FB_CONNECTED = false;
 let CHARTS = {};
 let CMP_CHART = null;
 let PENDING_DEL = null;
 let IMPORT_DATA = [];
+let TOAST_T;
+let SESSION_T;
+let SESSION_SEC = 30 * 60;
+let SESSION_WARN = false;
+
+/* ========== FIREBASE INIT ========== */
+
+function tryInitFirebase() {
+  const raw = localStorage.getItem('matokeo_fb');
+  if (!raw) return false;
+  try {
+    const cfg = JSON.parse(raw);
+    if (!cfg.projectId || !cfg.apiKey) return false;
+    if (firebase.apps.length) firebase.apps.forEach(a => a.delete().catch(()=>{}));
+    FB_APP = firebase.initializeApp(cfg);
+    FB_AUTH = firebase.auth();
+    FB_DB = firebase.firestore();
+    FB_CONNECTED = true;
+    updateSyncBadge();
+    return true;
+  } catch(e) {
+    console.warn('Firebase init failed:', e);
+    return false;
+  }
+}
+
+function setupFirebaseFromLogin() {
+  const raw = (document.getElementById('fb-config-login').value || '').trim();
+  const errEl = document.getElementById('fb-setup-err');
+  if (!raw) { errEl.textContent = 'Weka Firebase config JSON.'; errEl.style.display = 'block'; return; }
+  try {
+    const cfg = JSON.parse(raw);
+    if (!cfg.projectId || !cfg.apiKey) throw new Error('projectId na apiKey zinahitajika');
+    localStorage.setItem('matokeo_fb', raw);
+    if (tryInitFirebase()) {
+      errEl.style.display = 'none';
+      toast('✅', 'Firebase imeunganishwa! Sasa fungua akaunti au ingia.');
+      showLoginForm();
+    } else {
+      throw new Error('Imeshindwa kuunganisha');
+    }
+  } catch(e) {
+    errEl.textContent = 'Config si sahihi: ' + e.message;
+    errEl.style.display = 'block';
+    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
+  }
+}
+
+function showSetupForm() {
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('signup-form').style.display = 'none';
+  document.getElementById('fb-setup-form').style.display = 'block';
+}
+
+function showLoginForm() {
+  document.getElementById('login-form').style.display = 'block';
+  document.getElementById('signup-form').style.display = 'none';
+  document.getElementById('fb-setup-form').style.display = 'none';
+}
+
+/* ========== AUTH (Firebase Auth) ========== */
+
+function doLogin() {
+  if (!FB_CONNECTED) { toast('⚠️', 'Firebase haijaunganishwa. Weka config kwanza.'); showSetupForm(); return; }
+  const email = (document.getElementById('inp-email').value || '').trim();
+  const pass = (document.getElementById('inp-p').value || '').trim();
+  const errEl = document.getElementById('l-err');
+
+  if (!email || !pass) {
+    errEl.textContent = 'Weka barua pepe na nywila.';
+    errEl.style.display = 'block';
+    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
+    return;
+  }
+
+  // Disable button during login
+  const btn = document.querySelector('#login-form .btn-login');
+  btn.disabled = true; btn.textContent = 'Inaingia...';
+
+  FB_AUTH.signInWithEmailAndPassword(email, pass)
+    .then(cred => handleAuthSuccess(cred.user))
+    .catch(err => {
+      const msg = err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential'
+        ? 'Barua pepe au nywila si sahihi.'
+        : err.code === 'auth/too-many-requests'
+        ? 'Majaribio mengi sana. Jaribu baadaye.'
+        : 'Hitilafu: ' + err.message;
+      errEl.textContent = msg;
+      errEl.style.display = 'block';
+      errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
+      btn.disabled = false; btn.textContent = 'INGIA →';
+    });
+}
+
+function doSignup() {
+  if (!FB_CONNECTED) { toast('⚠️', 'Firebase haijaunganishwa.'); showSetupForm(); return; }
+  const fullName = (document.getElementById('su-name').value || '').trim();
+  const email = (document.getElementById('su-email').value || '').trim();
+  const pass = document.getElementById('su-pass').value || '';
+  const pass2 = document.getElementById('su-pass2').value || '';
+  const errEl = document.getElementById('su-err');
+
+  if (!fullName || !email || !pass || !pass2) {
+    errEl.textContent = 'Tafadhali jaza sehemu zote.';
+    errEl.style.display = 'block';
+    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
+    return;
+  }
+  if (pass.length < 6) {
+    errEl.textContent = 'Nywila iwe angalau herufi 6.';
+    errEl.style.display = 'block';
+    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
+    return;
+  }
+  if (pass !== pass2) {
+    errEl.textContent = 'Nywila hazifanani. Angalia tena.';
+    errEl.style.display = 'block';
+    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
+    return;
+  }
+
+  const btn = document.querySelector('#signup-form .btn-login');
+  btn.disabled = true; btn.textContent = 'Inafungua akaunti...';
+
+  FB_AUTH.createUserWithEmailAndPassword(email, pass)
+    .then(cred => {
+      // Save user profile in Firestore
+      return cred.user.updateProfile({displayName: fullName}).then(() => {
+        return FB_DB.collection('users').doc(cred.user.uid).collection('data').doc('profile').set({
+          fullName: fullName,
+          email: email,
+          createdAt: new Date().toISOString()
+        });
+      }).then(() => cred);
+    })
+    .then(cred => {
+      // Initialize default settings for new user
+      SETTINGS = {classes:['7A','7B','8A','8B'], terms:['Term 1','Term 2','Term 3'], year:'2026', schoolName:'Shule Yako', teacherName: fullName};
+      return cloudSaveSettings().then(() => cred);
+    })
+    .then(cred => handleAuthSuccess(cred.user))
+    .catch(err => {
+      const msg = err.code === 'auth/email-already-in-use'
+        ? 'Barua pepe hii tayari ina akaunti.'
+        : err.code === 'auth/weak-password'
+        ? 'Nywila dhaifu sana. Tumia angalau herufi 6.'
+        : err.code === 'auth/invalid-email'
+        ? 'Barua pepe si sahihi.'
+        : 'Hitilafu: ' + err.message;
+      errEl.textContent = msg;
+      errEl.style.display = 'block';
+      errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
+      btn.disabled = false; btn.textContent = 'FUNGUA AKOUNTI →';
+    });
+}
+
+function handleAuthSuccess(firebaseUser) {
+  CURRENT_USER = {
+    uid: firebaseUser.uid,
+    email: firebaseUser.email,
+    fullName: firebaseUser.displayName || firebaseUser.email
+  };
+  localStorage.setItem('matokeo_session', JSON.stringify({uid: CURRENT_USER.uid, email: CURRENT_USER.email, fullName: CURRENT_USER.fullName}));
+
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+
+  const sbName = document.querySelector('.sb-name');
+  if (sbName) sbName.innerHTML = esc(CURRENT_USER.fullName) + '<br><small>' + esc(CURRENT_USER.email) + '</small>';
+
+  load();
+  startSessionTimer();
+  buildSubjInputs();
+  refreshSettingsUI();
+  refreshAllSelects();
+  renderDash();
+
+  // Load cloud data if connected
+  if (FB_CONNECTED) {
+    cloudLoad().then(() => { renderDash(); renderTable(); });
+    cloudLoadSettings().then(() => { refreshSettingsUI(); refreshAllSelects(); });
+  }
+
+  toast('🎉', 'Karibu ' + CURRENT_USER.fullName + '!');
+}
+
+function doLogout() {
+  clearInterval(SESSION_T);
+  if (FB_AUTH) FB_AUTH.signOut().catch(()=>{});
+  CURRENT_USER = null;
+  localStorage.removeItem('matokeo_session');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('landing-page').style.display = 'block';
+  // Clear form fields
+  document.getElementById('inp-email').value = '';
+  document.getElementById('inp-p').value = '';
+  document.getElementById('su-name').value = '';
+  document.getElementById('su-email').value = '';
+  document.getElementById('su-pass').value = '';
+  document.getElementById('su-pass2').value = '';
+  // Reset to login form
+  showLoginForm();
+  // Reset login button state
+  const loginBtn = document.querySelector('#login-form .btn-login');
+  if (loginBtn) { loginBtn.disabled = false; loginBtn.textContent = 'INGIA →'; }
+  const signupBtn = document.querySelector('#signup-form .btn-login');
+  if (signupBtn) { signupBtn.disabled = false; signupBtn.textContent = 'FUNGUA AKOUNTI →'; }
+}
+
+function toggleAuthForm(type) {
+  const loginForm = document.getElementById('login-form');
+  const signupForm = document.getElementById('signup-form');
+  const setupForm = document.getElementById('fb-setup-form');
+  const errL = document.getElementById('l-err');
+  const errS = document.getElementById('su-err');
+  if (type === 'signup') {
+    loginForm.style.display = 'none';
+    signupForm.style.display = 'block';
+    setupForm.style.display = 'none';
+    errS.style.display = 'none';
+    document.getElementById('su-name').value = '';
+    document.getElementById('su-email').value = '';
+    document.getElementById('su-pass').value = '';
+    document.getElementById('su-pass2').value = '';
+  } else {
+    signupForm.style.display = 'none';
+    setupForm.style.display = 'none';
+    loginForm.style.display = 'block';
+    errL.style.display = 'none';
+    document.getElementById('inp-email').value = '';
+    document.getElementById('inp-p').value = '';
+  }
+}
+
+function goToLanding() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('landing-page').style.display = 'block';
+}
+
+function goToSignup() {
+  document.getElementById('landing-page').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  if (!FB_CONNECTED) { showSetupForm(); return; }
+  toggleAuthForm('signup');
+}
+
+function goToLogin() {
+  document.getElementById('landing-page').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  if (!FB_CONNECTED) { showSetupForm(); return; }
+  toggleAuthForm('login');
+  setTimeout(() => document.getElementById('inp-email').focus(), 100);
+}
+
+/* ========== SESSION RESTORE (Firebase Auth State) ========== */
+
+function tryRestoreSession() {
+  if (!FB_CONNECTED || !FB_AUTH) return false;
+
+  // Listen for Firebase auth state changes
+  FB_AUTH.onAuthStateChanged(user => {
+    if (user) {
+      CURRENT_USER = {
+        uid: user.uid,
+        email: user.email,
+        fullName: user.displayName || user.email
+      };
+      localStorage.setItem('matokeo_session', JSON.stringify({uid: user.uid, email: user.email, fullName: CURRENT_USER.fullName}));
+
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'flex';
+
+      const sbName = document.querySelector('.sb-name');
+      if (sbName) sbName.innerHTML = esc(CURRENT_USER.fullName) + '<br><small>' + esc(CURRENT_USER.email) + '</small>';
+
+      load();
+      startSessionTimer();
+      buildSubjInputs();
+      refreshSettingsUI();
+      refreshAllSelects();
+      renderDash();
+
+      // Load cloud data
+      cloudLoad().then(() => { renderDash(); renderTable(); });
+      cloudLoadSettings().then(() => { refreshSettingsUI(); refreshAllSelects(); });
+    } else {
+      // No authenticated user — show landing or login
+      document.getElementById('landing-page').style.display = 'block';
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'none';
+    }
+  });
+  return true; // We've set up the listener
+}
+
+/* ========== DATA STORAGE ========== */
+
+function getUserStorageKey(suffix) {
+  if (!CURRENT_USER) return 'matokeo_v2_anon_' + suffix;
+  return 'matokeo_v2_' + CURRENT_USER.uid + '_' + suffix;
+}
 
 function load() {
   const key = getUserStorageKey('data');
@@ -1064,10 +1361,12 @@ function load() {
     if (s) SETTINGS = {...SETTINGS, ...s};
   } catch(e) {}
 }
+
 function save() {
   localStorage.setItem(getUserStorageKey('data'), JSON.stringify(DATA));
   if (FB_CONNECTED) cloudSave();
 }
+
 function saveSettings() {
   SETTINGS.schoolName = document.getElementById('set-school').value || 'Shule Yako';
   SETTINGS.year = document.getElementById('set-year').value || '2026';
@@ -1077,29 +1376,73 @@ function saveSettings() {
   refreshAllSelects();
 }
 
+/* ========== CLOUD OPERATIONS (with error handling) ========== */
+
 async function cloudSave() {
   if (!FB_CONNECTED || !CURRENT_USER) return;
-  try { await FB_DB.collection('users').doc(CURRENT_USER.id).collection('data').doc('students').set({students: DATA, updatedAt: new Date().toISOString()}); } catch(e) { console.warn('Cloud save failed:', e); }
+  try {
+    await FB_DB.collection('users').doc(CURRENT_USER.uid).collection('data').doc('students')
+      .set({students: DATA, updatedAt: new Date().toISOString()});
+  } catch(e) {
+    console.warn('Cloud save failed:', e);
+    toast('⚠️', 'Cloud save imeshindwa: ' + (e.message || 'Angalia mtandao'));
+  }
 }
+
 async function cloudLoad() {
   if (!FB_CONNECTED || !CURRENT_USER) return false;
   try {
-    const doc = await FB_DB.collection('users').doc(CURRENT_USER.id).collection('data').doc('students').get();
-    if (doc.exists && doc.data().students) { DATA = doc.data().students; localStorage.setItem(getUserStorageKey('data'), JSON.stringify(DATA)); return true; }
-  } catch(e) { console.warn('Cloud load failed:', e); }
+    const doc = await FB_DB.collection('users').doc(CURRENT_USER.uid).collection('data').doc('students').get();
+    if (doc.exists && doc.data().students) {
+      const cloudData = doc.data().students;
+      // Merge strategy: if local data exists, compare timestamps
+      const localRaw = localStorage.getItem(getUserStorageKey('data'));
+      if (localRaw) {
+        const localData = JSON.parse(localRaw) || [];
+        if (localData.length > 0 && cloudData.length > 0) {
+          // Use the larger dataset (simple heuristic)
+          if (localData.length > cloudData.length) {
+            // Local has more data — upload local to cloud
+            await cloudSave();
+            return true;
+          }
+        }
+      }
+      DATA = cloudData;
+      localStorage.setItem(getUserStorageKey('data'), JSON.stringify(DATA));
+      return true;
+    }
+  } catch(e) {
+    console.warn('Cloud load failed:', e);
+    toast('⚠️', 'Cloud load imeshindwa: ' + (e.message || 'Angalia mtandao'));
+  }
   return false;
 }
+
 async function cloudSaveSettings() {
   if (!FB_CONNECTED || !CURRENT_USER) return;
-  try { await FB_DB.collection('users').doc(CURRENT_USER.id).collection('data').doc('settings').set(SETTINGS); } catch(e) {}
+  try {
+    await FB_DB.collection('users').doc(CURRENT_USER.uid).collection('data').doc('settings').set(SETTINGS);
+  } catch(e) {
+    console.warn('Cloud save settings failed:', e);
+    toast('⚠️', 'Cloud settings save imeshindwa');
+  }
 }
+
 async function cloudLoadSettings() {
   if (!FB_CONNECTED || !CURRENT_USER) return;
   try {
-    const doc = await FB_DB.collection('users').doc(CURRENT_USER.id).collection('data').doc('settings').get();
-    if (doc.exists) { SETTINGS = {...SETTINGS, ...doc.data()}; localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS)); }
-  } catch(e) {}
+    const doc = await FB_DB.collection('users').doc(CURRENT_USER.uid).collection('data').doc('settings').get();
+    if (doc.exists) {
+      SETTINGS = {...SETTINGS, ...doc.data()};
+      localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
+    }
+  } catch(e) {
+    console.warn('Cloud load settings failed:', e);
+  }
 }
+
+/* ========== FIREBASE CONFIG (Settings page) ========== */
 
 function connectFirebase() {
   const raw = document.getElementById('fb-config').value.trim();
@@ -1107,8 +1450,9 @@ function connectFirebase() {
   try {
     const cfg = JSON.parse(raw);
     if (!cfg.projectId || !cfg.apiKey) throw new Error('Config si sahihi');
-    if (firebase.apps.length) firebase.apps.forEach(a => a.delete());
-    firebase.initializeApp(cfg);
+    if (firebase.apps.length) firebase.apps.forEach(a => a.delete().catch(()=>{}));
+    FB_APP = firebase.initializeApp(cfg);
+    FB_AUTH = firebase.auth();
     FB_DB = firebase.firestore();
     FB_CONNECTED = true;
     localStorage.setItem('matokeo_fb', raw);
@@ -1124,244 +1468,28 @@ function connectFirebase() {
     toast('❌','Firebase config si sahihi');
   }
 }
+
 function disconnectFirebase() {
   FB_CONNECTED = false;
-  FB_DB = null;
+  FB_APP = null; FB_AUTH = null; FB_DB = null;
   localStorage.removeItem('matokeo_fb');
-  if (firebase.apps.length) firebase.apps.forEach(a => a.delete());
+  if (firebase.apps.length) firebase.apps.forEach(a => a.delete().catch(()=>{}));
   updateSyncBadge();
   document.getElementById('fb-status').className = 'fb-status fb-no';
   document.getElementById('fb-status').innerHTML = '<span>⚪</span> <span>Haijawekwa — data inahifadhiwa local tu</span>';
   document.getElementById('fb-config').value = '';
   toast('📴','Cloud sync imeondolewa');
 }
+
 function updateSyncBadge() {
   const b = document.getElementById('sync-badge');
   const t = document.getElementById('sync-text');
+  if (!b || !t) return;
   if (FB_CONNECTED) { b.className = 'sync-badge sync-on'; t.textContent = 'Cloud Sync ON'; }
   else { b.className = 'sync-badge sync-off'; t.textContent = 'Offline Mode'; }
 }
-function tryRestoreFirebase() {
-  const raw = localStorage.getItem('matokeo_fb');
-  if (!raw) return;
-  try {
-    const cfg = JSON.parse(raw);
-    if (firebase.apps.length) firebase.apps.forEach(a => a.delete());
-    firebase.initializeApp(cfg);
-    FB_DB = firebase.firestore();
-    FB_CONNECTED = true;
-    updateSyncBadge();
-    document.getElementById('fb-status').className = 'fb-status fb-ok';
-    document.getElementById('fb-status').innerHTML = '<span>🟢</span> <span>Imeunganishwa — data inasync kwenye cloud</span>';
-    document.getElementById('fb-config').value = raw;
-    cloudLoad().then(() => { renderDash(); renderTable(); });
-    cloudLoadSettings().then(() => { refreshSettingsUI(); refreshAllSelects(); });
-  } catch(e) { localStorage.removeItem('matokeo_fb'); }
-}
 
-function doLogin() {
-  const u = (document.getElementById('inp-u').value || '').trim().toLowerCase();
-  const p = (document.getElementById('inp-p').value || '').trim();
-  const errEl = document.getElementById('l-err');
-  if (!u || !p) {
-    errEl.textContent = 'Weka jina la mtumiaji na nywila.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  const users = getUsers();
-  const hashed = simpleHash(p);
-  const found = users.find(usr => usr.username === u && usr.password === hashed);
-  if (found) {
-    CURRENT_USER = found;
-    localStorage.setItem('matokeo_session', JSON.stringify({id: found.id, username: found.username, fullName: found.fullName}));
-    errEl.style.display = 'none';
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
-    // Update sidebar greeting
-    const sbName = document.querySelector('.sb-name');
-    if (sbName) sbName.innerHTML = (found.fullName || found.username) + '<br><small>Matokeo Platform</small>';
-    load();
-    startSessionTimer();
-    buildSubjInputs();
-    refreshSettingsUI();
-    refreshAllSelects();
-    renderDash();
-    tryRestoreFirebase();
-  } else {
-    errEl.textContent = 'Jina au nywila si sahihi. Jaribu tena.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-  }
-}
-
-function doSignup() {
-  const fullName = (document.getElementById('su-name').value || '').trim();
-  const username = (document.getElementById('su-user').value || '').trim().toLowerCase();
-  const pass = document.getElementById('su-pass').value || '';
-  const pass2 = document.getElementById('su-pass2').value || '';
-  const errEl = document.getElementById('su-err');
-
-  // Validation
-  if (!fullName || !username || !pass || !pass2) {
-    errEl.textContent = 'Tafadhali jaza sehemu zote.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  if (username.length < 3) {
-    errEl.textContent = 'Jina la mtumiaji liwe angalau herufi 3.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  if (!/^[a-z0-9_]+$/.test(username)) {
-    errEl.textContent = 'Jina la mtumiaji liwe na herufi ndogo, nambari, na _ tu.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  if (pass.length < 4) {
-    errEl.textContent = 'Nywila iwe angalau herufi 4.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  if (pass !== pass2) {
-    errEl.textContent = 'Nywila hazifanani. Angalia tena.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-
-  const users = getUsers();
-  if (users.find(usr => usr.username === username)) {
-    errEl.textContent = 'Jina hili la mtumiaji tayari linatumika. Chagua lingine.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-
-  // Create user
-  const newUser = {
-    id: 'u_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6),
-    fullName: fullName,
-    username: username,
-    password: simpleHash(pass),
-    createdAt: new Date().toISOString()
-  };
-  users.push(newUser);
-  saveUsers(users);
-
-  // Auto-login
-  CURRENT_USER = newUser;
-  localStorage.setItem('matokeo_session', JSON.stringify({id: newUser.id, username: newUser.username, fullName: newUser.fullName}));
-
-  // Initialize empty data for this user
-  DATA = [];
-  SETTINGS = {classes:['7A','7B','8A','8B'], terms:['Term 1','Term 2','Term 3'], year:'2026', schoolName:'Shule Yako', teacherName: fullName};
-  save();
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-
-  errEl.style.display = 'none';
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
-  const sbName = document.querySelector('.sb-name');
-  if (sbName) sbName.innerHTML = fullName + '<br><small>Matokeo Platform</small>';
-  startSessionTimer();
-  buildSubjInputs();
-  refreshSettingsUI();
-  refreshAllSelects();
-  renderDash();
-  toast('🎉', 'Karibu ' + fullName + '! Akounti yako imefunguliwa.');
-}
-
-function toggleAuthForm(type) {
-  const loginForm = document.getElementById('login-form');
-  const signupForm = document.getElementById('signup-form');
-  const errL = document.getElementById('l-err');
-  const errS = document.getElementById('su-err');
-  if (type === 'signup') {
-    loginForm.style.display = 'none';
-    signupForm.style.display = 'block';
-    errS.style.display = 'none';
-    // Clear signup fields
-    document.getElementById('su-name').value = '';
-    document.getElementById('su-user').value = '';
-    document.getElementById('su-pass').value = '';
-    document.getElementById('su-pass2').value = '';
-  } else {
-    signupForm.style.display = 'none';
-    loginForm.style.display = 'block';
-    errL.style.display = 'none';
-    // Clear login fields
-    document.getElementById('inp-u').value = '';
-    document.getElementById('inp-p').value = '';
-  }
-}
-
-function goToLanding() {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('landing-page').style.display = 'block';
-}
-
-function goToSignup() {
-  document.getElementById('landing-page').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  toggleAuthForm('signup');
-}
-
-function doLogout() {
-  clearInterval(SESSION_T);
-  CURRENT_USER = null;
-  localStorage.removeItem('matokeo_session');
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('landing-page').style.display = 'block';
-  // Clear form fields
-  document.getElementById('inp-u').value = '';
-  document.getElementById('inp-p').value = '';
-  document.getElementById('su-name').value = '';
-  document.getElementById('su-user').value = '';
-  document.getElementById('su-pass').value = '';
-  document.getElementById('su-pass2').value = '';
-  // Reset to login form
-  document.getElementById('login-form').style.display = 'block';
-  document.getElementById('signup-form').style.display = 'none';
-}
-function goToLogin() {
-  document.getElementById('landing-page').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  toggleAuthForm('login');
-  setTimeout(() => document.getElementById('inp-u').focus(), 100);
-}
-
-// Auto-restore session on page load
-function tryRestoreSession() {
-  try {
-    const sess = JSON.parse(localStorage.getItem('matokeo_session'));
-    if (!sess || !sess.id) return false;
-    const users = getUsers();
-    const found = users.find(usr => usr.id === sess.id);
-    if (found) {
-      CURRENT_USER = found;
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('app').style.display = 'flex';
-      const sbName = document.querySelector('.sb-name');
-      if (sbName) sbName.innerHTML = (found.fullName || found.username) + '<br><small>Matokeo Platform</small>';
-      load();
-      startSessionTimer();
-      buildSubjInputs();
-      refreshSettingsUI();
-      refreshAllSelects();
-      renderDash();
-      tryRestoreFirebase();
-      return true;
-    }
-  } catch(e) {}
-  return false;
-}
+/* ========== NAVIGATION ========== */
 
 function showView(v) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
@@ -1377,6 +1505,8 @@ function showView(v) {
   if (window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
 }
 function toggleSB() { document.getElementById('sidebar').classList.toggle('open'); }
+
+/* ========== SELECTS / FILTERS ========== */
 
 function refreshAllSelects() {
   const classFilters = ['f-class-dash','f-class-list','f-class-rep','f-class-an'];
@@ -1405,32 +1535,18 @@ function refreshAllSelects() {
   if (ft) { const v = ft.value; ft.innerHTML = ''; SETTINGS.terms.forEach(t => { const o = document.createElement('option'); o.value = t; o.textContent = t; ft.appendChild(o); }); ft.value = v || SETTINGS.terms[0] || ''; }
 }
 
-function getFilteredData() {
+function getFilteredData(classElId, termElId, searchElId) {
   let d = DATA;
-  const fc = document.getElementById('f-class-list')?.value;
-  const ft = document.getElementById('f-term-list')?.value;
-  const q = (document.getElementById('srch')?.value || '').toLowerCase();
+  const fc = classElId ? (document.getElementById(classElId)?.value || '') : '';
+  const ft = termElId ? (document.getElementById(termElId)?.value || '') : '';
+  const q = searchElId ? (document.getElementById(searchElId)?.value || '').toLowerCase() : '';
   if (fc) d = d.filter(s => s.class === fc);
   if (ft) d = d.filter(s => s.term === ft);
   if (q) d = d.filter(s => s.name.toLowerCase().includes(q));
   return d;
 }
-function getFilteredForDash() {
-  let d = DATA;
-  const fc = document.getElementById('f-class-dash')?.value;
-  const ft = document.getElementById('f-term-dash')?.value;
-  if (fc) d = d.filter(s => s.class === fc);
-  if (ft) d = d.filter(s => s.term === ft);
-  return d;
-}
-function getFilteredForAnalytics() {
-  let d = DATA;
-  const fc = document.getElementById('f-class-an')?.value;
-  const ft = document.getElementById('f-term-an')?.value;
-  if (fc) d = d.filter(s => s.class === fc);
-  if (ft) d = d.filter(s => s.term === ft);
-  return d;
-}
+
+/* ========== CALCULATIONS ========== */
 
 function grade(s) {
   const n = Number(s);
@@ -1442,20 +1558,32 @@ function grade(s) {
   return 'F';
 }
 function gColor(g) { return {A:'#4caf50',B:'#42a5f5',C:'#ffb74d',D:'#ffa726',F:'#ef5350'}[g] || '#6b9a6b'; }
+
 function avg(stu) {
   const vals = SUBS.map(s => stu.scores[s.key]).filter(v => v !== null && v !== undefined && !isNaN(Number(v)));
   if (!vals.length) return 0;
   return Math.round((vals.reduce((a,b) => a + Number(b), 0) / vals.length) * 10) / 10;
 }
+
 function totalMarks(stu) {
   return SUBS.map(s => stu.scores[s.key]).filter(v => v !== null && v !== undefined && !isNaN(Number(v))).reduce((a,b) => a + Number(b), 0);
 }
+
+/** Competition ranking: ties get same position, next position skips (1,1,3,4) */
 function computePositions(list) {
   const sorted = [...list].sort((a,b) => avg(b) - avg(a));
   const posMap = {};
-  sorted.forEach((s, i) => { posMap[s.id] = i + 1; });
+  let pos = 1;
+  for (let i = 0; i < sorted.length; i++) {
+    if (i > 0 && avg(sorted[i]) < avg(sorted[i-1])) {
+      pos = i + 1;
+    }
+    posMap[sorted[i].id] = pos;
+  }
   return posMap;
 }
+
+/* ========== FORM / SUBJECT INPUTS ========== */
 
 function buildSubjInputs() {
   const g = document.getElementById('subj-grid');
@@ -1468,6 +1596,7 @@ function buildSubjInputs() {
     g.appendChild(d);
   });
 }
+
 function liveGrade(k) {
   const inp = document.getElementById('sc-' + k);
   const v = inp.value;
@@ -1511,8 +1640,10 @@ function saveStudent() {
   save(); resetForm(); showView('students'); toast('✅','Imehifadhiwa!');
 }
 
+/* ========== TABLE RENDERING ========== */
+
 function renderTable() {
-  const d = getFilteredData();
+  const d = getFilteredData('f-class-list', 'f-term-list', 'srch');
   const positions = computePositions(d);
   const body = document.getElementById('stu-body');
   const cards = document.getElementById('stu-cards');
@@ -1542,6 +1673,7 @@ function resetForm() {
   document.getElementById('form-title').textContent = 'Ongeza Mwanafunzi';
   SUBS.forEach(sub => { document.getElementById('sc-' + sub.key).value = ''; liveGrade(sub.key); });
 }
+
 function editStu(id) {
   const s = DATA.find(x => x.id === id);
   if (!s) return;
@@ -1556,6 +1688,7 @@ function editStu(id) {
   });
   showView('add');
 }
+
 function confirmDel(id) {
   PENDING_DEL = id;
   document.getElementById('modal-title').textContent = '⚠️ Thibitisha Kufuta';
@@ -1566,6 +1699,7 @@ function confirmDel(id) {
   };
   document.getElementById('modal-ov').style.display = 'flex';
 }
+
 function confirmClearAll() {
   document.getElementById('modal-title').textContent = '⚠️ Futa Data Yote';
   document.getElementById('modal-body').textContent = 'Una uhakika unataka kufuta data YA WOTE wanafunzi? Hatua hii haiwezi kurudishwa!';
@@ -1575,11 +1709,14 @@ function confirmClearAll() {
   };
   document.getElementById('modal-ov').style.display = 'flex';
 }
+
 function closeModal() { document.getElementById('modal-ov').style.display = 'none'; }
+
+/* ========== DASHBOARD ========== */
 
 function renderDash() {
   showSkeletons(false);
-  const d = getFilteredForDash();
+  const d = getFilteredData('f-class-dash', 'f-term-dash', null);
   const total = d.length;
   if (!total) {
     document.getElementById('stats-grid').innerHTML = '';
@@ -1590,7 +1727,7 @@ function renderDash() {
     return;
   }
   const avgAll = Math.round(d.reduce((a,b) => a + avg(b), 0) / total * 10) / 10;
-  const passCount = d.filter(s => avg(s) >= 40).length;
+  const passCount = d.filter(s => avg(s) >= 45).length;
   const passRate = total ? Math.round(passCount / total * 100) : 0;
   const highest = total ? Math.max(...d.map(s => avg(s))) : 0;
   const lowest = total ? Math.min(...d.map(s => avg(s))) : 0;
@@ -1630,8 +1767,10 @@ function renderCmpChart(d) {
   });
 }
 
+/* ========== ANALYTICS ========== */
+
 function renderAnalytics() {
-  const d = getFilteredForAnalytics();
+  const d = getFilteredData('f-class-an', 'f-term-an', null);
   const grid = document.getElementById('an-grid');
   if (!d.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><span class="es-icon">📈</span><div class="es-title">Hakuna Data ya Kuchambua</div><div class="es-sub">Ongeza wanafunzi kwanza ili kupata grafu na takwimu</div></div>'; return; }
   grid.innerHTML = '';
@@ -1640,7 +1779,7 @@ function renderAnalytics() {
     const a = vals.length ? Math.round(vals.reduce((a,b) => a + Number(b), 0) / vals.length * 10) / 10 : 0;
     const mx = vals.length ? Math.max(...vals) : 0;
     const mn = vals.length ? Math.min(...vals) : 0;
-    const pass = vals.filter(v => Number(v) >= 40).length;
+    const pass = vals.filter(v => Number(v) >= 45).length;
     const div = document.createElement('div');
     div.className = 'cc';
     div.innerHTML = '<div class="ct">' + esc(sub.label) + '</div><div class="ca">Wastani: <span>' + a + '</span> | Juu: <span>' + mx + '</span> | Chini: <span>' + mn + '</span></div><div class="ch"><canvas id="an-c-' + idx + '"></canvas></div>';
@@ -1662,8 +1801,10 @@ function renderAnalytics() {
 
 function onDashFilterChange() { renderDash(); }
 
+/* ========== EXPORT ========== */
+
 function expPDF() {
-  const d = getFilteredData();
+  const d = getFilteredData('f-class-list', 'f-term-list', 'srch');
   if (!d.length) { toast('⚠️','Hakuna data ya kupakua'); return; }
   const {jsPDF} = window.jspdf;
   const doc = new jsPDF();
@@ -1682,8 +1823,9 @@ function expPDF() {
   doc.save('matokeo-' + (SETTINGS.year||'') + '.pdf');
   toast('📄','PDF imepakuliwa!');
 }
+
 function expExcel() {
-  const d = getFilteredData();
+  const d = getFilteredData('f-class-list', 'f-term-list', 'srch');
   if (!d.length) { toast('⚠️','Hakuna data ya kupakua'); return; }
   const positions = computePositions(d);
   const rows = d.map((s,i) => ({
@@ -1698,9 +1840,15 @@ function expExcel() {
   toast('📊','Excel imepakuliwa!');
 }
 
+/* ========== IMPORT (with validation + error reporting) ========== */
+
 function handleFile(file) {
   if (!file) return;
   if (file.size > 5*1024*1024) { toast('⚠️','Faili kubwa sana (max 5MB)'); return; }
+
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['xlsx','xls','csv'].includes(ext)) { toast('❌','Aina ya faili si sahihi. Tumia .xlsx, .xls, au .csv'); return; }
+
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
@@ -1708,54 +1856,126 @@ function handleFile(file) {
       const ws = wb.Sheets[wb.SheetNames[0]];
       const json = XLSX.utils.sheet_to_json(ws);
       if (!json.length) { toast('⚠️','Faili haina data'); return; }
-      IMPORT_DATA = json.map(row => {
-        const name = row['Jina'] || row['Name'] || row['jina'] || '';
-        const cls = String(row['Darasa'] || row['Class'] || row['darasa'] || SETTINGS.classes[0] || '');
-        const term = String(row['Muda'] || row['Term'] || row['muda'] || SETTINGS.terms[0] || '');
+
+      let errorCount = 0;
+      let warnCount = 0;
+      IMPORT_DATA = [];
+      IMPORT_ERRORS = [];
+
+      json.forEach((row, rowIdx) => {
+        const name = String(row['Jina'] || row['Name'] || row['jina'] || '').trim();
+        const cls = String(row['Darasa'] || row['Class'] || row['darasa'] || SETTINGS.classes[0] || '').trim();
+        const term = String(row['Muda'] || row['Term'] || row['muda'] || SETTINGS.terms[0] || '').trim();
+        const errors = [];
+
+        if (!name || name === 'undefined') { errors.push('Jina halijajazwa'); }
+
         const scores = {};
         SUBS.forEach(sub => {
           const v = row[sub.label] || row[sub.key] || '';
-          const n = v !== '' ? Number(v) : null;
-          if (n !== null && (isNaN(n) || n < 0 || n > 100)) { scores[sub.key] = null; }
-          else { scores[sub.key] = n; }
+          if (v === '' || v === undefined || v === null) {
+            scores[sub.key] = null;
+          } else {
+            const n = Number(v);
+            if (isNaN(n) || n < 0 || n > 100) {
+              errors.push(sub.label + ': ' + v + ' (si sahihi, 0-100)');
+              scores[sub.key] = null;
+              warnCount++;
+            } else {
+              scores[sub.key] = n;
+            }
+          }
         });
-        return {id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), name: String(name), class: cls, term, year: SETTINGS.year, scores};
-      }).filter(r => r.name && r.name !== 'undefined');
+
+        if (errors.length) {
+          errorCount++;
+          IMPORT_ERRORS.push({row: rowIdx + 2, name: name || '(haijulikani)', errors});
+        }
+
+        if (name && name !== 'undefined') {
+          IMPORT_DATA.push({
+            id: Date.now().toString(36) + Math.random().toString(36).slice(2,6) + rowIdx,
+            name, class: cls, term, year: SETTINGS.year, scores,
+            _hasErrors: errors.length > 0
+          });
+        }
+      });
+
       showImportPreview();
     } catch(err) { toast('❌','Hitilafu kusoma faili: ' + err.message); }
   };
   reader.readAsBinaryString(file);
 }
+
+let IMPORT_ERRORS = [];
+
 function showImportPreview() {
   document.getElementById('import-section').style.display = 'block';
-  document.getElementById('import-count').textContent = IMPORT_DATA.length + ' wanafunzi wamepatikana';
-  document.getElementById('imp-head').innerHTML = '<tr><th>#</th><th>Jina</th><th>Darasa</th><th>Muda</th><th>Hisabati</th><th>Kiswahili</th><th>English</th><th>Sayansi</th></tr>';
-  document.getElementById('imp-body').innerHTML = IMPORT_DATA.slice(0, 50).map((r,i) =>
-    '<tr><td>' + (i+1) + '</td><td>' + esc(r.name) + '</td><td>' + esc(r.class) + '</td><td>' + esc(r.term) + '</td>' + SUBS.slice(0,4).map(sub => '<td>' + fmt(r.scores[sub.key]) + '</td>').join('') + '</tr>'
-  ).join('');
+  const validCount = IMPORT_DATA.filter(r => !r._hasErrors).length;
+  const errRowCount = IMPORT_ERRORS.length;
+  let countText = validCount + ' wanafunzi wako tayari';
+  if (errRowCount > 0) countText += ' | ' + errRowCount + ' wana makosa';
+  document.getElementById('import-count').textContent = countText;
+
+  document.getElementById('imp-head').innerHTML = '<tr><th>#</th><th>Jina</th><th>Darasa</th><th>Muda</th><th>Hisabati</th><th>Kiswahili</th><th>English</th><th>Sayansi</th><th>Hali</th></tr>';
+  document.getElementById('imp-body').innerHTML = IMPORT_DATA.slice(0, 50).map((r,i) => {
+    const status = r._hasErrors ? '<span style="color:var(--red)">⚠ Kosa</span>' : '<span style="color:var(--green)">✓ Saw</span>';
+    return '<tr' + (r._hasErrors ? ' style="background:rgba(239,83,80,.05)"' : '') + '><td>' + (i+1) + '</td><td>' + esc(r.name) + '</td><td>' + esc(r.class) + '</td><td>' + esc(r.term) + '</td>' + SUBS.slice(0,4).map(sub => '<td>' + fmt(r.scores[sub.key]) + '</td>').join('') + '<td>' + status + '</td></tr>';
+  }).join('');
   if (IMPORT_DATA.length > 50) {
-    document.getElementById('imp-body').innerHTML += '<tr class="empty-row"><td colspan="8">...na wanafunzi ' + (IMPORT_DATA.length - 50) + ' zaidi</td></tr>';
+    document.getElementById('imp-body').innerHTML += '<tr class="empty-row"><td colspan="9">...na wanafunzi ' + (IMPORT_DATA.length - 50) + ' zaidi</td></tr>';
+  }
+
+  // Show errors summary if any
+  if (IMPORT_ERRORS.length > 0) {
+    let errHtml = '<div style="margin-top:12px;padding:12px;background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.15);border-radius:10px;font-size:12px;color:var(--red);max-height:120px;overflow-y:auto">';
+    errHtml += '<strong>Makosa yaliyopatikana:</strong><br>';
+    IMPORT_ERRORS.slice(0, 10).forEach(e => {
+      errHtml += '• Row ' + e.row + ' (' + esc(e.name) + '): ' + e.errors.join(', ') + '<br>';
+    });
+    if (IMPORT_ERRORS.length > 10) errHtml += '...na makosa ' + (IMPORT_ERRORS.length - 10) + ' zaidi';
+    errHtml += '</div>';
+    const existing = document.getElementById('import-errors');
+    if (existing) existing.remove();
+    const errDiv = document.createElement('div');
+    errDiv.id = 'import-errors';
+    errDiv.innerHTML = errHtml;
+    document.getElementById('import-section').appendChild(errDiv);
   }
 }
+
 function confirmImport() {
   if (!IMPORT_DATA.length) { toast('⚠️','Hakuna data ya kuingiza'); return; }
-  let added = 0, skipped = 0;
-  IMPORT_DATA.forEach(bs => {
+  let added = 0, skipped = 0, updated = 0;
+  // Only import rows without errors
+  IMPORT_DATA.filter(r => !r._hasErrors).forEach(bs => {
     const dup = DATA.findIndex(s => s.name.toLowerCase() === bs.name.toLowerCase() && s.class === bs.class && s.term === bs.term);
-    if (dup !== -1) { skipped++; }
-    else { DATA.push(bs); added++; }
+    if (dup !== -1) {
+      // Update existing record instead of skipping
+      DATA[dup] = {...DATA[dup], ...bs, id: DATA[dup].id};
+      updated++;
+    } else {
+      delete bs._hasErrors;
+      DATA.push(bs);
+      added++;
+    }
   });
   save();
-  const msg = added + ' wameingizwa!' + (skipped ? ' ' + skipped + ' wamerukwa (duplicate)' : '');
+  const msg = added + ' wameingizwa!' + (updated ? ' ' + updated + ' wamesasishwa.' : '') + (skipped ? ' ' + skipped + ' wamerukwa.' : '');
   toast('✅', msg);
   cancelImport();
   showView('students');
 }
+
 function cancelImport() {
   IMPORT_DATA = [];
+  IMPORT_ERRORS = [];
   document.getElementById('import-section').style.display = 'none';
   document.getElementById('file-inp').value = '';
+  const errDiv = document.getElementById('import-errors');
+  if (errDiv) errDiv.remove();
 }
+
 function downloadTemplate() {
   const ws = XLSX.utils.json_to_sheet([
     {Jina:'Amina Hassan', Darasa:'7A', Muda:'Term 1', Hisabati:82, Kiswahili:75, English:68, 'Jiografia na Michezo':71, Sayansi:85, 'Historia na Maadili':73},
@@ -1773,6 +1993,8 @@ if (dz) {
   dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); });
 }
 
+/* ========== REPORT CARDS ========== */
+
 function genReport(studentId) {
   const s = DATA.find(x => x.id === studentId);
   if (!s) return;
@@ -1780,6 +2002,7 @@ function genReport(studentId) {
   const positions = computePositions(d);
   buildReportPDF(s, positions[s.id] || 0, d.length);
 }
+
 function genAllReports() {
   const cls = document.getElementById('f-class-rep').value;
   const term = document.getElementById('f-term-rep').value;
@@ -1791,6 +2014,7 @@ function genAllReports() {
   d.forEach(s => buildReportPDF(s, positions[s.id] || 0, d.length, true));
   toast('📄', d.length + ' report cards zimetengenezwa!');
 }
+
 function buildReportPDF(s, pos, total, silent) {
   const {jsPDF} = window.jspdf;
   const doc = new jsPDF();
@@ -1845,6 +2069,7 @@ function buildReportPDF(s, pos, total, silent) {
   doc.save('report-' + s.name.replace(/\s+/g,'_') + '-' + (s.term||'') + '.pdf');
   if (!silent) toast('📄','Report card imetengenezwa!');
 }
+
 function hexToRgb(hex) {
   const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
   return [r,g,b];
@@ -1868,23 +2093,33 @@ function loadRepStudents() {
   }).join('');
 }
 
+/* ========== SETTINGS ========== */
+
 function refreshSettingsUI() {
   document.getElementById('set-school').value = SETTINGS.schoolName || '';
   document.getElementById('set-year').value = SETTINGS.year || '';
   document.getElementById('set-teacher').value = SETTINGS.teacherName || '';
+  if (FB_CONNECTED) {
+    document.getElementById('fb-config').value = localStorage.getItem('matokeo_fb') || '';
+    document.getElementById('fb-status').className = 'fb-status fb-ok';
+    document.getElementById('fb-status').innerHTML = '<span>🟢</span> <span>Imeunganishwa — data inasync kwenye cloud</span>';
+  }
   renderClassTags();
   renderTermTags();
 }
+
 function renderClassTags() {
   document.getElementById('class-tags').innerHTML = SETTINGS.classes.map((c,i) =>
     '<span class="tag">' + esc(c) + ' <span class="tag-rm" onclick="removeClass(' + i + ')">×</span></span>'
   ).join('');
 }
+
 function renderTermTags() {
   document.getElementById('term-tags').innerHTML = SETTINGS.terms.map((t,i) =>
     '<span class="tag">' + esc(t) + ' <span class="tag-rm" onclick="removeTerm(' + i + ')">×</span></span>'
   ).join('');
 }
+
 function addClass() {
   const inp = document.getElementById('new-class');
   const v = inp.value.trim();
@@ -1898,6 +2133,7 @@ function addClass() {
   refreshAllSelects();
   toast('✅','Darasa limeongezwa');
 }
+
 function removeClass(i) {
   SETTINGS.classes.splice(i, 1);
   localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
@@ -1905,6 +2141,7 @@ function removeClass(i) {
   renderClassTags();
   refreshAllSelects();
 }
+
 function addTerm() {
   const inp = document.getElementById('new-term');
   const v = inp.value.trim();
@@ -1918,6 +2155,7 @@ function addTerm() {
   refreshAllSelects();
   toast('✅','Muda umeongezwa');
 }
+
 function removeTerm(i) {
   SETTINGS.terms.splice(i, 1);
   localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
@@ -1926,8 +2164,10 @@ function removeTerm(i) {
   refreshAllSelects();
 }
 
+/* ========== BACKUP ========== */
+
 function exportAllData() {
-  const backup = {settings: SETTINGS, students: DATA, exportedAt: new Date().toISOString(), version: '2.0'};
+  const backup = {settings: SETTINGS, students: DATA, exportedAt: new Date().toISOString(), version: '3.0'};
   const blob = new Blob([JSON.stringify(backup, null, 2)], {type: 'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -1935,6 +2175,46 @@ function exportAllData() {
   a.click(); URL.revokeObjectURL(url);
   toast('📤','Backup imepakuliwa!');
 }
+
+function importBackup(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const backup = JSON.parse(e.target.result);
+      if (!backup.students || !Array.isArray(backup.students)) { toast('❌','File si backup ya Matokeo'); return; }
+      let added = 0, updated = 0;
+      backup.students.forEach(bs => {
+        const existing = DATA.findIndex(s => s.name === bs.name && s.class === bs.class && s.term === bs.term);
+        if (existing !== -1) { DATA[existing] = {...DATA[existing], ...bs, id: DATA[existing].id}; updated++; }
+        else { if (!bs.id) bs.id = Date.now().toString(36) + Math.random().toString(36).slice(2,6) + added; DATA.push(bs); added++; }
+      });
+      if (backup.settings) { SETTINGS = {...SETTINGS, ...backup.settings}; localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS)); refreshSettingsUI(); refreshAllSelects(); }
+      save();
+      renderDash(); renderTable();
+      toast('✅', added + ' wameongezwa, ' + updated + ' wamesasishwa!');
+    } catch(err) { toast('❌','File si JSON sahihi: ' + err.message); }
+  };
+  reader.readAsText(file);
+  document.getElementById('json-inp').value = '';
+}
+
+/* ========== UTILITIES ========== */
+
+function validateScores(scores) {
+  const errors = [];
+  SUBS.forEach(sub => {
+    const v = scores[sub.key];
+    if (v !== null && v !== undefined && v !== '') {
+      const n = Number(v);
+      if (isNaN(n) || n < 0 || n > 100) errors.push(sub.label + ': ' + v + ' (lazima 0-100)');
+    }
+  });
+  return errors;
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmt(v) { return v !== null && v !== undefined ? v : '–'; }
 
 function toast(ico, msg) {
   const el = document.getElementById('toast');
@@ -1948,11 +2228,9 @@ function toast(ico, msg) {
   clearTimeout(TOAST_T);
   TOAST_T = setTimeout(() => el.classList.remove('show'), 3500);
 }
-let TOAST_T;
 
-let SESSION_T;
-let SESSION_SEC = 30 * 60;
-let SESSION_WARN = false;
+/* ========== SESSION TIMER ========== */
+
 function startSessionTimer() {
   SESSION_SEC = 30 * 60;
   SESSION_WARN = false;
@@ -1992,71 +2270,17 @@ function showSkeletons(show) {
   }
 }
 
-function importBackup(file) {
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const backup = JSON.parse(e.target.result);
-      if (!backup.students || !Array.isArray(backup.students)) { toast('❌','File si backup ya Matokeo'); return; }
-      let added = 0, updated = 0;
-      backup.students.forEach(bs => {
-        const existing = DATA.findIndex(s => s.name === bs.name && s.class === bs.class && s.term === bs.term);
-        if (existing !== -1) { DATA[existing] = {...DATA[existing], ...bs, id: DATA[existing].id}; updated++; }
-        else { if (!bs.id) bs.id = Date.now().toString(36) + Math.random().toString(36).slice(2,6) + added; DATA.push(bs); added++; }
-      });
-      if (backup.settings) { SETTINGS = {...SETTINGS, ...backup.settings}; localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS)); refreshSettingsUI(); refreshAllSelects(); }
-      save();
-      renderDash(); renderTable();
-      toast('✅', added + ' wameongezwa, ' + updated + ' wamesasishwa!');
-    } catch(err) { toast('❌','File si JSON sahihi: ' + err.message); }
-  };
-  reader.readAsText(file);
-  document.getElementById('json-inp').value = '';
-}
-
-function validateScores(scores) {
-  const errors = [];
-  SUBS.forEach(sub => {
-    const v = scores[sub.key];
-    if (v !== null && v !== undefined && v !== '') {
-      const n = Number(v);
-      if (isNaN(n) || n < 0 || n > 100) errors.push(sub.label + ': ' + v + ' (lazima 0-100)');
-    }
-  });
-  return errors;
-}
-
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function fmt(v) { return v !== null && v !== undefined ? v : '–'; }
+/* ========== APP INIT ========== */
 
 window.addEventListener('DOMContentLoaded', () => {
-  // One-time migration: if old data exists and no users yet, create default account
-  try {
-    const oldData = JSON.parse(localStorage.getItem('matokeo_v2') || '[]');
-    const oldSettings = JSON.parse(localStorage.getItem('matokeo_settings') || 'null');
-    const users = getUsers();
-    if (oldData.length > 0 && users.length === 0) {
-      const migUser = {
-        id: 'u_migrated',
-        fullName: 'Zarem',
-        username: 'zarem',
-        password: simpleHash('zarem'),
-        createdAt: new Date().toISOString()
-      };
-      saveUsers([migUser]);
-      // Move old data to user-scoped key
-      localStorage.setItem('matokeo_v2_u_migrated_data', JSON.stringify(oldData));
-      if (oldSettings) localStorage.setItem('matokeo_v2_u_migrated_settings', JSON.stringify(oldSettings));
-      // Clean up old keys
-      localStorage.removeItem('matokeo_v2');
-      localStorage.removeItem('matokeo_settings');
-    }
-  } catch(e) {}
+  // Try to initialize Firebase from saved config
+  const fbReady = tryInitFirebase();
 
-  // Try to restore existing session
-  if (!tryRestoreSession()) {
-    // No active session — show landing page
+  if (fbReady) {
+    // Firebase is configured — use Firebase Auth for session management
+    tryRestoreSession();
+  } else {
+    // No Firebase config — show setup form on login screen
     document.getElementById('landing-page').style.display = 'block';
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'none';
