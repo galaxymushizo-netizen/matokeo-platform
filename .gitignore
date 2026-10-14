@@ -1,0 +1,5 @@
+node_modules/
+.emulator-test/node_modules/
+.emulator-test/firebase-debug.log
+.emulator-test/ui-debug.log
+._syntax_check.js
