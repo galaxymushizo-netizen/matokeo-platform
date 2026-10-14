@@ -1,0 +1,92 @@
+rules_version = '2';
+
+// Matokeo Platform — Firestore Security Rules
+// Model:
+//   users/{uid}                      -> {fullName, email, role: 'admin'|'teacher', schoolId, createdAt}
+//   joinCodes/{code}                 -> {schoolId, createdBy}  (secret that lets a teacher join a school)
+//   schools/{schoolId}               -> {name, createdBy, joinCode?, settings...}
+//   schools/{schoolId}/students/{id} -> student records
+//
+// Guarantees:
+//   - No read/write without Firebase Auth (no anonymous access).
+//   - A user only reaches their own school's data (schoolId match).
+//   - Only admins delete students, edit school settings, manage roles.
+//   - Role escalation is blocked at signup: 'admin' requires creating the school;
+//     'teacher' requires a valid join code that maps to the claimed school.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+    function me() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    function isAdmin() {
+      return signedIn() && me().role == 'admin';
+    }
+    function mySchool() {
+      return me().schoolId;
+    }
+
+    // ---------- User profiles ----------
+    match /users/{uid} {
+      // Read own profile; admins read profiles within their school only.
+      allow get: if signedIn() &&
+        (request.auth.uid == uid || (isAdmin() && resource.data.schoolId == mySchool()));
+      // Admin user-management list (query must filter schoolId == own).
+      allow list: if isAdmin() && resource.data.schoolId == mySchool();
+
+      // Signup: own doc only. Either admin-creator (must have created the school)
+      // or teacher-join (must present a join code that maps to the claimed school).
+      allow create: if signedIn() && request.auth.uid == uid && (
+        (request.resource.data.role == 'admin' &&
+         exists(/databases/$(database)/documents/schools/$(request.resource.data.schoolId)) &&
+         get(/databases/$(database)/documents/schools/$(request.resource.data.schoolId)).data.createdBy == request.auth.uid)
+        ||
+        (request.resource.data.role == 'teacher' &&
+         request.resource.data.keys().hasAny(['joinCode']) &&
+         exists(/databases/$(database)/documents/joinCodes/$(request.resource.data.joinCode)) &&
+         get(/databases/$(database)/documents/joinCodes/$(request.resource.data.joinCode)).data.schoolId == request.resource.data.schoolId)
+      );
+
+      // Own profile: only fullName is self-editable. Admin: role/fullName within own school.
+      allow update: if signedIn() && (
+        (request.auth.uid == uid &&
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['fullName'])) ||
+        (isAdmin() &&
+         resource.data.schoolId == mySchool() &&
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['role', 'fullName']))
+      );
+
+      // Admin may remove a teacher from their school (not themselves).
+      allow delete: if isAdmin() && resource.data.schoolId == mySchool() && uid != request.auth.uid;
+    }
+
+    // ---------- Join codes ----------
+    match /joinCodes/{code} {
+      // Any signed-in user may look up a single code (needed to join at signup).
+      allow get: if signedIn();
+      allow list: if isAdmin() && resource.data.schoolId == mySchool();
+      allow create, update: if isAdmin() && request.resource.data.schoolId == mySchool();
+      allow delete: if isAdmin() && resource.data.schoolId == mySchool();
+    }
+
+    // ---------- Schools & students ----------
+    match /schools/{sid} {
+      allow get, list: if signedIn() && sid == mySchool();
+      allow create: if signedIn() && request.resource.data.createdBy == request.auth.uid;
+      // Settings live here: admin-only updates.
+      allow update: if isAdmin() && sid == mySchool();
+      allow delete: if false;
+
+      match /students/{studentId} {
+        allow get, list: if signedIn() && sid == mySchool();
+        // Both roles add/edit scores; only admins delete.
+        allow create, update: if signedIn() && sid == mySchool();
+        allow delete: if isAdmin() && sid == mySchool();
+      }
+    }
+  }
+}

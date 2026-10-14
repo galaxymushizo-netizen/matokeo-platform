@@ -9,16 +9,22 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Matokeo%20Platform%22,%22short_name%22:%22Matokeo%22,%22start_url%22:%22index.html%22,%22display%22:%22standalone%22,%22background_color%22:%22#e8f5e9%22,%22theme_color%22:%22#66bb6a%22,%22icons%22:[{%22src%22:%22https://via.placeholder.com/192/66bb6a/ffffff?text=MP%22,%22sizes%22:%22192x192%22,%22type%22:%22image/png%22}]}">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com; img-src 'self' data:; manifest-src data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'">
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Matokeo%20Platform%22,%22short_name%22:%22Matokeo%22,%22start_url%22:%22index.html%22,%22display%22:%22standalone%22,%22background_color%22:%22%23e8f5e9%22,%22theme_color%22:%22%2366bb6a%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20192%20192'%3E%3Crect%20width='192'%20height='192'%20rx='40'%20fill='%234caf50'/%3E%3Ctext%20x='96'%20y='122'%20font-size='88'%20text-anchor='middle'%20fill='white'%20font-family='serif'%20font-weight='bold'%3EMP%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]}">
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-e6nUZLBkQ86NJ6TVVKAeSaK8jWa3NhkYWZFomE39AvDbQWeie9PlQqM3pmYW5d1g" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js" integrity="sha384-fCAW/rDWORTbQXSiB7mOg0QtQ5c+r0f544y6XoKjuVva0nMBlCpNUjiFeG5iMdS3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" integrity="sha384-yuGdyIzzYtOBlBG6JOWn+Ey9kpq7HocusNuxEGyyohr1eEyXpeEyehIIXC/hznw4" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js" integrity="sha384-lI+CxEx/bCvWP1b0OK13j5HTrTZP7yf1xle8TVOFq2smz6KC1RChTarRV/RHP5PP" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js" integrity="sha384-nwX2Qpkhc2sv6L0ZPkLefLGguao67toSowvePuQvGF6cG+8MUphGI2uI94Ls3JF7" crossorigin="anonymous"></script>
+
+<script src="js/core.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cloud.js"></script>
 
 <style>
 :root {
@@ -694,44 +700,59 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
     <p class="l-sub">School Results Management System</p>
     <p class="l-ver">VERSION 3.0</p>
 
-    <!-- LOGIN FORM -->
+    <!-- LOGIN FORM (Firebase Auth) -->
     <div id="login-form">
       <div class="fw">
-        <label>Jina la Mtumiaji</label>
-        <input type="text" id="inp-u" placeholder="Weka jina lako..." onkeydown="if(event.key==='Enter')doLogin()">
+        <label>Barua Pepe</label>
+        <input type="email" id="inp-e" placeholder="weka@barua.com" onkeydown="if(event.key==='Enter')doLogin()">
       </div>
       <div class="fw">
         <label>Nywila</label>
         <input type="password" id="inp-p" placeholder="Weka nywila..." onkeydown="if(event.key==='Enter')doLogin()">
       </div>
       <div class="l-err" id="l-err">Jina au nywila si sahihi. Jaribu tena.</div>
-      <button class="btn-login" onclick="doLogin()">INGIA →</button>
+      <button class="btn-login" id="btn-login" onclick="doLogin()">INGIA →</button>
       <div class="l-toggle">
         Huna akaunti? <a onclick="toggleAuthForm('signup')">Jiandikishe hapa</a>
       </div>
       <p style="text-align:center;margin-top:10px"><a href="#" onclick="event.preventDefault();goToLanding()" style="color:var(--muted);font-size:12px;text-decoration:none" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">← Rudi Nyumbani</a></p>
     </div>
 
-    <!-- SIGNUP FORM -->
+    <!-- SIGNUP FORM (Firebase Auth + school create/join) -->
     <div id="signup-form" style="display:none">
       <div class="fw">
         <label>Jina Kamili</label>
-        <input type="text" id="su-name" placeholder="Mfano: Mwl. Amina Hassan" onkeydown="if(event.key==='Enter')document.getElementById('su-user').focus()">
+        <input type="text" id="su-name" placeholder="Mfano: Mwl. Amina Hassan" onkeydown="if(event.key==='Enter')document.getElementById('su-email').focus()">
       </div>
       <div class="fw">
-        <label>Jina la Mtumiaji</label>
-        <input type="text" id="su-user" placeholder="Chagua jina la akaunti..." onkeydown="if(event.key==='Enter')document.getElementById('su-pass').focus()">
+        <label>Barua Pepe</label>
+        <input type="email" id="su-email" placeholder="weka@barua.com" onkeydown="if(event.key==='Enter')document.getElementById('su-pass').focus()">
       </div>
       <div class="fw">
-        <label>Nywila</label>
-        <input type="password" id="su-pass" placeholder="Angalau herufi 4..." onkeydown="if(event.key==='Enter')document.getElementById('su-pass2').focus()">
+        <label>Nywila (angalau herufi 8)</label>
+        <input type="password" id="su-pass" placeholder="Nywila yenye usalama..." onkeydown="if(event.key==='Enter')document.getElementById('su-pass2').focus()">
       </div>
       <div class="fw">
         <label>Thibitisha Nywila</label>
         <input type="password" id="su-pass2" placeholder="Rudia nywila..." onkeydown="if(event.key==='Enter')doSignup()">
       </div>
+      <div class="fw">
+        <label>Aina ya Akaunti</label>
+        <div style="display:flex;gap:10px">
+          <label style="flex:1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);text-transform:none;letter-spacing:0;font-weight:500;cursor:pointer;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:10px 12px"><input type="radio" name="su-mode" value="create" checked onchange="onSignupModeChange()">🏫 Fungua Shule (Admin)</label>
+          <label style="flex:1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);text-transform:none;letter-spacing:0;font-weight:500;cursor:pointer;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:10px 12px"><input type="radio" name="su-mode" value="join" onchange="onSignupModeChange()">🤝 Jiunge (Teacher)</label>
+        </div>
+      </div>
+      <div class="fw" id="su-school-row">
+        <label>Jina la Shule</label>
+        <input type="text" id="su-school" placeholder="Mfano: Shule ya Msingi Galaxia" onkeydown="if(event.key==='Enter')doSignup()">
+      </div>
+      <div class="fw" id="su-code-row" style="display:none">
+        <label>Join Code ya Shule</label>
+        <input type="text" id="su-code" placeholder="Mfano: AB12CD" style="text-transform:uppercase" onkeydown="if(event.key==='Enter')doSignup()">
+      </div>
       <div class="l-err" id="su-err"></div>
-      <button class="btn-login" onclick="doSignup()">FUNGUA AKOUNTI →</button>
+      <button class="btn-login" id="btn-signup" onclick="doSignup()">FUNGUA AKOUNTI →</button>
       <div class="l-toggle">
         Una akaunti tayari? <a onclick="toggleAuthForm('login')">Ingia hapa</a>
       </div>
@@ -758,6 +779,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
       <div class="nav-divider"></div>
       <div class="nav-item" onclick="showView('analytics')" id="nav-analytics"><span class="nav-icon">📈</span> Uchambuzi</div>
       <div class="nav-item" onclick="showView('settings')" id="nav-settings"><span class="nav-icon">⚙️</span> Mipangilio</div>
+      <div class="nav-item" onclick="showView('users')" id="nav-users" style="display:none"><span class="nav-icon">👤</span> Watumiaji (Admin)</div>
     </nav>
     <div class="sb-ft">
       <div class="sync-badge sync-off" id="sync-badge">
@@ -939,6 +961,24 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           </div>
         </div>
 
+        <div class="settings-card" id="card-grading">
+          <h3>🎓 Mipaka ya Gredi (Wewe Unaweka)</h3>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Weka alama ya chini kabisa ya kila gredi. F ni chini ya D.</p>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
+            <div class="fg"><label>A ≥</label><input type="number" id="gb-A" min="0" max="100" oninput="saveGrading()"></div>
+            <div class="fg"><label>B ≥</label><input type="number" id="gb-B" min="0" max="100" oninput="saveGrading()"></div>
+            <div class="fg"><label>C ≥</label><input type="number" id="gb-C" min="0" max="100" oninput="saveGrading()"></div>
+            <div class="fg"><label>D ≥</label><input type="number" id="gb-D" min="0" max="100" oninput="saveGrading()"></div>
+          </div>
+          <div class="fg">
+            <label>Wastani unahesabiwa na</label>
+            <select id="set-avgmode" onchange="saveGrading()">
+              <option value="all">Masomo yote (6) — masomo yasiyo na alama huhesabiwa 0</option>
+              <option value="scored">Masomo yenye alama tu</option>
+            </select>
+          </div>
+        </div>
+
         <div class="settings-card">
           <h3>📚 Madarasa</h3>
           <div class="tag-list" id="class-tags"></div>
@@ -957,21 +997,28 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           </div>
         </div>
 
+        <div class="settings-card" id="card-joincode" style="display:none">
+          <h3>🤝 Join Code (Walimu Kujiunga)</h3>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+            <span id="joincode-value" style="font-family:'Cinzel',serif;font-size:26px;font-weight:700;letter-spacing:4px;color:var(--accent);background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);border-radius:10px;padding:8px 18px">——</span>
+            <button class="btn-sec" onclick="regenJoinCode()" style="font-size:12px">🔄 Badilisha</button>
+          </div>
+          <p style="font-size:11px;color:var(--muted);line-height:1.6">Mwalimu mpya ajiandikishe akitumia code hii atakuwa <strong>Teacher</strong> kwenye shule hii. Kubadilisha code kunafuta ile ya zamani.</p>
+        </div>
+
+        <div class="settings-card" id="card-users" style="display:none">
+          <h3>👤 Watumiaji wa Shule</h3>
+          <div id="users-list" style="font-size:13px"></div>
+        </div>
+      </div>
+
         <div class="settings-card">
           <h3>☁️ Cloud Sync (Firebase)</h3>
           <div class="fb-status fb-no" id="fb-status">
-            <span>⚪</span> <span>Haijawekwa — data inahifadhiwa local tu</span>
-          </div>
-          <div class="fg" style="margin-bottom:12px">
-            <label>Firebase Config (JSON)</label>
-            <textarea id="fb-config" placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","messagingSenderId":"...","appId":"..."}'></textarea>
-          </div>
-          <div class="fa">
-            <button class="btn-pri" onclick="connectFirebase()" style="font-size:11px;padding:10px 18px">🔗 Unganisha</button>
-            <button class="btn-sec" onclick="disconnectFirebase()" style="font-size:12px">Ondoa</button>
+            <span>⚪</span> <span>Inaunganisha...</span>
           </div>
           <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6">
-            Nenda <span style="color:var(--accent)">Firebase Console</span> → Create Project → Firestore Database → Project Settings → Your apps → Web app → Copy config JSON.
+            Data inahifadhiwa kwenye cloud na inapatikana kwenye vifaa vyote. Bila mtandao, data inabaki kwenye kifaa na inasync ukirudi mtandaoni. Usanidi wa Firebase uko kwenye code (config za web si siri kwa design — usalama unatoka kwenye Firestore rules na Firebase Auth).
           </p>
         </div>
       </div>
@@ -982,11 +1029,24 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           <button class="btn-exp bx" onclick="exportAllData()">📤 Export Data Yote (Backup)</button>
           <button class="btn-exp bx" onclick="document.getElementById('json-inp').click()" style="background:rgba(66,165,245,.08);color:var(--blue);border-color:rgba(66,165,245,.2)">📥 Import Backup (JSON)</button>
           <input type="file" id="json-inp" accept=".json" style="display:none" onchange="importBackup(this.files[0])">
-          <button class="btn-exp bp" onclick="confirmClearAll()" style="border-color:rgba(239,83,80,.2)">🗑️ Futa Data Yote</button>
+          <button class="btn-exp" onclick="importOldData()" style="background:rgba(255,183,77,.08);color:var(--amber);border-color:rgba(255,183,77,.2)">🕰️ Leta Data ya Kale (localStorage)</button>
+          <button class="btn-exp bp" onclick="confirmClearAll()" id="btn-clearall" style="border-color:rgba(239,83,80,.2)">🗑️ Futa Data Yote</button>
         </div>
         <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6">
-          Import ita-merge data ya backup na data ya sasa. Wanafunzi walio na jina, darasa na muda sawa wata-update badala ya ku-duplicate.
+          Import ya backup inaonyesha preview kwanzi: utaona nini kitaongezwa na nini kubadilishwa kabla ya kuthibitisha. Kitufe cha "Data ya Kale" kinachukua wanafunzi waliohifadhiwa kwenye browser hii na toleo la zamani la mfumo.
         </p>
+      </div>
+    </section>
+
+    <section class="view" id="view-users">
+      <div class="ph"><h1>Watumiaji wa Shule</h1><p>Simamia walimu na majukumu yao (Admin pekee)</p></div>
+      <div class="tw" style="max-width:760px">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Jina</th><th>Barua Pepe</th><th>Jukumu</th><th>Kitendo</th></tr></thead>
+            <tbody id="users-body"><tr class="empty-row"><td colspan="4">Inapakia...</td></tr></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -1015,266 +1075,264 @@ const SUBS = [
   {key:'sayansi', label:'Sayansi'},
   {key:'historia', label:'Historia na Maadili'},
 ];
-let CURRENT_USER = null;
 
-// Simple hash (not cryptographic, but sufficient for local password storage)
-function simpleHash(str) {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) {
-    const c = str.charCodeAt(i);
-    h = ((h << 5) - h) + c;
-    h = h & h; // Convert to 32-bit int
-  }
-  // Add a second pass for better distribution
-  let h2 = 5381;
-  for (let i = 0; i < str.length; i++) {
-    h2 = ((h2 << 5) + h2) + str.charCodeAt(i);
-    h2 = h2 & h2;
-  }
-  return 'h_' + Math.abs(h).toString(36) + '_' + Math.abs(h2).toString(36);
-}
-
-function getUsers() {
-  try { return JSON.parse(localStorage.getItem('matokeo_users') || '[]'); } catch(e) { return []; }
-}
-function saveUsers(users) {
-  localStorage.setItem('matokeo_users', JSON.stringify(users));
-}
-
-function getUserStorageKey(suffix) {
-  if (!CURRENT_USER) return 'matokeo_v2_anon_' + suffix;
-  return 'matokeo_v2_' + CURRENT_USER.id + '_' + suffix;
-}
+/* Firebase web config — public by design (identifies the project only).
+ * Security comes from Firebase Auth + firestore.rules, NOT from this config. */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBXkSCW7SMaT9Iig6TvaKVDd4aBubRw1t0",
+  authDomain: "matokeo-platform.firebaseapp.com",
+  projectId: "matokeo-platform",
+  storageBucket: "matokeo-platform.firebasestorage.app",
+  messagingSenderId: "909369498980",
+  appId: "1:909369498980:web:c4cfb48b726f71f9706e71",
+  measurementId: "G-RTJRH6WWYR"
+};
 
 let DATA = [];
-let SETTINGS = {classes:['7A','7B','8A','8B'], terms:['Term 1','Term 2','Term 3'], year:'2026', schoolName:'Shule Yako', teacherName:'Mwl. Mwalimu'};
-let FB_DB = null;
-let FB_CONNECTED = false;
+let CURRENT_USER = null;
+let SETTINGS = {
+  classes:['7A','7B','8A','8B'], terms:['Term 1','Term 2','Term 3'],
+  year:'2026', schoolName:'Shule Yako', teacherName:'',
+  gradeBoundaries:{A:75,B:60,C:45,D:30},
+  avgMode:'all'
+};
+let DELETED_IDS = [];   // student ids to delete on next cloud push
+let IS_ADMIN = false;
 let CHARTS = {};
 let CMP_CHART = null;
 let PENDING_DEL = null;
-let IMPORT_DATA = [];
+let IMPORT_DATA = null; // {rows, errors} from Core.parseImportRows
+let SYNC_PENDING_PUSH = false;
+
+const boundaries = () => Core.normalizeBoundaries(SETTINGS.gradeBoundaries);
+const avgFn = (s) => Core.avg(s, SUBS, SETTINGS.avgMode);
+function newId() { return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'id_' + Date.now().toString(36) + Math.random().toString(36).slice(2,10); }
+
+/* ---------- Local cache + sync ---------- */
+function cacheKey(suffix) { return 'mtk_cache_' + (window.Auth && Auth.current ? Auth.current.uid : 'anon') + '_' + suffix; }
 
 function load() {
-  const key = getUserStorageKey('data');
-  try { DATA = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { DATA = []; }
-  const sKey = getUserStorageKey('settings');
+  try { DATA = JSON.parse(localStorage.getItem(cacheKey('students')) || '[]'); } catch(e) { DATA = []; }
   try {
-    const s = JSON.parse(localStorage.getItem(sKey));
-    if (s) SETTINGS = {...SETTINGS, ...s};
+    const s = JSON.parse(localStorage.getItem(cacheKey('settings')) || 'null');
+    if (s) SETTINGS = {...SETTINGS, ...s, gradeBoundaries: {...SETTINGS.gradeBoundaries, ...(s.gradeBoundaries||{})}};
   } catch(e) {}
 }
-function save() {
-  localStorage.setItem(getUserStorageKey('data'), JSON.stringify(DATA));
-  if (FB_CONNECTED) cloudSave();
+function persistLocal() {
+  try { localStorage.setItem(cacheKey('students'), JSON.stringify(DATA)); } catch(e) { toast('❌','Hifadhi ya local imejaa — backup faili zako ni muhimu!'); }
 }
+function markDirtyAndPush() {
+  persistLocal();
+  Cloud.setDirty(true);
+  if (!SYNC_PENDING_PUSH) {
+    SYNC_PENDING_PUSH = true;
+    setTimeout(() => { SYNC_PENDING_PUSH = false; flushPush(); }, 400);
+  }
+}
+function flushPush() {
+  if (!window.Auth || !Auth.current) return;
+  Cloud.pushStudents(DATA, DELETED_IDS.splice(0))
+    .then(() => updateSyncBadge())
+    .catch(err => { toast('⚠️', 'Cloud save imeshindikana — data iko local. ' + (Cloud.state.msg||'')); updateSyncBadge(); });
+}
+function save() { markDirtyAndPush(); } // compatibility wrapper for existing calls
 function saveSettings() {
   SETTINGS.schoolName = document.getElementById('set-school').value || 'Shule Yako';
   SETTINGS.year = document.getElementById('set-year').value || '2026';
   SETTINGS.teacherName = document.getElementById('set-teacher').value || '';
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-  if (FB_CONNECTED) cloudSaveSettings();
+  localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('⚠️','Settings haziku-sync: ' + (Cloud.state.msg||err.message)));
   refreshAllSelects();
 }
 
-async function cloudSave() {
-  if (!FB_CONNECTED || !CURRENT_USER) return;
-  try { await FB_DB.collection('users').doc(CURRENT_USER.id).collection('data').doc('students').set({students: DATA, updatedAt: new Date().toISOString()}); } catch(e) { console.warn('Cloud save failed:', e); }
+/* ---------- Firebase init (config embedded, see top of script) ---------- */
+function initFirebase() {
+  try { firebase.initializeApp(FIREBASE_CONFIG); }
+  catch(e) { setFbStatus('err', 'Firebase init imeshindikana: ' + e.message); return; }
+  Cloud.setSyncListener(updateSyncBadge);
+  Auth.init(onUserChanged);
 }
-async function cloudLoad() {
-  if (!FB_CONNECTED || !CURRENT_USER) return false;
-  try {
-    const doc = await FB_DB.collection('users').doc(CURRENT_USER.id).collection('data').doc('students').get();
-    if (doc.exists && doc.data().students) { DATA = doc.data().students; localStorage.setItem(getUserStorageKey('data'), JSON.stringify(DATA)); return true; }
-  } catch(e) { console.warn('Cloud load failed:', e); }
-  return false;
-}
-async function cloudSaveSettings() {
-  if (!FB_CONNECTED || !CURRENT_USER) return;
-  try { await FB_DB.collection('users').doc(CURRENT_USER.id).collection('data').doc('settings').set(SETTINGS); } catch(e) {}
-}
-async function cloudLoadSettings() {
-  if (!FB_CONNECTED || !CURRENT_USER) return;
-  try {
-    const doc = await FB_DB.collection('users').doc(CURRENT_USER.id).collection('data').doc('settings').get();
-    if (doc.exists) { SETTINGS = {...SETTINGS, ...doc.data()}; localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS)); }
-  } catch(e) {}
-}
-
-function connectFirebase() {
-  const raw = document.getElementById('fb-config').value.trim();
-  if (!raw) { toast('⚠️','Weka Firebase config kwanza'); return; }
-  try {
-    const cfg = JSON.parse(raw);
-    if (!cfg.projectId || !cfg.apiKey) throw new Error('Config si sahihi');
-    if (firebase.apps.length) firebase.apps.forEach(a => a.delete());
-    firebase.initializeApp(cfg);
-    FB_DB = firebase.firestore();
-    FB_CONNECTED = true;
-    localStorage.setItem('matokeo_fb', raw);
-    updateSyncBadge();
-    document.getElementById('fb-status').className = 'fb-status fb-ok';
-    document.getElementById('fb-status').innerHTML = '<span>🟢</span> <span>Imeunganishwa — data inasync kwenye cloud</span>';
-    toast('☁️','Firebase imeunganishwa!');
-    cloudLoad().then(() => { renderDash(); renderTable(); });
-    cloudLoadSettings().then(() => { refreshSettingsUI(); refreshAllSelects(); });
-  } catch(e) {
-    document.getElementById('fb-status').className = 'fb-status fb-err';
-    document.getElementById('fb-status').innerHTML = '<span>🔴</span> <span>Config si sahihi: ' + esc(e.message) + '</span>';
-    toast('❌','Firebase config si sahihi');
-  }
-}
-function disconnectFirebase() {
-  FB_CONNECTED = false;
-  FB_DB = null;
-  localStorage.removeItem('matokeo_fb');
-  if (firebase.apps.length) firebase.apps.forEach(a => a.delete());
-  updateSyncBadge();
-  document.getElementById('fb-status').className = 'fb-status fb-no';
-  document.getElementById('fb-status').innerHTML = '<span>⚪</span> <span>Haijawekwa — data inahifadhiwa local tu</span>';
-  document.getElementById('fb-config').value = '';
-  toast('📴','Cloud sync imeondolewa');
+function setFbStatus(kind, msg) {
+  const el = document.getElementById('fb-status');
+  if (!el) return;
+  const ico = kind === 'ok' ? '🟢' : kind === 'err' ? '🔴' : '⚪';
+  el.className = 'fb-status ' + (kind === 'ok' ? 'fb-ok' : kind === 'err' ? 'fb-err' : 'fb-no');
+  el.innerHTML = '<span>' + ico + '</span> <span>' + esc(msg) + '</span>';
 }
 function updateSyncBadge() {
+  const st = Cloud.state;
   const b = document.getElementById('sync-badge');
   const t = document.getElementById('sync-text');
-  if (FB_CONNECTED) { b.className = 'sync-badge sync-on'; t.textContent = 'Cloud Sync ON'; }
-  else { b.className = 'sync-badge sync-off'; t.textContent = 'Offline Mode'; }
-}
-function tryRestoreFirebase() {
-  const raw = localStorage.getItem('matokeo_fb');
-  if (!raw) return;
-  try {
-    const cfg = JSON.parse(raw);
-    if (firebase.apps.length) firebase.apps.forEach(a => a.delete());
-    firebase.initializeApp(cfg);
-    FB_DB = firebase.firestore();
-    FB_CONNECTED = true;
-    updateSyncBadge();
-    document.getElementById('fb-status').className = 'fb-status fb-ok';
-    document.getElementById('fb-status').innerHTML = '<span>🟢</span> <span>Imeunganishwa — data inasync kwenye cloud</span>';
-    document.getElementById('fb-config').value = raw;
-    cloudLoad().then(() => { renderDash(); renderTable(); });
-    cloudLoadSettings().then(() => { refreshSettingsUI(); refreshAllSelects(); });
-  } catch(e) { localStorage.removeItem('matokeo_fb'); }
+  const dot = b ? b.querySelector('.sync-dot') : null;
+  if (!b || !t) return;
+  b.className = 'sync-badge';
+  if (st.state === 'ok') { b.style.background='rgba(76,175,80,.1)'; b.style.borderColor='rgba(76,175,80,.2)'; t.style.color='var(--green)'; if(dot) dot.style.background='var(--green)'; t.textContent = 'Cloud Sync ON'; }
+  else if (st.state === 'syncing') { b.style.background='rgba(66,165,245,.1)'; b.style.borderColor='rgba(66,165,245,.2)'; t.style.color='var(--blue)'; if(dot) dot.style.background='var(--blue)'; t.textContent = 'Inasync...'; }
+  else if (st.state === 'error') { b.style.background='rgba(239,83,80,.1)'; b.style.borderColor='rgba(239,83,80,.2)'; t.style.color='var(--red)'; if(dot) dot.style.background='var(--red)'; t.textContent = 'Sync Imeshindikana'; }
+  else { b.style.background='rgba(107,154,107,.08)'; b.style.borderColor='rgba(255,255,255,.3)'; t.style.color='var(--muted)'; if(dot) dot.style.background='var(--muted)'; t.textContent = 'Offline Mode'; }
 }
 
-function doLogin() {
-  const u = (document.getElementById('inp-u').value || '').trim().toLowerCase();
-  const p = (document.getElementById('inp-p').value || '').trim();
-  const errEl = document.getElementById('l-err');
-  if (!u || !p) {
-    errEl.textContent = 'Weka jina la mtumiaji na nywila.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  const users = getUsers();
-  const hashed = simpleHash(p);
-  const found = users.find(usr => usr.username === u && usr.password === hashed);
-  if (found) {
-    CURRENT_USER = found;
-    localStorage.setItem('matokeo_session', JSON.stringify({id: found.id, username: found.username, fullName: found.fullName}));
-    errEl.style.display = 'none';
+/* ---------- Auth state ---------- */
+function onUserChanged(user, err) {
+  if (err) { setFbStatus('err', 'Profile load imeshindikana: ' + err.message); return; }
+  if (!user) {
+    // signed out
+    clearInterval(SESSION_T);
+    DATA = [];
+    IS_ADMIN = false;
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('landing-page').style.display = 'block';
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
-    // Update sidebar greeting
-    const sbName = document.querySelector('.sb-name');
-    if (sbName) sbName.innerHTML = (found.fullName || found.username) + '<br><small>Matokeo Platform</small>';
-    load();
-    startSessionTimer();
-    buildSubjInputs();
-    refreshSettingsUI();
-    refreshAllSelects();
-    renderDash();
-    tryRestoreFirebase();
-  } else {
-    errEl.textContent = 'Jina au nywila si sahihi. Jaribu tena.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-  }
-}
-
-function doSignup() {
-  const fullName = (document.getElementById('su-name').value || '').trim();
-  const username = (document.getElementById('su-user').value || '').trim().toLowerCase();
-  const pass = document.getElementById('su-pass').value || '';
-  const pass2 = document.getElementById('su-pass2').value || '';
-  const errEl = document.getElementById('su-err');
-
-  // Validation
-  if (!fullName || !username || !pass || !pass2) {
-    errEl.textContent = 'Tafadhali jaza sehemu zote.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
     return;
   }
-  if (username.length < 3) {
-    errEl.textContent = 'Jina la mtumiaji liwe angalau herufi 3.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  if (!/^[a-z0-9_]+$/.test(username)) {
-    errEl.textContent = 'Jina la mtumiaji liwe na herufi ndogo, nambari, na _ tu.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  if (pass.length < 4) {
-    errEl.textContent = 'Nywila iwe angalau herufi 4.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  if (pass !== pass2) {
-    errEl.textContent = 'Nywila hazifanani. Angalia tena.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-
-  const users = getUsers();
-  if (users.find(usr => usr.username === username)) {
-    errEl.textContent = 'Jina hili la mtumiaji tayari linatumika. Chagua lingine.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-
-  // Create user
-  const newUser = {
-    id: 'u_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6),
-    fullName: fullName,
-    username: username,
-    password: simpleHash(pass),
-    createdAt: new Date().toISOString()
-  };
-  users.push(newUser);
-  saveUsers(users);
-
-  // Auto-login
-  CURRENT_USER = newUser;
-  localStorage.setItem('matokeo_session', JSON.stringify({id: newUser.id, username: newUser.username, fullName: newUser.fullName}));
-
-  // Initialize empty data for this user
-  DATA = [];
-  SETTINGS = {classes:['7A','7B','8A','8B'], terms:['Term 1','Term 2','Term 3'], year:'2026', schoolName:'Shule Yako', teacherName: fullName};
-  save();
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-
-  errEl.style.display = 'none';
+  IS_ADMIN = user.role === 'admin';
+  CURRENT_USER = user;
   document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('landing-page').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
   const sbName = document.querySelector('.sb-name');
-  if (sbName) sbName.innerHTML = fullName + '<br><small>Matokeo Platform</small>';
+  if (sbName) sbName.innerHTML = esc(user.fullName || user.email) + '<br><small>' + esc(user.role === 'admin' ? 'Admin — Matokeo Platform' : 'Teacher — Matokeo Platform') + '</small>';
+  applyRoleUI();
+  setFbStatus('ok', 'Imeunganishwa — data inasync kwenye cloud');
+  load();
   startSessionTimer();
   buildSubjInputs();
   refreshSettingsUI();
   refreshAllSelects();
   renderDash();
-  toast('🎉', 'Karibu ' + fullName + '! Akounti yako imefunguliwa.');
+  // Pull fresh cloud data (server is source of truth unless local has unsynced edits).
+  Cloud.loadAll()
+    .then(res => {
+      const localDirty = Cloud.isDirty();
+      const localData = DATA;
+      const cloudChanged = res.students.length !== localData.length ||
+        JSON.stringify(res.students.map(s=>s.id)) !== JSON.stringify(localData.map(s=>s.id));
+      if (localDirty && cloudChanged) {
+        promptSyncConflict(localData, res);
+        return;
+      }
+      if (!localDirty) {
+        DATA = res.students;
+        if (res.settings) SETTINGS = {...SETTINGS, ...res.settings, gradeBoundaries: {...SETTINGS.gradeBoundaries, ...(res.settings.gradeBoundaries||{})}};
+        persistLocal();
+        localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+      }
+      afterDataLoad();
+    })
+    .catch(() => { afterDataLoad(); });
 }
+function afterDataLoad() {
+  refreshSettingsUI();
+  refreshAllSelects();
+  renderDash();
+  renderTable();
+  if (IS_ADMIN) loadJoinCodeUI();
+  if (pendingJoinCode && IS_ADMIN) {
+    const code = pendingJoinCode;
+    pendingJoinCode = null;
+    showConfirm('🔑 Join Code ya Shule Yako',
+      'Wape code hii walimu wako ili wajiunge na shule yako wakijiandikisha:<br><br>' +
+      '<div style="font-size:2em;letter-spacing:.35em;font-weight:800;color:var(--gold);text-align:center;padding:.3em 0;background:rgba(255,255,255,.05);border-radius:8px">' + esc(code) + '</div>' +
+      '<br>Ukipoteza, itaonekana kwenye <strong>Settings</strong> au ubadilishe huko.',
+      [{label:'Nimeinakili', cls:'btn-e', fn:()=>{}}]);
+  }
+}
+function promptSyncConflict(localData, res) {
+  showConfirm('⚠️ Mgongano wa Data',
+    'Data ya local na cloud zinatofautiana. Chagua: <br><br><strong>Cloud</strong> — tumia data ya cloud, punguzi local (backup itapakuliwa kwanzi).<br><strong>Local</strong> — tumia data ya kifaa hiki na itapelekwa cloud.',
+    [
+      {label:'Tumia Cloud', cls:'btn-e', fn: () => {
+        exportAllData(true);
+        DATA = res.students;
+        if (res.settings) SETTINGS = {...SETTINGS, ...res.settings, gradeBoundaries: {...SETTINGS.gradeBoundaries, ...(res.settings.gradeBoundaries||{})}};
+        Cloud.setDirty(false);
+        persistLocal();
+        localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+        afterDataLoad();
+      }},
+      {label:'Tumia Local', cls:'btn-d', fn: () => {
+        DATA.forEach(s => s._dirty = true);
+        flushPush();
+        afterDataLoad();
+      }}
+    ]);
+}
+function applyRoleUI() {
+  document.getElementById('nav-users').style.display = IS_ADMIN ? 'flex' : 'none';
+  document.getElementById('card-joincode').style.display = IS_ADMIN ? 'block' : 'none';
+  document.getElementById('card-users').style.display = IS_ADMIN ? 'block' : 'none';
+  document.getElementById('btn-clearall').style.display = IS_ADMIN ? 'flex' : 'none';
+  // Settings inputs: teacher sees read-only
+  ['set-school','set-year','set-teacher','gb-A','gb-B','gb-C','gb-D','set-avgmode','new-class','new-term'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = !IS_ADMIN;
+  });
+}
+
+function showAuthError(elId, msg) {
+  const errEl = document.getElementById(elId);
+  errEl.textContent = msg;
+  errEl.style.display = 'block';
+  errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
+}
+function setAuthBusy(btnId, busy, label) {
+  const b = document.getElementById(btnId);
+  b.disabled = busy;
+  b.textContent = busy ? 'SUBIRI...' : label;
+  b.style.opacity = busy ? '.6' : '1';
+}
+
+function doLogin() {
+  const email = (document.getElementById('inp-e').value || '').trim();
+  const p = (document.getElementById('inp-p').value || '');
+  if (!email || !p) { showAuthError('l-err', 'Weka barua pepe na nywila.'); return; }
+  setAuthBusy('btn-login', true, 'INGIA →');
+  Auth.signIn(email, p)
+    .then(() => { document.getElementById('l-err').style.display = 'none'; })
+    // onUserChanged handles UI on success; show error here on failure
+    .catch(e => { showAuthError('l-err', e.message); })
+    .finally(() => setAuthBusy('btn-login', false, 'INGIA →'));
+}
+
+function signupMode() {
+  const r = document.querySelector('input[name="su-mode"]:checked');
+  return r ? r.value : 'create';
+}
+function onSignupModeChange() {
+  document.getElementById('su-school-row').style.display = signupMode() === 'create' ? 'block' : 'none';
+  document.getElementById('su-code-row').style.display = signupMode() === 'join' ? 'block' : 'none';
+}
+
+function doSignup() {
+  const fullName = (document.getElementById('su-name').value || '').trim();
+  const email = (document.getElementById('su-email').value || '').trim();
+  const pass = document.getElementById('su-pass').value || '';
+  const pass2 = document.getElementById('su-pass2').value || '';
+  const mode = signupMode();
+  const schoolName = (document.getElementById('su-school').value || '').trim();
+  const joinCode = (document.getElementById('su-code').value || '').trim().toUpperCase();
+
+  if (!fullName || !email || !pass || !pass2) { showAuthError('su-err', 'Tafadhali jaza sehemu zote.'); return; }
+  if (pass.length < 8) { showAuthError('su-err', 'Nywila iwe angalau herufi 8.'); return; }
+  if (pass !== pass2) { showAuthError('su-err', 'Nywila hazifanani. Angalia tena.'); return; }
+  if (mode === 'create' && !schoolName) { showAuthError('su-err', 'Weka jina la shule.'); return; }
+  if (mode === 'join' && !joinCode) { showAuthError('su-err', 'Weka Join Code ya shule.'); return; }
+
+  setAuthBusy('btn-signup', true, 'FUNGUA AKOUNTI →');
+  Auth.signUp({fullName, email, password: pass, mode, schoolName, joinCode})
+    .then(joinCodeCreated => {
+      document.getElementById('su-err').style.display = 'none';
+      if (mode === 'create' && joinCodeCreated) {
+        pendingJoinCode = joinCodeCreated; // shown after entering app
+        toast('🎉', 'Karibu ' + fullName + '! Shule imefunguliwa.');
+      } else {
+        toast('🎉', 'Karibu ' + fullName + '! Umejiunge na shule.');
+      }
+    })
+    .catch(e => showAuthError('su-err', e.message))
+    .finally(() => setAuthBusy('btn-signup', false, 'FUNGUA AKOUNTI →'));
+}
+let pendingJoinCode = null;
 
 function toggleAuthForm(type) {
   const loginForm = document.getElementById('login-form');
@@ -1285,17 +1343,17 @@ function toggleAuthForm(type) {
     loginForm.style.display = 'none';
     signupForm.style.display = 'block';
     errS.style.display = 'none';
-    // Clear signup fields
     document.getElementById('su-name').value = '';
-    document.getElementById('su-user').value = '';
+    document.getElementById('su-email').value = '';
     document.getElementById('su-pass').value = '';
     document.getElementById('su-pass2').value = '';
+    document.getElementById('su-school').value = '';
+    document.getElementById('su-code').value = '';
   } else {
     signupForm.style.display = 'none';
     loginForm.style.display = 'block';
     errL.style.display = 'none';
-    // Clear login fields
-    document.getElementById('inp-u').value = '';
+    document.getElementById('inp-e').value = '';
     document.getElementById('inp-p').value = '';
   }
 }
@@ -1314,19 +1372,9 @@ function goToSignup() {
 
 function doLogout() {
   clearInterval(SESSION_T);
-  CURRENT_USER = null;
-  localStorage.removeItem('matokeo_session');
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('landing-page').style.display = 'block';
-  // Clear form fields
-  document.getElementById('inp-u').value = '';
+  Auth.signOut().catch(() => {}); // onUserChanged resets UI
+  document.getElementById('inp-e').value = '';
   document.getElementById('inp-p').value = '';
-  document.getElementById('su-name').value = '';
-  document.getElementById('su-user').value = '';
-  document.getElementById('su-pass').value = '';
-  document.getElementById('su-pass2').value = '';
-  // Reset to login form
   document.getElementById('login-form').style.display = 'block';
   document.getElementById('signup-form').style.display = 'none';
 }
@@ -1334,34 +1382,10 @@ function goToLogin() {
   document.getElementById('landing-page').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   toggleAuthForm('login');
-  setTimeout(() => document.getElementById('inp-u').focus(), 100);
+  setTimeout(() => document.getElementById('inp-e').focus(), 100);
 }
 
-// Auto-restore session on page load
-function tryRestoreSession() {
-  try {
-    const sess = JSON.parse(localStorage.getItem('matokeo_session'));
-    if (!sess || !sess.id) return false;
-    const users = getUsers();
-    const found = users.find(usr => usr.id === sess.id);
-    if (found) {
-      CURRENT_USER = found;
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('app').style.display = 'flex';
-      const sbName = document.querySelector('.sb-name');
-      if (sbName) sbName.innerHTML = (found.fullName || found.username) + '<br><small>Matokeo Platform</small>';
-      load();
-      startSessionTimer();
-      buildSubjInputs();
-      refreshSettingsUI();
-      refreshAllSelects();
-      renderDash();
-      tryRestoreFirebase();
-      return true;
-    }
-  } catch(e) {}
-  return false;
-}
+// Session restore is handled by Firebase Auth (Auth.init -> onAuthStateChanged).
 
 function showView(v) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
@@ -1373,6 +1397,7 @@ function showView(v) {
   if (v === 'analytics') renderAnalytics();
   if (v === 'reports') { loadRepStudents(); }
   if (v === 'settings') refreshSettingsUI();
+  if (v === 'users' && IS_ADMIN) loadUsersUI();
   if (v === 'add' && !document.getElementById('edit-id').value) resetForm();
   if (window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
 }
@@ -1432,30 +1457,13 @@ function getFilteredForAnalytics() {
   return d;
 }
 
-function grade(s) {
-  const n = Number(s);
-  if (s === '' || s === null || s === undefined || isNaN(n)) return '-';
-  if (n >= 75) return 'A';
-  if (n >= 60) return 'B';
-  if (n >= 45) return 'C';
-  if (n >= 30) return 'D';
-  return 'F';
-}
+function grade(s) { return Core.grade(s, SETTINGS.gradeBoundaries); }
 function gColor(g) { return {A:'#4caf50',B:'#42a5f5',C:'#ffb74d',D:'#ffa726',F:'#ef5350'}[g] || '#6b9a6b'; }
-function avg(stu) {
-  const vals = SUBS.map(s => stu.scores[s.key]).filter(v => v !== null && v !== undefined && !isNaN(Number(v)));
-  if (!vals.length) return 0;
-  return Math.round((vals.reduce((a,b) => a + Number(b), 0) / vals.length) * 10) / 10;
-}
-function totalMarks(stu) {
-  return SUBS.map(s => stu.scores[s.key]).filter(v => v !== null && v !== undefined && !isNaN(Number(v))).reduce((a,b) => a + Number(b), 0);
-}
-function computePositions(list) {
-  const sorted = [...list].sort((a,b) => avg(b) - avg(a));
-  const posMap = {};
-  sorted.forEach((s, i) => { posMap[s.id] = i + 1; });
-  return posMap;
-}
+function gDesc(g) { return {A:'Bora sana',B:'Vizuri',C:'Wastani',D:'Dhaifu',F:'Shindwa'}[g] || '–'; }
+function gComment(g) { return {A:'Mwanafunzi bora. Endelea hivyo!',B:'Vizuri sana. Unaweza kufanya vizuri zaidi.',C:'Wastani. Jitahidi zaidi.',D:'Dhaifu. Unahitaji msaada wa ziada.',F:'Shindwa. Tafadhali mzunge mwalimu.'}[g] || ''; }
+function avg(stu) { return Core.avg(stu, SUBS, SETTINGS.avgMode); }
+function totalMarks(stu) { return Core.totalMarks(stu, SUBS); }
+function computePositions(list) { return Core.computePositions(list, avgFn); }
 
 function buildSubjInputs() {
   const g = document.getElementById('subj-grid');
@@ -1474,7 +1482,7 @@ function liveGrade(k) {
   const n = Number(v);
   const valid = v !== '' && !isNaN(n) && n >= 0 && n <= 100;
   const invalid = v !== '' && (!isNaN(n) && (n < 0 || n > 100));
-  const g = valid ? (n>=75?'A':n>=60?'B':n>=45?'C':n>=30?'D':'F') : '–';
+  const g = valid ? Core.grade(n, boundaries()) : '–';
   const el = document.getElementById('gr-' + k);
   const bar = document.getElementById('bar-' + k);
   el.textContent = g;
@@ -1484,7 +1492,7 @@ function liveGrade(k) {
   else if (!invalid) { el.style.background = ''; el.style.color = ''; }
   const pct = valid ? n : 0;
   bar.style.width = pct + '%';
-  bar.style.background = pct >= 75 ? '#4caf50' : pct >= 60 ? '#42a5f5' : pct >= 45 ? '#ffb74d' : pct >= 30 ? '#ffa726' : '#ef5350';
+  bar.style.background = gColor(Core.grade(pct, boundaries()));
 }
 
 function saveStudent() {
@@ -1500,13 +1508,13 @@ function saveStudent() {
     const v = document.getElementById('sc-' + sub.key).value;
     scores[sub.key] = v !== '' ? Number(v) : null;
   });
-  const scoreErrors = validateScores(scores);
+  const scoreErrors = Core.validateScores(scores, SUBS);
   if (scoreErrors.length) { toast('⚠️','Alama si sahihi: ' + scoreErrors[0]); return; }
   if (eid) {
     const i = DATA.findIndex(s => s.id === eid);
-    if (i !== -1) DATA[i] = {...DATA[i], name, class:cls, term, scores};
+    if (i !== -1) { DATA[i] = {...DATA[i], name, class:cls, term, scores, updatedAt: new Date().toISOString(), _dirty: true}; }
   } else {
-    DATA.push({id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), name, class:cls, term, year:SETTINGS.year, scores});
+    DATA.push({id: newId(), name, class:cls, term, year:SETTINGS.year, scores, createdAt: new Date().toISOString(), _dirty: true});
   }
   save(); resetForm(); showView('students'); toast('✅','Imehifadhiwa!');
 }
@@ -1557,22 +1565,45 @@ function editStu(id) {
   showView('add');
 }
 function confirmDel(id) {
+  if (!IS_ADMIN) { toast('⛔','Kufuta ni kwa Admin tu. Wasiliana na mkuu wa shule.'); return; }
   PENDING_DEL = id;
-  document.getElementById('modal-title').textContent = '⚠️ Thibitisha Kufuta';
-  document.getElementById('modal-body').textContent = 'Je, una uhakika unataka kufuta mwanafunzi huyu? Hatua hii haiwezi kurudishwa.';
-  document.getElementById('modal-confirm').onclick = () => {
-    DATA = DATA.filter(s => s.id !== PENDING_DEL);
-    save(); closeModal(); renderTable(); toast('🗑️','Imefutwa');
-  };
-  document.getElementById('modal-ov').style.display = 'flex';
+  showConfirm('⚠️ Thibitisha Kufuta', 'Je, una uhakika unataka kufuta mwanafunzi huyu? Hatua hii haiwezi kurudishwa.', [
+    {label:'Hapana', cls:'btn-sec'},
+    {label:'Ndio, Futa', cls:'btn-d', fn: () => {
+      const stu = DATA.find(s => s.id === PENDING_DEL);
+      DATA = DATA.filter(s => s.id !== PENDING_DEL);
+      if (stu) DELETED_IDS.push(stu.id);
+      Cloud.setDirty(true);
+      save(); renderTable(); toast('🗑️','Imefutwa');
+    }}
+  ]);
 }
 function confirmClearAll() {
-  document.getElementById('modal-title').textContent = '⚠️ Futa Data Yote';
-  document.getElementById('modal-body').textContent = 'Una uhakika unataka kufuta data YA WOTE wanafunzi? Hatua hii haiwezi kurudishwa!';
-  document.getElementById('modal-confirm').onclick = () => {
-    DATA = [];
-    save(); closeModal(); renderDash(); toast('🗑️','Data yote imefutwa');
-  };
+  if (!IS_ADMIN) { toast('⛔','Hii ni kwa Admin tu.'); return; }
+  showConfirm('⚠️ Futa Data Yote', 'Una uhakika unataka kufuta data YA WOTE wanafunzi? Hatua hii haiwezi kurudishwa!', [
+    {label:'Hapana', cls:'btn-sec'},
+    {label:'Ndio, Futa Yote', cls:'btn-d', fn: () => {
+      Cloud.deleteAllStudents(DATA).catch(err => toast('⚠️','Cloud delete imeshindikana: ' + err.message));
+      DATA = [];
+      DELETED_IDS = [];
+      Cloud.setDirty(true);
+      save(); renderDash(); toast('🗑️','Data yote imefutwa');
+    }}
+  ]);
+}
+function showConfirm(title, bodyHtml, actions) {
+  // actions: [{label, cls, fn}] — flexible confirm dialog (also used as simple OK/cancel)
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHtml;
+  const ma = document.querySelector('#modal-ov .ma');
+  ma.innerHTML = '';
+  (actions || [{label:'Sawa', cls:'btn-d', fn:closeModal}]).forEach((a, i) => {
+    const b = document.createElement('button');
+    b.className = a.cls || 'btn-sec';
+    b.textContent = a.label;
+    b.onclick = () => { closeModal(); if (a.fn) a.fn(); };
+    ma.appendChild(b);
+  });
   document.getElementById('modal-ov').style.display = 'flex';
 }
 function closeModal() { document.getElementById('modal-ov').style.display = 'none'; }
@@ -1590,7 +1621,7 @@ function renderDash() {
     return;
   }
   const avgAll = Math.round(d.reduce((a,b) => a + avg(b), 0) / total * 10) / 10;
-  const passCount = d.filter(s => avg(s) >= 40).length;
+  const passCount = d.filter(s => avg(s) >= boundaries().D).length; // pass = grade D or above
   const passRate = total ? Math.round(passCount / total * 100) : 0;
   const highest = total ? Math.max(...d.map(s => avg(s))) : 0;
   const lowest = total ? Math.min(...d.map(s => avg(s))) : 0;
@@ -1624,7 +1655,7 @@ function renderCmpChart(d) {
     type: 'bar',
     data: {
       labels: SUBS.map(s => s.label.length > 12 ? s.label.slice(0,12) + '..' : s.label),
-      datasets: [{label: 'Wastani', data: avgs, backgroundColor: avgs.map(v => v >= 75 ? 'rgba(76,175,80,.55)' : v >= 60 ? 'rgba(66,165,245,.55)' : v >= 45 ? 'rgba(255,183,77,.55)' : v >= 30 ? 'rgba(255,167,38,.55)' : 'rgba(239,83,80,.55)'), borderRadius: 8, borderSkipped: false}]
+      datasets: [{label: 'Wastani', data: avgs, backgroundColor: avgs.map(v => gColor(Core.grade(v, boundaries()))), borderRadius: 8, borderSkipped: false}]
     },
     options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, max: 100, grid: {color: 'rgba(200,230,200,.4)'}, ticks: {color: '#6b9a6b', font: {size: 10}}}, x: {grid: {display: false}, ticks: {color: '#6b9a6b', font: {size: 10}}}}}
   });
@@ -1700,27 +1731,20 @@ function expExcel() {
 
 function handleFile(file) {
   if (!file) return;
+  const okTypes = ['.xlsx','.xls','.csv'];
+  const lower = (file.name || '').toLowerCase();
+  if (!okTypes.some(t => lower.endsWith(t))) { toast('⚠️','Faili lazima iwe .xlsx, .xls au .csv'); return; }
   if (file.size > 5*1024*1024) { toast('⚠️','Faili kubwa sana (max 5MB)'); return; }
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
       const wb = XLSX.read(e.target.result, {type: 'binary'});
       const ws = wb.Sheets[wb.SheetNames[0]];
-      const json = XLSX.utils.sheet_to_json(ws);
+      if (!ws) { toast('❌','Faili haina sheet'); return; }
+      const json = XLSX.utils.sheet_to_json(ws, {defval: ''});
       if (!json.length) { toast('⚠️','Faili haina data'); return; }
-      IMPORT_DATA = json.map(row => {
-        const name = row['Jina'] || row['Name'] || row['jina'] || '';
-        const cls = String(row['Darasa'] || row['Class'] || row['darasa'] || SETTINGS.classes[0] || '');
-        const term = String(row['Muda'] || row['Term'] || row['muda'] || SETTINGS.terms[0] || '');
-        const scores = {};
-        SUBS.forEach(sub => {
-          const v = row[sub.label] || row[sub.key] || '';
-          const n = v !== '' ? Number(v) : null;
-          if (n !== null && (isNaN(n) || n < 0 || n > 100)) { scores[sub.key] = null; }
-          else { scores[sub.key] = n; }
-        });
-        return {id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), name: String(name), class: cls, term, year: SETTINGS.year, scores};
-      }).filter(r => r.name && r.name !== 'undefined');
+      // Strict parsing: invalid rows are REPORTED, not silently nulled (Core).
+      IMPORT_DATA = Core.parseImportRows(json, SUBS, SETTINGS, DATA);
       showImportPreview();
     } catch(err) { toast('❌','Hitilafu kusoma faili: ' + err.message); }
   };
@@ -1728,31 +1752,44 @@ function handleFile(file) {
 }
 function showImportPreview() {
   document.getElementById('import-section').style.display = 'block';
-  document.getElementById('import-count').textContent = IMPORT_DATA.length + ' wanafunzi wamepatikana';
-  document.getElementById('imp-head').innerHTML = '<tr><th>#</th><th>Jina</th><th>Darasa</th><th>Muda</th><th>Hisabati</th><th>Kiswahili</th><th>English</th><th>Sayansi</th></tr>';
-  document.getElementById('imp-body').innerHTML = IMPORT_DATA.slice(0, 50).map((r,i) =>
-    '<tr><td>' + (i+1) + '</td><td>' + esc(r.name) + '</td><td>' + esc(r.class) + '</td><td>' + esc(r.term) + '</td>' + SUBS.slice(0,4).map(sub => '<td>' + fmt(r.scores[sub.key]) + '</td>').join('') + '</tr>'
+  const ok = IMPORT_DATA.rows, errs = IMPORT_DATA.errors;
+  document.getElementById('import-count').innerHTML =
+    '<span style="color:var(--green)">' + ok.length + ' sahihi</span>' +
+    (errs.length ? ' · <span style="color:var(--red)">' + errs.length + ' zenye makosa</span>' : '');
+
+  const head = '<tr><th>#</th><th>Jina</th><th>Darasa</th><th>Muda</th><th>Hisabati</th><th>Kiswahili</th><th>English</th><th>Sayansi</th></tr>';
+  document.getElementById('imp-head').innerHTML = head;
+  let body = ok.slice(0, 50).map((r,i) =>
+    '<tr><td>' + r.rowIndex + '</td><td>' + esc(r.name) + '</td><td>' + esc(r.class) + '</td><td>' + esc(r.term) + '</td>' + SUBS.slice(0,4).map(sub => '<td>' + fmt(r.scores[sub.key]) + '</td>').join('') + '</tr>'
   ).join('');
-  if (IMPORT_DATA.length > 50) {
-    document.getElementById('imp-body').innerHTML += '<tr class="empty-row"><td colspan="8">...na wanafunzi ' + (IMPORT_DATA.length - 50) + ' zaidi</td></tr>';
+  if (ok.length > 50) body += '<tr class="empty-row"><td colspan="8">...na sahihi ' + (ok.length - 50) + ' zaidi</td></tr>';
+  if (errs.length) {
+    body += '<tr class="empty-row"><td colspan="8" style="color:var(--red);font-weight:700;text-align:left;padding:12px">❌ Mistari yenye makosa (HAITAINGIZWA):</td></tr>';
+    body += errs.slice(0, 50).map(e =>
+      '<tr><td style="color:var(--red)">' + e.rowIndex + '</td><td colspan="7" style="color:var(--red)">' + esc(e.name) + ' — ' + e.errors.map(esc).join('; ') + '</td></tr>'
+    ).join('');
+    if (errs.length > 50) body += '<tr class="empty-row"><td colspan="8">...na makosa ' + (errs.length - 50) + ' zaidi</td></tr>';
   }
+  document.getElementById('imp-body').innerHTML = body;
+
+  const btn = document.querySelector('#import-section .btn-pri');
+  if (!ok.length) { btn.disabled = true; btn.style.opacity = '.5'; btn.textContent = '🚫 Hakuna Mstari Sahihi'; }
+  else { btn.disabled = false; btn.style.opacity = '1'; btn.textContent = '✅ INGIZA ' + ok.length + ' WANAFUNZI'; }
 }
 function confirmImport() {
-  if (!IMPORT_DATA.length) { toast('⚠️','Hakuna data ya kuingiza'); return; }
-  let added = 0, skipped = 0;
-  IMPORT_DATA.forEach(bs => {
-    const dup = DATA.findIndex(s => s.name.toLowerCase() === bs.name.toLowerCase() && s.class === bs.class && s.term === bs.term);
-    if (dup !== -1) { skipped++; }
-    else { DATA.push(bs); added++; }
+  if (!IMPORT_DATA || !IMPORT_DATA.rows.length) { toast('⚠️','Hakuna data sahihi ya kuingiza'); return; }
+  // Atomic: rows were fully validated in parseImportRows — nothing partial gets written.
+  IMPORT_DATA.rows.forEach(bs => {
+    DATA.push({id: newId(), name: bs.name, class: bs.class, term: bs.term, year: bs.year || SETTINGS.year, scores: bs.scores, createdAt: new Date().toISOString(), _dirty: true});
   });
+  const n = IMPORT_DATA.rows.length;
   save();
-  const msg = added + ' wameingizwa!' + (skipped ? ' ' + skipped + ' wamerukwa (duplicate)' : '');
-  toast('✅', msg);
+  toast('✅', n + ' wameingizwa!' + (IMPORT_DATA.errors.length ? ' (' + IMPORT_DATA.errors.length + ' mistari ilirukwa kwa makosa)' : ''));
   cancelImport();
   showView('students');
 }
 function cancelImport() {
-  IMPORT_DATA = [];
+  IMPORT_DATA = null;
   document.getElementById('import-section').style.display = 'none';
   document.getElementById('file-inp').value = '';
 }
@@ -1815,8 +1852,8 @@ function buildReportPDF(s, pos, total, silent) {
     head: [['Somo','Alama','Gredi','Maelezo']],
     body: SUBS.map(sub => {
       const v = s.scores[sub.key];
-      const g = grade(v);
-      const desc = v === null ? 'Hakuna alama' : v >= 75 ? 'Bora sana' : v >= 60 ? 'Vizuri' : v >= 45 ? 'Wastani' : v >= 30 ? 'Dhaifu' : 'Shindwa';
+      const g = v === null || v === undefined ? '–' : grade(v);
+      const desc = v === null || v === undefined ? 'Hakuna alama' : gDesc(g);
       return [sub.label, fmt(v), g, desc];
     }),
     styles: {fontSize: 10, cellPadding: 5},
@@ -1836,7 +1873,7 @@ function buildReportPDF(s, pos, total, silent) {
   doc.setTextColor(...hexToRgb(gColor(g)));
   doc.text('Gredi Kuu: ' + g, 110, finalY + 10);
 
-  const comment = a >= 75 ? 'Mwanafunzi bora. Endelea hivyo!' : a >= 60 ? 'Vizuri sana. Unaweza kufanya vizuri zaidi.' : a >= 45 ? 'Wastani. Jitahidi zaidi.' : a >= 30 ? 'Dhaifu. Unahitaji msaada wa ziada.' : 'Shindwa. Tafadhali mzunge mwalimu.';
+  const comment = gComment(grade(a));
   doc.setTextColor(100,100,100); doc.setFontSize(10);
   doc.text('Maoni: ' + comment, 14, finalY + 24);
   doc.text('Sahihi Mwalimu: ___________________', 14, finalY + 38);
@@ -1872,68 +1909,183 @@ function refreshSettingsUI() {
   document.getElementById('set-school').value = SETTINGS.schoolName || '';
   document.getElementById('set-year').value = SETTINGS.year || '';
   document.getElementById('set-teacher').value = SETTINGS.teacherName || '';
+  const b = boundaries();
+  ['A','B','C','D'].forEach(g => { const el = document.getElementById('gb-' + g); if (el) el.value = b[g]; });
+  const am = document.getElementById('set-avgmode');
+  if (am) am.value = SETTINGS.avgMode || 'all';
   renderClassTags();
   renderTermTags();
 }
+function saveGrading() {
+  if (!IS_ADMIN) return;
+  const gb = {
+    A: Number(document.getElementById('gb-A').value),
+    B: Number(document.getElementById('gb-B').value),
+    C: Number(document.getElementById('gb-C').value),
+    D: Number(document.getElementById('gb-D').value)
+  };
+  const next = {...SETTINGS, gradeBoundaries: gb, avgMode: document.getElementById('set-avgmode').value};
+  const errs = Core.validateSettings(next);
+  if (errs.length) { toast('⚠️', errs[0]); return; }
+  SETTINGS.gradeBoundaries = gb;
+  SETTINGS.avgMode = next.avgMode;
+  localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('⚠️','Grading haziku-sync: ' + (Cloud.state.msg||err.message)));
+  renderDash(); renderTable();
+}
 function renderClassTags() {
+  const t = IS_ADMIN ? ' <span class="tag-rm" onclick="removeClass(INDEX)">×</span>' : '';
   document.getElementById('class-tags').innerHTML = SETTINGS.classes.map((c,i) =>
-    '<span class="tag">' + esc(c) + ' <span class="tag-rm" onclick="removeClass(' + i + ')">×</span></span>'
+    '<span class="tag">' + esc(c) + t.replace('INDEX', i) + '</span>'
   ).join('');
 }
 function renderTermTags() {
-  document.getElementById('term-tags').innerHTML = SETTINGS.terms.map((t,i) =>
-    '<span class="tag">' + esc(t) + ' <span class="tag-rm" onclick="removeTerm(' + i + ')">×</span></span>'
+  const t = IS_ADMIN ? ' <span class="tag-rm" onclick="removeTerm(INDEX)">×</span>' : '';
+  document.getElementById('term-tags').innerHTML = SETTINGS.terms.map((t2,i) =>
+    '<span class="tag">' + esc(t2) + t.replace('INDEX', i) + '</span>'
   ).join('');
 }
+function pushSettingsChange() {
+  localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('⚠️','Settings haziku-sync: ' + (Cloud.state.msg||err.message)));
+}
 function addClass() {
+  if (!IS_ADMIN) { toast('⛔','Madarasa yanabadilishwa na Admin tu.'); return; }
   const inp = document.getElementById('new-class');
   const v = inp.value.trim();
   if (!v) return;
   if (SETTINGS.classes.includes(v)) { toast('⚠️','Darasa lipo tayari'); return; }
   SETTINGS.classes.push(v);
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-  if (FB_CONNECTED) cloudSaveSettings();
+  pushSettingsChange();
   inp.value = '';
   renderClassTags();
   refreshAllSelects();
   toast('✅','Darasa limeongezwa');
 }
 function removeClass(i) {
+  if (!IS_ADMIN) return;
   SETTINGS.classes.splice(i, 1);
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-  if (FB_CONNECTED) cloudSaveSettings();
+  pushSettingsChange();
   renderClassTags();
   refreshAllSelects();
 }
 function addTerm() {
+  if (!IS_ADMIN) { toast('⛔','Terms zinabadilishwa na Admin tu.'); return; }
   const inp = document.getElementById('new-term');
   const v = inp.value.trim();
   if (!v) return;
   if (SETTINGS.terms.includes(v)) { toast('⚠️','Muda upo tayari'); return; }
   SETTINGS.terms.push(v);
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-  if (FB_CONNECTED) cloudSaveSettings();
+  pushSettingsChange();
   inp.value = '';
   renderTermTags();
   refreshAllSelects();
   toast('✅','Muda umeongezwa');
 }
 function removeTerm(i) {
+  if (!IS_ADMIN) return;
   SETTINGS.terms.splice(i, 1);
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-  if (FB_CONNECTED) cloudSaveSettings();
+  pushSettingsChange();
   renderTermTags();
   refreshAllSelects();
 }
 
-function exportAllData() {
-  const backup = {settings: SETTINGS, students: DATA, exportedAt: new Date().toISOString(), version: '2.0'};
+/* ---------- Join code + user management (admin) ---------- */
+function loadJoinCodeUI() {
+  Cloud.listSchoolUsers().catch(()=>{});
+  const el = document.getElementById('joincode-value');
+  if (!el) return;
+  firebase.firestore().collection('schools').doc(Auth.current.schoolId).get()
+    .then(snap => { el.textContent = (snap.exists && snap.data().joinCode) ? snap.data().joinCode : '——'; })
+    .catch(() => { el.textContent = '——'; });
+}
+function regenJoinCode() {
+  if (!IS_ADMIN) return;
+  showConfirm('🔄 Badilisha Join Code', 'Code ya zamani itaacha kutumika. Walimu waliokuwa wamejiunga hawathiriki.', [
+    {label:'Ghairi', cls:'btn-sec'},
+    {label:'Badilisha', cls:'btn-d', fn: () => {
+      Cloud.regenerateJoinCode()
+        .then(code => { SETTINGS.joinCode = code; document.getElementById('joincode-value').textContent = code; toast('✅','Join code mpya: ' + code); })
+        .catch(err => toast('❌','Imeshindikana: ' + err.message));
+    }}
+  ]);
+}
+function loadUsersUI() {
+  const body = document.getElementById('users-body');
+  Cloud.listSchoolUsers().then(users => {
+    if (!users.length) { body.innerHTML = '<tr class="empty-row"><td colspan="4">Hakuna watumiaji</td></tr>'; return; }
+    body.innerHTML = users.map(u => {
+      const isMe = u.uid === Auth.current.uid;
+      const roleBadge = u.role === 'admin'
+        ? '<span class="gb gA">Admin</span>'
+        : '<span class="gb gB">Teacher</span>';
+      let act = '';
+      if (!isMe) {
+        act = u.role === 'teacher'
+          ? '<button class="btn-rc" onclick="changeUserRole(\'' + u.uid + '\',\'admin\')">⬆️ Fanya Admin</button>'
+          : '<button class="btn-e" onclick="changeUserRole(\'' + u.uid + '\',\'teacher\')">⬇️ Fanya Teacher</button>';
+      } else act = '<em style="color:var(--muted);font-size:12px">Wewe</em>';
+      return '<tr><td><strong>' + esc(u.fullName || '') + '</strong></td><td>' + esc(u.email || '') + '</td><td>' + roleBadge + '</td><td>' + act + '</td></tr>';
+    }).join('');
+  }).catch(err => {
+    body.innerHTML = '<tr class="empty-row"><td colspan="4">Imeshindikana kupakia: ' + esc(err.message) + '</td></tr>';
+  });
+}
+function changeUserRole(uid2, role) {
+  showConfirm('👤 Badilisha Jukumu', 'Unahakika unataka kubadilisha jukumu la mtumiaji hku kuwa <strong>' + (role === 'admin' ? 'Admin' : 'Teacher') + '</strong>?', [
+    {label:'Hapana', cls:'btn-sec'},
+    {label:'Ndio', cls:'btn-d', fn: () => {
+      Cloud.setUserRole(uid2, role)
+        .then(() => { toast('✅','Jukumu limebadilishwa'); loadUsersUI(); })
+        .catch(err => toast('❌','Imeshindikana: ' + err.message));
+    }}
+  ]);
+}
+
+/* ---------- Old-version data import (localStorage scan) ---------- */
+function importOldData() {
+  const found = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (/^matokeo_v2_.*_data$/.test(k) || k === 'matokeo_v2') {
+        try {
+          const arr = JSON.parse(localStorage.getItem(k) || '[]');
+          if (Array.isArray(arr) && arr.length) found.push({key: k, students: arr});
+        } catch(e) {}
+      }
+    }
+  } catch(e) {}
+  if (!found.length) { toast('ℹ️','Hakuna data ya kale iliyopatikana kwenye browser hii'); return; }
+  const total = found.reduce((a,f) => a + f.students.length, 0);
+  showConfirm('🕰️ Leta Data ya Kale',
+    'Nimepata rekodi <strong>' + total + '</strong> za toleo la zamani (browser hii tu). Zitaongezwa kama wanafunzi wapya; zilizopo hazibadilishwi.',
+    [
+      {label:'Ghairi', cls:'btn-sec'},
+      {label:'Leta', cls:'btn-d', fn: () => {
+        let added = 0;
+        found.forEach(f => f.students.forEach(bs => {
+          if (!bs || !bs.name) return;
+          const dup = DATA.some(s => s.name && s.name.toLowerCase() === String(bs.name).toLowerCase() && s.class === bs.class && s.term === bs.term);
+          if (dup) return;
+          DATA.push({id: newId(), name: String(bs.name), class: bs.class || '', term: bs.term || '', year: bs.year || SETTINGS.year, scores: bs.scores || {}, createdAt: new Date().toISOString(), _dirty: true});
+          added++;
+        }));
+        save();
+        renderDash(); renderTable();
+        toast('✅', added + ' za kale zimeletwa!');
+      }}
+    ]);
+}
+
+function exportAllData(silent) {
+  const backup = {settings: SETTINGS, students: DATA, exportedAt: new Date().toISOString(), version: '2.1'};
   const blob = new Blob([JSON.stringify(backup, null, 2)], {type: 'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = 'matokeo-backup-' + new Date().toISOString().slice(0,10) + '.json';
   a.click(); URL.revokeObjectURL(url);
-  toast('📤','Backup imepakuliwa!');
+  if (!silent) toast('📤','Backup imepakuliwa!');
 }
 
 function toast(ico, msg) {
@@ -1999,68 +2151,51 @@ function importBackup(file) {
     try {
       const backup = JSON.parse(e.target.result);
       if (!backup.students || !Array.isArray(backup.students)) { toast('❌','File si backup ya Matokeo'); return; }
-      let added = 0, updated = 0;
-      backup.students.forEach(bs => {
-        const existing = DATA.findIndex(s => s.name === bs.name && s.class === bs.class && s.term === bs.term);
-        if (existing !== -1) { DATA[existing] = {...DATA[existing], ...bs, id: DATA[existing].id}; updated++; }
-        else { if (!bs.id) bs.id = Date.now().toString(36) + Math.random().toString(36).slice(2,6) + added; DATA.push(bs); added++; }
-      });
-      if (backup.settings) { SETTINGS = {...SETTINGS, ...backup.settings}; localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS)); refreshSettingsUI(); refreshAllSelects(); }
-      save();
-      renderDash(); renderTable();
-      toast('✅', added + ' wameongezwa, ' + updated + ' wamesasishwa!');
+      const plan = Core.planBackupMerge(DATA, backup.students);
+      const settingsErrors = backup.settings ? Core.validateSettings({...SETTINGS, ...backup.settings}) : [];
+      let body = 'Backup hii ina wanafunzi <strong>' + backup.students.length + '</strong>.<br><br>' +
+        '<span style="color:var(--green)">✔ Wataongezwa wapya: ' + plan.toAdd.length + '</span><br>' +
+        '<span style="color:var(--amber)">✎ Watabadilishwa (sasa hivi: ' + plan.toUpdate.length + '): ' + plan.toUpdate.length + '</span><br><br>' +
+        'Walio wapyo hawajathirika. Ukiendelea, data ya sasa ya walio hapo juu itabadilishwa.';
+      if (settingsErrors.length) body += '<br><br><span style="color:var(--red)">Settings za backup zitarukwa: ' + esc(settingsErrors[0]) + '</span>';
+      showConfirm('📥 Thibitisha Import ya Backup', body, [
+        {label:'Ghairi', cls:'btn-sec'},
+        {label:'Endelea', cls:'btn-d', fn: () => {
+          plan.toUpdate.forEach(u => {
+            DATA[u.index] = {...u.existing, ...u.incoming, id: u.existing.id, updatedAt: new Date().toISOString(), _dirty: true};
+          });
+          plan.toAdd.forEach(bs => {
+            DATA.push({id: bs.id || newId(), name: bs.name, class: bs.class || '', term: bs.term || '', year: bs.year || SETTINGS.year, scores: bs.scores || {}, createdAt: new Date().toISOString(), _dirty: true});
+          });
+          if (backup.settings && !settingsErrors.length) {
+            SETTINGS = {...SETTINGS, ...backup.settings, gradeBoundaries: {...SETTINGS.gradeBoundaries, ...(backup.settings.gradeBoundaries||{})}};
+            localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+          }
+          save();
+          renderDash(); renderTable(); refreshSettingsUI(); refreshAllSelects();
+          toast('✅', plan.toAdd.length + ' wameongezwa, ' + plan.toUpdate.length + ' wamesasishwa!');
+        }}
+      ]);
     } catch(err) { toast('❌','File si JSON sahihi: ' + err.message); }
   };
   reader.readAsText(file);
   document.getElementById('json-inp').value = '';
 }
 
-function validateScores(scores) {
-  const errors = [];
-  SUBS.forEach(sub => {
-    const v = scores[sub.key];
-    if (v !== null && v !== undefined && v !== '') {
-      const n = Number(v);
-      if (isNaN(n) || n < 0 || n > 100) errors.push(sub.label + ': ' + v + ' (lazima 0-100)');
-    }
-  });
-  return errors;
-}
-
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function fmt(v) { return v !== null && v !== undefined ? v : '–'; }
 
 window.addEventListener('DOMContentLoaded', () => {
-  // One-time migration: if old data exists and no users yet, create default account
-  try {
-    const oldData = JSON.parse(localStorage.getItem('matokeo_v2') || '[]');
-    const oldSettings = JSON.parse(localStorage.getItem('matokeo_settings') || 'null');
-    const users = getUsers();
-    if (oldData.length > 0 && users.length === 0) {
-      const migUser = {
-        id: 'u_migrated',
-        fullName: 'Zarem',
-        username: 'zarem',
-        password: simpleHash('zarem'),
-        createdAt: new Date().toISOString()
-      };
-      saveUsers([migUser]);
-      // Move old data to user-scoped key
-      localStorage.setItem('matokeo_v2_u_migrated_data', JSON.stringify(oldData));
-      if (oldSettings) localStorage.setItem('matokeo_v2_u_migrated_settings', JSON.stringify(oldSettings));
-      // Clean up old keys
-      localStorage.removeItem('matokeo_v2');
-      localStorage.removeItem('matokeo_settings');
-    }
-  } catch(e) {}
+  initFirebase();
 
-  // Try to restore existing session
-  if (!tryRestoreSession()) {
-    // No active session — show landing page
-    document.getElementById('landing-page').style.display = 'block';
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'none';
-  }
+  // Flush pending cloud writes when connectivity returns.
+  window.addEventListener('online', () => { if (Cloud.isDirty()) flushPush(); updateSyncBadge(); });
+  window.addEventListener('offline', () => updateSyncBadge());
+
+  // No session yet -> landing page (Firebase onAuthStateChanged will switch views on sign-in).
+  document.getElementById('landing-page').style.display = 'block';
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'none';
 });
 </script>
 </body>
