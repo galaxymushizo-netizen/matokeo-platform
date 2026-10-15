@@ -1186,7 +1186,16 @@ function updateSyncBadge() {
 
 /* ---------- Auth state ---------- */
 function onUserChanged(user, err) {
-  if (err) { setFbStatus('err', 'Profile load imeshindikana: ' + err.message); return; }
+  if (err) {
+    setFbStatus('err', 'Profile load imeshindikana: ' + err.message);
+    // Show error visibly on login form instead of silently staying on landing page.
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('landing-page').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    toggleAuthForm('login');
+    showAuthError('l-err', 'Hitilafu: ' + err.message + ' Jaribu tena.');
+    return;
+  }
   if (!user) {
     // signed out
     clearInterval(SESSION_T);
@@ -1318,6 +1327,7 @@ function doGoogleSignIn() {
   Auth.googleSignIn()
     .then(function (result) {
       if (result.isNew) {
+        Auth.setGoogleSignupPending(true);
         _googleUser = { fullName: result.user.displayName || '', email: result.user.email || '' };
         toggleAuthForm('signup');
         document.getElementById('su-name').value = _googleUser.fullName;
@@ -1328,6 +1338,7 @@ function doGoogleSignIn() {
         document.getElementById('btn-signup').textContent = 'KAMILISHA KUJIANDIKISHA →';
         document.getElementById('l-err').style.display = 'none';
       }
+      // Existing Google user: onAuthStateChanged will load profile and redirect to app.
     })
     .catch(function (e) { showAuthError('l-err', e.message); })
     .finally(function () { setAuthBusy('btn-google-signin', false); });
@@ -1363,7 +1374,7 @@ function doSignup() {
         _googleUser = null;
         toast('celebration', 'Karibu ' + fullName + '!');
       })
-      .catch(e => { showAuthError('su-err', e.message); })
+      .catch(e => { showAuthError('su-err', e.message); Auth.setGoogleSignupPending(false); })
       .finally(() => setAuthBusy('btn-signup', false, 'KAMILISHA KUJIANDIKISHA →'));
     return;
   }
@@ -1413,6 +1424,7 @@ function toggleAuthForm(type) {
     document.getElementById('su-code').value = '';
   } else {
     _googleUser = null;
+    Auth.setGoogleSignupPending(false);
     signupForm.style.display = 'none';
     loginForm.style.display = 'block';
     errL.style.display = 'none';
@@ -1435,6 +1447,8 @@ function goToSignup() {
 
 function doLogout() {
   clearInterval(SESSION_T);
+  _googleUser = null;
+  Auth.setGoogleSignupPending(false);
   Auth.signOut().catch(() => {}); // onUserChanged resets UI
   document.getElementById('inp-e').value = '';
   document.getElementById('inp-p').value = '';

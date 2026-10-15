@@ -9,6 +9,7 @@
   var _onChange = null;
   var _unsub = null;
   var current = null; // {uid, email, fullName, role, schoolId}
+  var _googleCompletingSignup = false;
 
   function init(onChange) {
     _onChange = onChange || function () {};
@@ -20,6 +21,10 @@
           if (doc.exists) {
             var d = doc.data();
             current = { uid: user.uid, email: user.email || d.email || '', fullName: d.fullName || '', role: d.role || 'teacher', schoolId: d.schoolId || '' };
+            _googleCompletingSignup = false;
+          } else if (_googleCompletingSignup) {
+            // New Google user — waiting for them to complete signup. Don't sign out.
+            return;
           } else {
             // Authenticated but no profile (e.g. rules blocked creation): treat as signed out.
             current = null;
@@ -30,6 +35,7 @@
         .catch(function (err) {
           console.error('Profile load failed:', err);
           current = null;
+          _googleCompletingSignup = false;
           _onChange(null, err);
         });
     });
@@ -185,5 +191,9 @@
     return err instanceof Error ? err : new Error((err && err.message) || 'Hitilafu haijulikani');
   }
 
-  window.Auth = { init: init, signUp: signUp, signIn: signIn, signOut: signOut, googleSignIn: googleSignIn, completeGoogleSignup: completeGoogleSignup, get current() { return current; } };
+  function setGoogleSignupPending(val) {
+    _googleCompletingSignup = !!val;
+  }
+
+  window.Auth = { init: init, signUp: signUp, signIn: signIn, signOut: signOut, googleSignIn: googleSignIn, completeGoogleSignup: completeGoogleSignup, setGoogleSignupPending: setGoogleSignupPending, get current() { return current; } };
 })();
