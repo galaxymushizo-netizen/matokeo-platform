@@ -5,16 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Matokeo Platform v2.2</title>
 
-<meta name="theme-color" content="#e8f5e9">
+<meta name="theme-color" content="#e3f2fd">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com; img-src 'self' data:; manifest-src data:; object-src 'none'; base-uri 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://accounts.google.com; img-src 'self' data: https://accounts.google.com https://*.googleusercontent.com; manifest-src data:; object-src 'none'; base-uri 'self'">
 <!-- frame-ancestors needs an HTTP header (impossible on GitHub Pages); JS frame-buster used instead -->
 <script>if (self !== top) { try { top.location = self.location; } catch (e) { document.body && (document.body.innerHTML = ''); } }</script>
-<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Matokeo%20Platform%22,%22short_name%22:%22Matokeo%22,%22start_url%22:%22index.html%22,%22display%22:%22standalone%22,%22background_color%22:%22%23e8f5e9%22,%22theme_color%22:%22%2366bb6a%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20192%20192'%3E%3Crect%20width='192'%20height='192'%20rx='40'%20fill='%234caf50'/%3E%3Ctext%20x='96'%20y='122'%20font-size='88'%20text-anchor='middle'%20fill='white'%20font-family='serif'%20font-weight='bold'%3EMP%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]}">
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Matokeo%20Platform%22,%22short_name%22:%22Matokeo%22,%22start_url%22:%22index.html%22,%22display%22:%22standalone%22,%22background_color%22:%22%23e3f2fd%22,%22theme_color%22:%22%2342a5f5%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20192%20192'%3E%3Crect%20width='192'%20height='192'%20rx='40'%20fill='%232196f5'/%3E%3Ctext%20x='96'%20y='122'%20font-size='88'%20text-anchor='middle'%20fill='white'%20font-family='serif'%20font-weight='bold'%3EMP%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]}">
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-e6nUZLBkQ86NJ6TVVKAeSaK8jWa3NhkYWZFomE39AvDbQWeie9PlQqM3pmYW5d1g" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js" integrity="sha384-fCAW/rDWORTbQXSiB7mOg0QtQ5c+r0f544y6XoKjuVva0nMBlCpNUjiFeG5iMdS3" crossorigin="anonymous"></script>
@@ -30,32 +31,32 @@
 
 <style>
 :root {
-  --bg:#eef6ee; --bg2:#e0f2e0;
+  --bg:#eef3f9; --bg2:#e0ecf5;
   --glass:rgba(255,255,255,0.55); --glass2:rgba(255,255,255,0.38); --glass3:rgba(255,255,255,0.72);
-  --border:rgba(255,255,255,0.6); --border2:rgba(130,200,150,0.25);
-  --green:#4caf50; --green2:#66bb6a; --green3:#81c784; --green4:#a5d6a7; --green5:#c8e6c9;
-  --accent:#388e3c; --accent2:#2e7d32;
-  --text:#1b3a1b; --text2:#2e5a2e; --muted:#6b9a6b;
+  --border:rgba(255,255,255,0.6); --border2:rgba(130,180,220,0.25);
+  --green:#2196f5; --green2:#42a5f5; --green3:#64b5f6; --green4:#90caf9; --green5:#bbdefb;
+  --accent:#1565c0; --accent2:#0d47a1;
+  --text:#1a2a3a; --text2:#2a4a6a; --muted:#6a8a9a;
   --blue:#42a5f5; --amber:#ffb74d; --orange:#ffa726; --red:#ef5350;
-  --shadow:0 8px 32px rgba(50,120,70,0.10);
+  --shadow:0 8px 32px rgba(30,80,160,0.10);
   --sw:260px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;position:relative;overflow-x:hidden}
-body::before{content:'';position:fixed;top:-20%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(129,199,132,0.35) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(165,214,167,0.30) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0}
+body::before{content:'';position:fixed;top:-20%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(100,181,246,0.35) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(144,202,249,0.30) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0}
 ::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:rgba(200,230,200,0.3)}
+::-webkit-scrollbar-track{background:rgba(200,220,240,0.3)}
 ::-webkit-scrollbar-thumb{background:var(--green4);border-radius:3px}
 
-#login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#e8f5e9 0%,#f1f8e9 40%,#e0f2f1 100%);display:flex;align-items:center;justify-content:center;z-index:999;overflow:hidden}
-.l-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(76,175,80,.12) 0,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(129,199,132,.10) 0,transparent 40%)}
+#login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#e3f2fd 0%,#e8f0f8 40%,#e0ecf5 100%);display:flex;align-items:center;justify-content:center;z-index:999;overflow:hidden}
+.l-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(33,150,243,.12) 0,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(100,181,246,.10) 0,transparent 40%)}
 .l-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.4) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.4) 1px,transparent 1px);background-size:44px 44px;opacity:.25;animation:gp 4s ease-in-out infinite}
 @keyframes gp{0%,100%{opacity:.15}50%{opacity:.30}}
-.l-card{position:relative;background:rgba(255,255,255,0.55);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:1px solid rgba(255,255,255,0.7);border-radius:20px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 25px 60px rgba(50,120,70,.12),0 0 0 1px rgba(255,255,255,0.3),inset 0 1px 0 rgba(255,255,255,0.5);animation:ci .6s cubic-bezier(.16,1,.3,1) forwards}
+.l-card{position:relative;background:rgba(255,255,255,0.55);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:1px solid rgba(255,255,255,0.7);border-radius:20px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 25px 60px rgba(25,80,160,.12),0 0 0 1px rgba(255,255,255,0.3),inset 0 1px 0 rgba(255,255,255,0.5);animation:ci .6s cubic-bezier(.16,1,.3,1) forwards}
 @keyframes ci{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-.l-icon{width:58px;height:58px;background:linear-gradient(135deg,var(--green),var(--green3));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 8px 22px rgba(76,175,80,.25);animation:ip 2.5s ease-in-out infinite}
-@keyframes ip{0%,100%{box-shadow:0 8px 22px rgba(76,175,80,.2)}50%{box-shadow:0 8px 32px rgba(76,175,80,.4)}}
+.l-icon{width:58px;height:58px;background:linear-gradient(135deg,var(--green),var(--green3));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 8px 22px rgba(33,150,243,.25);animation:ip 2.5s ease-in-out infinite}
+@keyframes ip{0%,100%{box-shadow:0 8px 22px rgba(33,150,243,.2)}50%{box-shadow:0 8px 32px rgba(33,150,243,.4)}}
 .l-title{font-family:'Cinzel',serif;font-size:22px;font-weight:600;text-align:center;letter-spacing:1px;margin-bottom:4px;color:var(--accent2)}
 .l-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:6px}
 .l-ver{text-align:center;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:28px}
@@ -63,33 +64,34 @@ body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:600px;height:
 .fw label{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
 .fw input{width:100%;background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.6);border-radius:10px;padding:11px 14px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
 .fw input::placeholder{color:var(--muted)}
-.fw input:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(76,175,80,.12);background:rgba(255,255,255,0.7)}
+.fw input:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(33,150,243,.12);background:rgba(255,255,255,0.7)}
 .l-err{background:rgba(239,83,80,.08);border:1px solid rgba(239,83,80,.2);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:14px;display:none}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-.btn-login{width:100%;background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;border:none;border-radius:10px;padding:13px;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:6px;box-shadow:0 4px 15px rgba(76,175,80,.2)}
-.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(76,175,80,.3)}
+.btn-login{width:100%;background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;border:none;border-radius:10px;padding:13px;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:6px;box-shadow:0 4px 15px rgba(33,150,243,.2)}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(33,150,243,.3)}
 
 #app{display:flex;min-height:100vh;position:relative;z-index:1}
-#sidebar{width:var(--sw);background:rgba(255,255,255,0.45);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border-right:1px solid rgba(255,255,255,0.5);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s;overflow-y:auto;box-shadow:4px 0 30px rgba(50,120,70,0.05)}
+#sidebar{width:var(--sw);background:rgba(255,255,255,0.45);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border-right:1px solid rgba(255,255,255,0.5);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s;overflow-y:auto;box-shadow:4px 0 30px rgba(25,80,160,0.05)}
 .sb-hd{padding:22px 18px;border-bottom:1px solid rgba(255,255,255,0.4)}
 .sb-logo{display:flex;align-items:center;gap:10px}
-.sb-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green3));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;box-shadow:0 4px 12px rgba(76,175,80,.2)}
+.sb-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green3));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;box-shadow:0 4px 12px rgba(33,150,243,.2)}
 .sb-name{font-family:'Cinzel',serif;font-size:13px;font-weight:600;line-height:1.3;color:var(--accent2)}
 .sb-name small{font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400}
 .sb-nav{flex:1;padding:14px 10px;display:flex;flex-direction:column;gap:4px}
 .nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all .2s;color:var(--muted);font-size:13px;font-weight:500;user-select:none;border:1px solid transparent}
 .nav-item:hover{background:rgba(255,255,255,0.5);color:var(--text);border-color:rgba(255,255,255,0.4)}
-.nav-item.active{background:rgba(255,255,255,0.6);color:var(--accent);border-color:rgba(76,175,80,.25);box-shadow:0 4px 16px rgba(76,175,80,.08),inset 0 0 8px rgba(76,175,80,.04)}
-.nav-icon{font-size:16px;width:22px;text-align:center}
+.nav-item.active{background:rgba(255,255,255,0.6);color:var(--accent);border-color:rgba(33,150,243,.25);box-shadow:0 4px 16px rgba(33,150,243,.08),inset 0 0 8px rgba(33,150,243,.04)}
+.nav-icon{font-family:'Material Icons';font-size:20px;width:22px;text-align:center;font-style:normal;font-weight:normal;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased}
 .nav-divider{height:1px;background:rgba(255,255,255,0.4);margin:8px 12px}
 .sb-ft{padding:14px 10px;border-top:1px solid rgba(255,255,255,0.4)}
 .sync-badge{display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:8px;border-radius:8px;font-size:11px;font-weight:600}
-.sync-on{background:rgba(76,175,80,.1);color:var(--green);border:1px solid rgba(76,175,80,.2)}
-.sync-off{background:rgba(107,154,107,.08);color:var(--muted);border:1px solid rgba(255,255,255,0.3)}
+.sync-on{background:rgba(33,150,243,.1);color:var(--green);border:1px solid rgba(33,150,243,.2)}
+.sync-off{background:rgba(100,160,200,.08);color:var(--muted);border:1px solid rgba(255,255,255,0.3)}
 .sync-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .sync-on .sync-dot{background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite}
 .sync-off .sync-dot{background:var(--muted)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .btn-logout{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:none;border:1px solid rgba(255,255,255,0.4);color:var(--muted);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
 .btn-logout:hover{background:rgba(239,83,80,.06);color:var(--red);border-color:rgba(239,83,80,.2)}
 #content{margin-left:var(--sw);flex:1;padding:32px;min-width:0;position:relative;z-index:1}
@@ -106,15 +108,15 @@ body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:600px;height:
 .filter-sel option{background:#fff;color:var(--text)}
 
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px;margin-bottom:24px}
-.stat-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;transition:all .25s;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
-.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(76,175,80,.3),transparent);opacity:0;transition:opacity .3s}
-.stat-card:hover{border-color:rgba(76,175,80,.3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(50,120,70,0.1)}
+.stat-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;transition:all .25s;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(25,80,160,0.06)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(33,150,243,.3),transparent);opacity:0;transition:opacity .3s}
+.stat-card:hover{border-color:rgba(33,150,243,.3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(25,80,160,0.1)}
 .stat-card:hover::before{opacity:1}
 .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:8px}
 .stat-value{font-family:'Cinzel',serif;font-size:30px;font-weight:700;color:var(--accent)}
 .stat-sub{font-size:12px;color:var(--muted);margin-top:4px}
 
-.tw{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+.tw{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(25,80,160,0.06)}
 .t-toolbar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.4);gap:12px;flex-wrap:wrap}
 .sw-r{position:relative;display:flex;align-items:center}
 .sw-r .si{position:absolute;left:10px;color:var(--muted);font-size:14px;pointer-events:none}
@@ -123,12 +125,12 @@ body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:600px;height:
 .search-inp::placeholder{color:var(--muted)}
 table{width:100%;border-collapse:collapse}
 thead th{padding:11px 14px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);text-align:left;background:rgba(255,255,255,0.35);border-bottom:1px solid rgba(255,255,255,0.4);white-space:nowrap}
-tbody tr{border-bottom:1px solid rgba(200,230,200,0.3);transition:background .15s}
+tbody tr{border-bottom:1px solid rgba(200,220,240,0.3);transition:background .15s}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:rgba(76,175,80,.04)}
+tbody tr:hover{background:rgba(33,150,243,.04)}
 td{padding:11px 14px;font-size:13px;vertical-align:middle}
 .gb{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-weight:700;font-size:11px}
-.gA{background:rgba(76,175,80,.15);color:var(--green)}
+.gA{background:rgba(33,150,243,.15);color:var(--green)}
 .gB{background:rgba(66,165,245,.15);color:var(--blue)}
 .gC{background:rgba(255,183,77,.15);color:var(--amber)}
 .gD{background:rgba(255,167,38,.15);color:var(--orange)}
@@ -144,51 +146,51 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 .btn-e:hover{background:rgba(66,165,245,.15)}
 .btn-d{background:rgba(239,83,80,.08);color:var(--red);border-color:rgba(239,83,80,.2)}
 .btn-d:hover{background:rgba(239,83,80,.15)}
-.btn-rc{background:rgba(76,175,80,.08);color:var(--green);border-color:rgba(76,175,80,.2)}
-.btn-rc:hover{background:rgba(76,175,80,.15)}
+.btn-rc{background:rgba(33,150,243,.08);color:var(--green);border-color:rgba(33,150,243,.2)}
+.btn-rc:hover{background:rgba(33,150,243,.15)}
 .exp-btns{display:flex;gap:9px;flex-wrap:wrap}
 .btn-exp{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid;font-family:'DM Sans',sans-serif;transition:all .15s}
 .bp{background:rgba(239,83,80,.08);color:var(--red);border-color:rgba(239,83,80,.2)}
 .bp:hover{background:rgba(239,83,80,.15);transform:translateY(-1px)}
-.bx{background:rgba(76,175,80,.08);color:var(--green);border-color:rgba(76,175,80,.2)}
-.bx:hover{background:rgba(76,175,80,.15);transform:translateY(-1px)}
+.bx{background:rgba(33,150,243,.08);color:var(--green);border-color:rgba(33,150,243,.2)}
+.bx:hover{background:rgba(33,150,243,.15);transform:translateY(-1px)}
 .empty-row td{text-align:center;padding:40px;color:var(--muted);font-style:italic}
 
-.form-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:26px;max-width:740px;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+.form-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:26px;max-width:740px;box-shadow:0 4px 20px rgba(25,80,160,0.06)}
 .fsec{font-family:'Cinzel',serif;font-size:12px;color:var(--accent);letter-spacing:1px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.4)}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 .frow-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
 .fg label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:6px}
 .fg input,.fg select{width:100%;background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:10px 13px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
-.fg input:focus,.fg select:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(76,175,80,.1);background:rgba(255,255,255,0.7)}
+.fg input:focus,.fg select:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(33,150,243,.1);background:rgba(255,255,255,0.7)}
 .fg input::placeholder{color:var(--muted)}
 .fg input.err{border-color:var(--red)}
 .fg select option{background:#fff;color:var(--text)}
 .subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
 .sbox{background:rgba(255,255,255,0.45);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:12px;padding:13px;transition:border-color .2s}
-.sbox:focus-within{border-color:rgba(76,175,80,.35)}
+.sbox:focus-within{border-color:rgba(33,150,243,.35)}
 .sname{font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .srow{display:flex;align-items:center;gap:9px}
 .sinp{width:72px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:8px;padding:7px 10px;color:var(--text);font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;outline:none;text-align:center;transition:border-color .2s}
 .sinp:focus{border-color:var(--green3)}
 .sinp.err{border-color:var(--red)}
 .lgr{font-size:12px;font-weight:700;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all .2s;background:rgba(255,255,255,0.4);color:var(--muted)}
-.sbar{flex:1;height:4px;background:rgba(200,230,200,0.4);border-radius:2px;overflow:hidden}
+.sbar{flex:1;height:4px;background:rgba(200,220,240,0.4);border-radius:2px;overflow:hidden}
 .sbfill{height:100%;border-radius:2px;transition:width .3s,background .3s;background:var(--green);width:0%}
 .fa{display:flex;gap:11px;align-items:center;margin-top:4px;flex-wrap:wrap}
-.btn-pri{background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:1.5px;border:none;border-radius:10px;padding:12px 26px;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 15px rgba(76,175,80,.15)}
-.btn-pri:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(76,175,80,.25)}
+.btn-pri{background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:1.5px;border:none;border-radius:10px;padding:12px 26px;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 15px rgba(33,150,243,.15)}
+.btn-pri:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(33,150,243,.25)}
 .btn-sec{background:rgba(255,255,255,0.5);color:var(--text);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:11px 18px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;backdrop-filter:blur(8px)}
 .btn-sec:hover{background:rgba(255,255,255,0.7)}
 
 .an-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;margin-bottom:24px}
-.cc{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;transition:all .25s;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
-.cc:hover{border-color:rgba(76,175,80,.2);box-shadow:0 8px 30px rgba(50,120,70,0.1)}
+.cc{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;transition:all .25s;box-shadow:0 4px 20px rgba(25,80,160,0.06)}
+.cc:hover{border-color:rgba(33,150,243,.2);box-shadow:0 8px 30px rgba(25,80,160,0.1)}
 .ct{font-family:'Cinzel',serif;font-size:13px;font-weight:600;margin-bottom:3px;color:var(--accent2)}
 .ca{font-size:12px;color:var(--muted);margin-bottom:14px}
 .ca span{color:var(--accent);font-weight:700}
 .ch{position:relative;height:185px}
-.cmp{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;margin-bottom:20px;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+.cmp{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;margin-bottom:20px;box-shadow:0 4px 20px rgba(25,80,160,0.06)}
 .cmp-title{font-family:'Cinzel',serif;font-size:14px;margin-bottom:16px;color:var(--accent2)}
 
 .sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
@@ -196,24 +198,24 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 .va{font-size:12px;color:var(--green);cursor:pointer}
 .va:hover{color:var(--accent)}
 .rank{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;background:rgba(255,255,255,0.4);color:var(--muted)}
-.r1{background:rgba(76,175,80,.15);color:var(--accent)}
+.r1{background:rgba(33,150,243,.15);color:var(--accent)}
 .r2{background:rgba(120,144,156,.12);color:#78909c}
 .r3{background:rgba(141,110,99,.12);color:#8d6e63}
 
-.drop-zone{border:2px dashed rgba(76,175,80,.3);border-radius:14px;padding:48px 24px;text-align:center;transition:all .3s;cursor:pointer;margin-bottom:20px;background:rgba(255,255,255,0.25)}
-.drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(76,175,80,.06)}
+.drop-zone{border:2px dashed rgba(33,150,243,.3);border-radius:14px;padding:48px 24px;text-align:center;transition:all .3s;cursor:pointer;margin-bottom:20px;background:rgba(255,255,255,0.25)}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(33,150,243,.06)}
 .drop-zone .dz-icon{font-size:48px;margin-bottom:12px}
 .drop-zone .dz-text{font-size:15px;color:var(--text);margin-bottom:6px}
 .drop-zone .dz-sub{font-size:12px;color:var(--muted)}
-.import-preview{background:rgba(255,255,255,0.45);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.5);border-radius:14px;overflow:hidden;margin-bottom:20px;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+.import-preview{background:rgba(255,255,255,0.45);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.5);border-radius:14px;overflow:hidden;margin-bottom:20px;box-shadow:0 4px 20px rgba(25,80,160,0.06)}
 .import-preview .ip-hd{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.4);display:flex;justify-content:space-between;align-items:center}
 .import-preview .ip-hd span{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--accent2)}
 .import-preview table{max-height:300px;overflow-y:auto;display:block}
 .import-preview thead th{position:sticky;top:0;z-index:1}
 
 .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
-.settings-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:22px;transition:all .25s;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
-.settings-card:hover{border-color:rgba(76,175,80,.2)}
+.settings-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:22px;transition:all .25s;box-shadow:0 4px 20px rgba(25,80,160,0.06)}
+.settings-card:hover{border-color:rgba(33,150,243,.2)}
 .settings-card h3{font-family:'Cinzel',serif;font-size:14px;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--accent2)}
 .tag-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;backdrop-filter:blur(6px)}
@@ -223,19 +225,19 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 .tag-add input{flex:1;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none}
 .tag-add input:focus{border-color:var(--green3)}
 .tag-add button{background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;border:none;border-radius:8px;padding:8px 16px;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s}
-.tag-add button:hover{box-shadow:0 4px 12px rgba(76,175,80,.2)}
+.tag-add button:hover{box-shadow:0 4px 12px rgba(33,150,243,.2)}
 .fb-status{padding:12px;border-radius:10px;font-size:13px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.fb-ok{background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);color:var(--green)}
-.fb-no{background:rgba(107,154,107,.06);border:1px solid rgba(255,255,255,0.3);color:var(--muted)}
+.fb-ok{background:rgba(33,150,243,.08);border:1px solid rgba(33,150,243,.2);color:var(--green)}
+.fb-no{background:rgba(100,160,200,.06);border:1px solid rgba(255,255,255,0.3);color:var(--muted)}
 .fb-err{background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.15);color:var(--red)}
 .fg textarea{width:100%;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:10px 13px;color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;min-height:80px;transition:border-color .2s;backdrop-filter:blur(8px)}
-.fg textarea:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(76,175,80,.1);background:rgba(255,255,255,0.7)}
+.fg textarea:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(33,150,243,.1);background:rgba(255,255,255,0.7)}
 
-#toast{position:fixed;bottom:22px;right:22px;background:rgba(255,255,255,0.75);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:0;font-size:13px;color:var(--text);display:flex;align-items:stretch;gap:0;box-shadow:0 12px 40px rgba(50,120,70,.12),0 0 0 1px rgba(255,255,255,0.3);z-index:9999;transform:translateX(120%);opacity:0;transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .3s;max-width:320px;overflow:hidden}
+#toast{position:fixed;bottom:22px;right:22px;background:rgba(255,255,255,0.75);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:0;font-size:13px;color:var(--text);display:flex;align-items:stretch;gap:0;box-shadow:0 12px 40px rgba(25,80,160,.12),0 0 0 1px rgba(255,255,255,0.3);z-index:9999;transform:translateX(120%);opacity:0;transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .3s;max-width:320px;overflow:hidden}
 #toast.show{transform:translateX(0);opacity:1}
 
-#modal-ov{position:fixed;inset:0;background:rgba(200,230,200,.45);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:500}
-.mbox{background:rgba(255,255,255,0.75);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid rgba(255,255,255,0.7);border-radius:18px;padding:28px;max-width:420px;width:90%;animation:mi .25s cubic-bezier(.16,1,.3,1);box-shadow:0 25px 60px rgba(50,120,70,.12)}
+#modal-ov{position:fixed;inset:0;background:rgba(200,220,240,.45);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:500}
+.mbox{background:rgba(255,255,255,0.75);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid rgba(255,255,255,0.7);border-radius:18px;padding:28px;max-width:420px;width:90%;animation:mi .25s cubic-bezier(.16,1,.3,1);box-shadow:0 25px 60px rgba(25,80,160,.12)}
 @keyframes mi{from{transform:scale(.95) translateY(8px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
 .mt{font-family:'Cinzel',serif;font-size:16px;margin-bottom:10px;color:var(--accent2)}
 .mb{font-size:14px;color:var(--muted);margin-bottom:22px;line-height:1.6}
@@ -264,14 +266,14 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
   .stat-card,.tw,.form-card,.cc,.cmp,.settings-card,.import-preview{border:1px solid #ddd;background:#fff;break-inside:avoid}
   .stat-value,.avg-cell{color:var(--accent)!important}
   table{font-size:10px}
-  thead th{background:#e8f5e9!important;color:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  thead th{background:#e3f2fd!important;color:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .gb,.lgr{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .ph h1{color:var(--accent2)}
   .ph p{color:#555}
   .view:not(.print-active){display:none!important}
 }
 
-.skeleton{background:linear-gradient(90deg,rgba(200,230,200,0.4) 25%,rgba(200,230,200,0.6) 50%,rgba(200,230,200,0.4) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+.skeleton{background:linear-gradient(90deg,rgba(200,220,240,0.4) 25%,rgba(200,220,240,0.6) 50%,rgba(200,220,240,0.4) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .skel-stat{height:90px}
 .skel-row{height:42px;margin-bottom:6px}
@@ -299,13 +301,16 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 .view.active .cc:nth-child(6){animation-delay:.3s}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-.btn-pri:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(76,175,80,.25),0 0 0 2px rgba(76,175,80,.1)}
-.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(76,175,80,.3),0 0 0 2px rgba(76,175,80,.12)}
+.btn-pri:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(33,150,243,.25),0 0 0 2px rgba(33,150,243,.1)}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(33,150,243,.3),0 0 0 2px rgba(33,150,243,.12)}
+
+.btn-google{width:100%;display:flex;align-items:center;justify-content:center;background:#fff;color:#3c4043;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;border:1px solid #dadce0;border-radius:10px;padding:11px;cursor:pointer;transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.btn-google:hover{background:#f8f9fa;box-shadow:0 2px 8px rgba(0,0,0,.08);border-color:#c0c0c0}
 
 @media(max-width:768px){
   .stu-table-wrap table{display:none}
   .stu-cards{display:flex!important;flex-direction:column;gap:12px}
-  .stu-card{background:rgba(255,255,255,0.55);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:16px;position:relative;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+  .stu-card{background:rgba(255,255,255,0.55);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:16px;position:relative;box-shadow:0 4px 20px rgba(25,80,160,0.06)}
   .stu-card .sc-name{font-family:'Cinzel',serif;font-size:14px;font-weight:600;margin-bottom:8px;padding-right:60px;color:var(--accent2)}
   .stu-card .sc-meta{display:flex;gap:12px;font-size:12px;color:var(--muted);margin-bottom:10px}
   .stu-card .sc-meta span{display:flex;align-items:center;gap:4px}
@@ -323,129 +328,129 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 }
 
 /* ===== LANDING PAGE v2 ===== */
-#landing-page{position:fixed;inset:0;background:#f8fdf8;z-index:1000;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth}
+#landing-page{position:fixed;inset:0;background:#f8fbff;z-index:1000;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth}
 .lp-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .lp-blob{position:absolute;border-radius:50%;filter:blur(80px)}
-.lp-b1{width:500px;height:500px;top:-15%;left:-10%;background:rgba(76,175,80,0.12);animation:lpFloat 14s ease-in-out infinite}
-.lp-b2{width:400px;height:400px;bottom:-10%;right:-8%;background:rgba(129,199,132,0.10);animation:lpFloat 11s ease-in-out infinite 3s}
-.lp-b3{width:300px;height:300px;top:50%;left:55%;background:rgba(165,214,167,0.08);animation:lpFloat 9s ease-in-out infinite 5s}
+.lp-b1{width:500px;height:500px;top:-15%;left:-10%;background:rgba(33,150,243,0.12);animation:lpFloat 14s ease-in-out infinite}
+.lp-b2{width:400px;height:400px;bottom:-10%;right:-8%;background:rgba(100,181,246,0.10);animation:lpFloat 11s ease-in-out infinite 3s}
+.lp-b3{width:300px;height:300px;top:50%;left:55%;background:rgba(144,202,249,0.08);animation:lpFloat 9s ease-in-out infinite 5s}
 @keyframes lpFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(25px,-15px) scale(1.04)}66%{transform:translate(-15px,10px) scale(0.96)}}
 
 /* NAV */
-.lp-nav{position:sticky;top:0;z-index:100;background:rgba(248,253,248,0.82);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid rgba(76,175,80,0.08)}
+.lp-nav{position:sticky;top:0;z-index:100;background:rgba(248,253,248,0.82);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid rgba(33,150,243,0.08)}
 .lp-nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:14px 32px}
 .lp-nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none}
-.lp-nav-icon{width:38px;height:38px;background:linear-gradient(135deg,#4caf50,#81c784);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 3px 12px rgba(76,175,80,.2)}
-.lp-nav-name{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#1b5e20;line-height:1.2}
-.lp-nav-name small{font-size:9px;color:#6b9a6b;font-family:'DM Sans',sans-serif;font-weight:500;letter-spacing:1px;display:block}
+.lp-nav-icon{width:38px;height:38px;background:linear-gradient(135deg,#2196f5,#64b5f6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 3px 12px rgba(33,150,243,.2)}
+.lp-nav-name{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#0d47a1;line-height:1.2}
+.lp-nav-name small{font-size:9px;color:#6a8a9a;font-family:'DM Sans',sans-serif;font-weight:500;letter-spacing:1px;display:block}
 .lp-nav-links{display:flex;align-items:center;gap:8px}
-.lp-nav-link{padding:8px 16px;font-size:13px;font-weight:500;color:#4a7a4a;border-radius:8px;cursor:pointer;transition:all .15s;text-decoration:none;border:none;background:none;font-family:'DM Sans',sans-serif}
-.lp-nav-link:hover{color:#2e7d32;background:rgba(76,175,80,.06)}
-.lp-nav-cta{background:linear-gradient(135deg,#4caf50,#66bb6a);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:9px;padding:9px 22px;cursor:pointer;transition:all .2s;box-shadow:0 3px 12px rgba(76,175,80,.18);font-family:'DM Sans',sans-serif}
-.lp-nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(76,175,80,.28)}
+.lp-nav-link{padding:8px 16px;font-size:13px;font-weight:500;color:#4a6a8a;border-radius:8px;cursor:pointer;transition:all .15s;text-decoration:none;border:none;background:none;font-family:'DM Sans',sans-serif}
+.lp-nav-link:hover{color:#0d47a1;background:rgba(33,150,243,.06)}
+.lp-nav-cta{background:linear-gradient(135deg,#2196f5,#42a5f5);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:9px;padding:9px 22px;cursor:pointer;transition:all .2s;box-shadow:0 3px 12px rgba(33,150,243,.18);font-family:'DM Sans',sans-serif}
+.lp-nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(33,150,243,.28)}
 
 /* HERO */
 .lp-hero{position:relative;z-index:10;text-align:center;padding:100px 24px 70px;max-width:820px;margin:0 auto}
-.lp-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(76,175,80,.07);border:1px solid rgba(76,175,80,.15);border-radius:50px;padding:7px 18px;font-size:12px;font-weight:600;color:#388e3c;letter-spacing:.5px;margin-bottom:32px;animation:lpUp .7s ease both}
-.lp-pill-dot{width:7px;height:7px;background:#4caf50;border-radius:50%;box-shadow:0 0 6px #4caf50;animation:pulse 2s infinite}
-.lp-hero h1{font-family:'Cinzel',serif;font-size:clamp(34px,5.5vw,56px);font-weight:700;color:#1b3a1b;line-height:1.12;margin-bottom:20px;letter-spacing:-0.5px;animation:lpUp .7s ease .1s both}
-.lp-hero h1 .lp-grad{background:linear-gradient(135deg,#4caf50 0%,#2e7d32 50%,#66bb6a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.lp-hero .lp-desc{font-size:clamp(15px,2vw,18px);color:#5a8a5a;line-height:1.75;max-width:620px;margin:0 auto 40px;animation:lpUp .7s ease .2s both}
+.lp-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(33,150,243,.07);border:1px solid rgba(33,150,243,.15);border-radius:50px;padding:7px 18px;font-size:12px;font-weight:600;color:#1565c0;letter-spacing:.5px;margin-bottom:32px;animation:lpUp .7s ease both}
+.lp-pill-dot{width:7px;height:7px;background:#2196f5;border-radius:50%;box-shadow:0 0 6px #2196f5;animation:pulse 2s infinite}
+.lp-hero h1{font-family:'Cinzel',serif;font-size:clamp(34px,5.5vw,56px);font-weight:700;color:#1a2a3a;line-height:1.12;margin-bottom:20px;letter-spacing:-0.5px;animation:lpUp .7s ease .1s both}
+.lp-hero h1 .lp-grad{background:linear-gradient(135deg,#2196f5 0%,#0d47a1 50%,#42a5f5 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lp-hero .lp-desc{font-size:clamp(15px,2vw,18px);color:#5a7a9a;line-height:1.75;max-width:620px;margin:0 auto 40px;animation:lpUp .7s ease .2s both}
 .lp-hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:lpUp .7s ease .3s both}
-.lp-btn-pri{background:linear-gradient(135deg,#4caf50,#66bb6a);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;border:none;border-radius:12px;padding:15px 36px;cursor:pointer;transition:all .2s;box-shadow:0 6px 24px rgba(76,175,80,.22)}
-.lp-btn-pri:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(76,175,80,.32)}
-.lp-btn-sec{background:#fff;color:#2e7d32;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;border:1.5px solid rgba(76,175,80,.2);border-radius:12px;padding:15px 36px;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.03)}
-.lp-btn-sec:hover{border-color:rgba(76,175,80,.4);background:rgba(76,175,80,.03);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.lp-btn-pri{background:linear-gradient(135deg,#2196f5,#42a5f5);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;border:none;border-radius:12px;padding:15px 36px;cursor:pointer;transition:all .2s;box-shadow:0 6px 24px rgba(33,150,243,.22)}
+.lp-btn-pri:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(33,150,243,.32)}
+.lp-btn-sec{background:#fff;color:#0d47a1;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;border:1.5px solid rgba(33,150,243,.2);border-radius:12px;padding:15px 36px;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.lp-btn-sec:hover{border-color:rgba(33,150,243,.4);background:rgba(33,150,243,.03);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.06)}
 
 /* HERO MOCKUP */
 .lp-mockup{position:relative;z-index:10;max-width:900px;margin:0 auto 20px;padding:0 24px;animation:lpUp .7s ease .4s both}
-.lp-mockup-img{background:rgba(255,255,255,.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);border-radius:16px;padding:16px;box-shadow:0 20px 60px rgba(50,120,70,.08),0 1px 3px rgba(0,0,0,.04)}
+.lp-mockup-img{background:rgba(255,255,255,.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);border-radius:16px;padding:16px;box-shadow:0 20px 60px rgba(25,80,160,.08),0 1px 3px rgba(0,0,0,.04)}
 .lp-mockup-bar{display:flex;gap:6px;margin-bottom:12px}
 .lp-mockup-dot{width:10px;height:10px;border-radius:50%}
 .lp-mockup-dot:nth-child(1){background:#ef5350}
 .lp-mockup-dot:nth-child(2){background:#ffb74d}
-.lp-mockup-dot:nth-child(3){background:#4caf50}
+.lp-mockup-dot:nth-child(3){background:#2196f5}
 .lp-mockup-body{display:grid;grid-template-columns:200px 1fr;gap:12px;min-height:220px}
-.lp-mockup-side{background:rgba(76,175,80,.05);border-radius:10px;padding:14px}
-.lp-mockup-side-item{height:10px;border-radius:5px;margin-bottom:10px;background:rgba(76,175,80,.12)}
+.lp-mockup-side{background:rgba(33,150,243,.05);border-radius:10px;padding:14px}
+.lp-mockup-side-item{height:10px;border-radius:5px;margin-bottom:10px;background:rgba(33,150,243,.12)}
 .lp-mockup-side-item:nth-child(2){width:75%}
 .lp-mockup-side-item:nth-child(3){width:60%}
 .lp-mockup-side-item:nth-child(4){width:85%}
-.lp-mockup-side-item.active{background:rgba(76,175,80,.3)}
+.lp-mockup-side-item.active{background:rgba(33,150,243,.3)}
 .lp-mockup-main{display:flex;flex-direction:column;gap:10px}
 .lp-mockup-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.lp-mockup-stat{background:rgba(76,175,80,.04);border-radius:8px;padding:12px 8px;text-align:center}
-.lp-mockup-stat-val{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#2e7d32}
-.lp-mockup-stat-lbl{font-size:8px;color:#6b9a6b;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-.lp-mockup-chart{flex:1;background:rgba(76,175,80,.03);border-radius:10px;position:relative;overflow:hidden}
+.lp-mockup-stat{background:rgba(33,150,243,.04);border-radius:8px;padding:12px 8px;text-align:center}
+.lp-mockup-stat-val{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#0d47a1}
+.lp-mockup-stat-lbl{font-size:8px;color:#6a8a9a;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.lp-mockup-chart{flex:1;background:rgba(33,150,243,.03);border-radius:10px;position:relative;overflow:hidden}
 .lp-mockup-chart-bars{display:flex;align-items:flex-end;gap:6px;height:80px;padding:12px}
-.lp-mbar{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(to top,rgba(76,175,80,.3),rgba(76,175,80,.15));animation:lpBarGrow 1.2s ease forwards}
+.lp-mbar{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(to top,rgba(33,150,243,.3),rgba(33,150,243,.15));animation:lpBarGrow 1.2s ease forwards}
 @keyframes lpBarGrow{from{height:0}to{height:var(--h)}}
 
 /* TRUST BAR */
 .lp-trust{position:relative;z-index:10;text-align:center;padding:30px 24px 50px;animation:lpUp .7s ease .5s both}
 .lp-trust-row{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
-.lp-trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#6b9a6b;font-weight:500}
+.lp-trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#6a8a9a;font-weight:500}
 .lp-trust-ico{font-size:16px}
 
 /* SECTION COMMON */
 .lp-section{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:80px 32px}
 .lp-sec-head{text-align:center;margin-bottom:48px}
-.lp-sec-tag{display:inline-block;font-size:11px;font-weight:700;color:#4caf50;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
-.lp-sec-head h2{font-family:'Cinzel',serif;font-size:clamp(24px,3.5vw,36px);font-weight:700;color:#1b3a1b;margin-bottom:10px}
-.lp-sec-head p{font-size:15px;color:#6b9a6b;max-width:540px;margin:0 auto;line-height:1.7}
+.lp-sec-tag{display:inline-block;font-size:11px;font-weight:700;color:#2196f5;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
+.lp-sec-head h2{font-family:'Cinzel',serif;font-size:clamp(24px,3.5vw,36px);font-weight:700;color:#1a2a3a;margin-bottom:10px}
+.lp-sec-head p{font-size:15px;color:#6a8a9a;max-width:540px;margin:0 auto;line-height:1.7}
 
 /* FEATURES */
 .lp-feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.lp-feat{background:#fff;border:1px solid rgba(76,175,80,.08);border-radius:16px;padding:30px 26px;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.02)}
-.lp-feat:hover{transform:translateY(-4px);border-color:rgba(76,175,80,.18);box-shadow:0 12px 40px rgba(50,120,70,.08)}
+.lp-feat{background:#fff;border:1px solid rgba(33,150,243,.08);border-radius:16px;padding:30px 26px;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.02)}
+.lp-feat:hover{transform:translateY(-4px);border-color:rgba(33,150,243,.18);box-shadow:0 12px 40px rgba(25,80,160,.08)}
 .lp-feat-ico{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:18px}
-.lp-feat-ico.green{background:rgba(76,175,80,.08)}
+.lp-feat-ico.green{background:rgba(33,150,243,.08)}
 .lp-feat-ico.blue{background:rgba(66,165,245,.08)}
 .lp-feat-ico.amber{background:rgba(255,183,77,.08)}
 .lp-feat-ico.red{background:rgba(239,83,80,.08)}
 .lp-feat-ico.teal{background:rgba(77,182,172,.08)}
 .lp-feat-ico.purple{background:rgba(171,130,255,.08)}
-.lp-feat h3{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:#1b3a1b;margin-bottom:8px}
-.lp-feat p{font-size:13px;color:#6b9a6b;line-height:1.65}
+.lp-feat h3{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:#1a2a3a;margin-bottom:8px}
+.lp-feat p{font-size:13px;color:#6a8a9a;line-height:1.65}
 
 /* HOW IT WORKS */
 .lp-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative}
-.lp-steps::before{content:'';position:absolute;top:38px;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,rgba(76,175,80,.15),transparent)}
+.lp-steps::before{content:'';position:absolute;top:38px;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,rgba(33,150,243,.15),transparent)}
 .lp-step{text-align:center;position:relative}
-.lp-step-num{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#4caf50,#81c784);color:#fff;font-family:'Cinzel',serif;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 6px 20px rgba(76,175,80,.2);position:relative;z-index:2}
-.lp-step h3{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:#1b3a1b;margin-bottom:8px}
-.lp-step p{font-size:13px;color:#6b9a6b;line-height:1.6;max-width:260px;margin:0 auto}
+.lp-step-num{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#2196f5,#64b5f6);color:#fff;font-family:'Cinzel',serif;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 6px 20px rgba(33,150,243,.2);position:relative;z-index:2}
+.lp-step h3{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:#1a2a3a;margin-bottom:8px}
+.lp-step p{font-size:13px;color:#6a8a9a;line-height:1.6;max-width:260px;margin:0 auto}
 
 /* TESTIMONIALS */
 .lp-test-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.lp-test{background:#fff;border:1px solid rgba(76,175,80,.08);border-radius:16px;padding:28px;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.02)}
-.lp-test:hover{border-color:rgba(76,175,80,.15);box-shadow:0 8px 28px rgba(50,120,70,.06)}
+.lp-test{background:#fff;border:1px solid rgba(33,150,243,.08);border-radius:16px;padding:28px;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.02)}
+.lp-test:hover{border-color:rgba(33,150,243,.15);box-shadow:0 8px 28px rgba(25,80,160,.06)}
 .lp-test-stars{color:#ffb74d;font-size:14px;margin-bottom:12px;letter-spacing:2px}
-.lp-test p{font-size:14px;color:#3a6a3a;line-height:1.7;margin-bottom:16px;font-style:italic}
+.lp-test p{font-size:14px;color:#3a5a7a;line-height:1.7;margin-bottom:16px;font-style:italic}
 .lp-test-author{display:flex;align-items:center;gap:10px}
-.lp-test-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(76,175,80,.12),rgba(129,199,132,.12));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#2e7d32}
-.lp-test-name{font-size:13px;font-weight:600;color:#1b3a1b}
-.lp-test-role{font-size:11px;color:#6b9a6b}
+.lp-test-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(33,150,243,.12),rgba(100,181,246,.12));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#0d47a1}
+.lp-test-name{font-size:13px;font-weight:600;color:#1a2a3a}
+.lp-test-role{font-size:11px;color:#6a8a9a}
 
 /* CTA BANNER */
 .lp-cta-banner{position:relative;z-index:10;max-width:1060px;margin:0 auto 80px;padding:0 32px}
-.lp-cta-card{background:linear-gradient(135deg,#1b5e20,#2e7d32,#388e3c);border-radius:20px;padding:56px 48px;text-align:center;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(27,94,32,.2)}
+.lp-cta-card{background:linear-gradient(135deg,#0d47a1,#0d47a1,#1565c0);border-radius:20px;padding:56px 48px;text-align:center;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(27,94,32,.2)}
 .lp-cta-card::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 70%);border-radius:50%}
 .lp-cta-card h2{font-family:'Cinzel',serif;font-size:clamp(22px,3vw,32px);font-weight:700;color:#fff;margin-bottom:12px;position:relative}
 .lp-cta-card p{font-size:15px;color:rgba(255,255,255,.8);margin-bottom:28px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7;position:relative}
-.lp-cta-card .lp-btn-white{background:#fff;color:#2e7d32;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;border:none;border-radius:12px;padding:15px 40px;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(0,0,0,.1);position:relative}
+.lp-cta-card .lp-btn-white{background:#fff;color:#0d47a1;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;border:none;border-radius:12px;padding:15px 40px;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(0,0,0,.1);position:relative}
 .lp-cta-card .lp-btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.15)}
 
 /* FOOTER */
-.lp-footer{position:relative;z-index:10;border-top:1px solid rgba(76,175,80,.08);padding:40px 32px;background:rgba(248,253,248,.6)}
+.lp-footer{position:relative;z-index:10;border-top:1px solid rgba(33,150,243,.08);padding:40px 32px;background:rgba(248,253,248,.6)}
 .lp-footer-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}
-.lp-footer-brand p{font-size:13px;color:#6b9a6b;line-height:1.7;margin-top:12px;max-width:300px}
-.lp-footer-col h4{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#1b3a1b;margin-bottom:14px}
-.lp-footer-col a{display:block;font-size:13px;color:#6b9a6b;text-decoration:none;margin-bottom:8px;transition:color .15s;cursor:pointer}
-.lp-footer-col a:hover{color:#4caf50}
-.lp-footer-bottom{max-width:1060px;margin:24px auto 0;padding-top:20px;border-top:1px solid rgba(76,175,80,.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.lp-footer-bottom p{font-size:12px;color:#8aaa8a}
+.lp-footer-brand p{font-size:13px;color:#6a8a9a;line-height:1.7;margin-top:12px;max-width:300px}
+.lp-footer-col h4{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#1a2a3a;margin-bottom:14px}
+.lp-footer-col a{display:block;font-size:13px;color:#6a8a9a;text-decoration:none;margin-bottom:8px;transition:color .15s;cursor:pointer}
+.lp-footer-col a:hover{color:#2196f5}
+.lp-footer-bottom{max-width:1060px;margin:24px auto 0;padding-top:20px;border-top:1px solid rgba(33,150,243,.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.lp-footer-bottom p{font-size:12px;color:#8a9aaa}
 
 @keyframes lpUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 
@@ -483,7 +488,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
   <nav class="lp-nav">
     <div class="lp-nav-inner">
       <a class="lp-nav-logo" href="#">
-        <div class="lp-nav-icon">🎓</div>
+        <div class="lp-nav-icon"><span class="material-icons" style="font-size:20px;color:#fff">school</span></div>
         <div class="lp-nav-name">Matokeo<small>PLATFORM</small></div>
       </a>
       <div class="lp-nav-links">
@@ -545,10 +550,10 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
   <!-- TRUST BAR -->
   <div class="lp-trust">
     <div class="lp-trust-row">
-      <div class="lp-trust-item"><span class="lp-trust-ico">🔒</span> Data yako ni salama</div>
-      <div class="lp-trust-item"><span class="lp-trust-ico">⚡</span> Inafanya kazi offline</div>
-      <div class="lp-trust-item"><span class="lp-trust-ico">🌍</span> Inapatikana popote</div>
-      <div class="lp-trust-item"><span class="lp-trust-ico">💯</span> Bure kabisa</div>
+      <div class="lp-trust-item"><span class="lp-trust-ico"><span class="material-icons" style="font-size:16px">lock</span></span> Data yako ni salama</div>
+      <div class="lp-trust-item"><span class="lp-trust-ico"><span class="material-icons" style="font-size:16px">bolt</span></span> Inafanya kazi offline</div>
+      <div class="lp-trust-item"><span class="lp-trust-ico"><span class="material-icons" style="font-size:16px">public</span></span> Inapatikana popote</div>
+      <div class="lp-trust-item"><span class="lp-trust-ico"><span class="material-icons" style="font-size:16px">verified</span></span> Bure kabisa</div>
     </div>
   </div>
 
@@ -561,32 +566,32 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
     </div>
     <div class="lp-feat-grid">
       <div class="lp-feat">
-        <div class="lp-feat-ico green">📊</div>
+        <div class="lp-feat-ico green"><span class="material-icons" style="font-size:24px;color:#2196f5">dashboard</span></div>
         <h3>Dashboard ya Matokeo</h3>
         <p>Tazama muhtasari wa matokeo yote kwa mtazamo mmoja — wastani wa darasa, kiwango cha kufaulu, na mwenendo wa kila mwanafunzi.</p>
       </div>
       <div class="lp-feat">
-        <div class="lp-feat-ico blue">📄</div>
+        <div class="lp-feat-ico blue"><span class="material-icons" style="font-size:24px;color:#42a5f5">picture_as_pdf</span></div>
         <h3>Report Cards PDF</h3>
         <p>Tengeneza report cards za kitaalamu kwa PDF — zina grade, nafasi, wastani, na maoni ya mwalimu. Tayari kuchapishwa.</p>
       </div>
       <div class="lp-feat">
-        <div class="lp-feat-ico amber">📥</div>
+        <div class="lp-feat-ico amber"><span class="material-icons" style="font-size:24px;color:#ffa726">file_download</span></div>
         <h3>Import Data kwa Pamoja</h3>
         <p>Pakia wanafunzi wengi kwa mara moja kupitia faili ya Excel au CSV. Hakuna haja ya kuandika mwanafunzi mmoja mmoja.</p>
       </div>
       <div class="lp-feat">
-        <div class="lp-feat-ico red">📈</div>
+        <div class="lp-feat-ico red"><span class="material-icons" style="font-size:24px;color:#ef5350">analytics</span></div>
         <h3>Uchambuzi wa Kina</h3>
         <p>Grafu na takwimu za kila somo — wastani, kiwango cha kufaulu, na mwenendo wa matokeo kwa muda.</p>
       </div>
       <div class="lp-feat">
-        <div class="lp-feat-ico teal">☁️</div>
+        <div class="lp-feat-ico teal"><span class="material-icons" style="font-size:24px;color:#4db6ac">cloud</span></div>
         <h3>Cloud Sync</h3>
         <p>Data yako inahifadhiwa kwenye cloud kupitia Firebase — inapatikana popote ulipo, kwenye kifaa chochote.</p>
       </div>
       <div class="lp-feat">
-        <div class="lp-feat-ico purple">📋</div>
+        <div class="lp-feat-ico purple"><span class="material-icons" style="font-size:24px;color:#ab82ff">assignment</span></div>
         <h3>Export Excel & Backup</h3>
         <p>Export data yako kwenda Excel au hifadhi backup ya JSON kwa usalama wa data yako.</p>
       </div>
@@ -594,7 +599,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
   </div>
 
   <!-- HOW IT WORKS -->
-  <div class="lp-section" id="lp-how" style="background:rgba(76,175,80,.02);max-width:100%;padding-left:0;padding-right:0">
+  <div class="lp-section" id="lp-how" style="background:rgba(33,150,243,.02);max-width:100%;padding-left:0;padding-right:0">
     <div style="max-width:1060px;margin:0 auto;padding:0 32px">
       <div class="lp-sec-head">
         <div class="lp-sec-tag">Jinsi Inafanya Kazi</div>
@@ -670,8 +675,8 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
     <div class="lp-footer-inner">
       <div class="lp-footer-brand">
         <div style="display:flex;align-items:center;gap:10px">
-          <div style="width:34px;height:34px;background:linear-gradient(135deg,#4caf50,#81c784);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px">🎓</div>
-          <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#1b5e20">Matokeo Platform</div>
+          <div style="width:34px;height:34px;background:linear-gradient(135deg,#2196f5,#64b5f6);border-radius:9px;display:flex;align-items:center;justify-content:center"><span class="material-icons" style="font-size:18px;color:#fff">school</span></div>
+          <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#0d47a1">Matokeo Platform</div>
         </div>
         <p>Mfumo wa kisasa wa kusimamia matokeo ya shule kwa walimu wa Tanzania. Bure, rahisi, na wa kuaminika.</p>
       </div>
@@ -689,7 +694,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
     </div>
     <div class="lp-footer-bottom">
       <p>© 2026 Matokeo Platform. Haki zote zimehifadhiwa.</p>
-      <p>Imetengenezwa kwa ❤️ kwa walimu wa Tanzania</p>
+      <p>Imetengenezwa kwa <span class="material-icons" style="font-size:14px;color:#ef5350;vertical-align:middle">favorite</span> kwa walimu wa Tanzania</p>
     </div>
   </div>
 </div>
@@ -697,7 +702,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 <div id="login-screen" style="display:none">
   <div class="l-bg"><div class="l-grid"></div></div>
   <div class="l-card">
-    <div class="l-icon">🎓</div>
+    <div class="l-icon"><span class="material-icons" style="font-size:28px;color:#fff">school</span></div>
     <h1 class="l-title">Matokeo Platform</h1>
     <p class="l-sub">School Results Management System</p>
     <p class="l-ver">VERSION 3.0</p>
@@ -714,6 +719,11 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
       </div>
       <div class="l-err" id="l-err">Jina au nywila si sahihi. Jaribu tena.</div>
       <button class="btn-login" id="btn-login" onclick="doLogin()">INGIA →</button>
+      <div style="display:flex;align-items:center;gap:10px;margin:14px 0"><div style="flex:1;height:1px;background:rgba(200,220,240,.5)"></div><span style="font-size:11px;color:var(--muted);font-weight:600;letter-spacing:1px">AU</span><div style="flex:1;height:1px;background:rgba(200,220,240,.5)"></div></div>
+      <button class="btn-google" id="btn-google-signin" onclick="doGoogleSignIn()">
+        <svg style="width:18px;height:18px;margin-right:8px" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Ingia na Google
+      </button>
       <div class="l-toggle">
         Huna akaunti? <a onclick="toggleAuthForm('signup')">Jiandikishe hapa</a>
       </div>
@@ -741,8 +751,8 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
       <div class="fw">
         <label>Aina ya Akaunti</label>
         <div style="display:flex;gap:10px">
-          <label style="flex:1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);text-transform:none;letter-spacing:0;font-weight:500;cursor:pointer;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:10px 12px"><input type="radio" name="su-mode" value="create" checked onchange="onSignupModeChange()">🏫 Fungua Shule (Admin)</label>
-          <label style="flex:1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);text-transform:none;letter-spacing:0;font-weight:500;cursor:pointer;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:10px 12px"><input type="radio" name="su-mode" value="join" onchange="onSignupModeChange()">🤝 Jiunge (Teacher)</label>
+          <label style="flex:1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);text-transform:none;letter-spacing:0;font-weight:500;cursor:pointer;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:10px 12px"><input type="radio" name="su-mode" value="create" checked onchange="onSignupModeChange()"><span class="material-icons" style="font-size:16px;color:var(--accent)">school</span> Fungua Shule (Admin)</label>
+          <label style="flex:1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);text-transform:none;letter-spacing:0;font-weight:500;cursor:pointer;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:10px 12px"><input type="radio" name="su-mode" value="join" onchange="onSignupModeChange()"><span class="material-icons" style="font-size:16px;color:var(--accent)">group_add</span> Jiunge (Teacher)</label>
         </div>
       </div>
       <div class="fw" id="su-school-row">
@@ -764,24 +774,24 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 </div>
 
 <div id="app" style="display:none">
-  <button class="mob-btn" onclick="toggleSB()">☰</button>
+  <button class="mob-btn" onclick="toggleSB()"><span class="material-icons" style="font-size:22px">menu</span></button>
   <aside id="sidebar">
     <div class="sb-hd">
       <div class="sb-logo">
-        <div class="sb-icon">🎓</div>
+        <div class="sb-icon"><span class="material-icons" style="font-size:18px;color:#fff">school</span></div>
         <div class="sb-name">Matokeo<br><small>Platform v3.0</small></div>
       </div>
     </div>
     <nav class="sb-nav">
-      <div class="nav-item active" onclick="showView('dashboard')" id="nav-dashboard"><span class="nav-icon">📊</span> Dashboard</div>
-      <div class="nav-item" onclick="showView('add')" id="nav-add"><span class="nav-icon">➕</span> Ongeza Mwanafunzi</div>
-      <div class="nav-item" onclick="showView('students')" id="nav-students"><span class="nav-icon">👥</span> Wanafunzi Wote</div>
-      <div class="nav-item" onclick="showView('import')" id="nav-import"><span class="nav-icon">📥</span> Import Data</div>
-      <div class="nav-item" onclick="showView('reports')" id="nav-reports"><span class="nav-icon">📄</span> Report Cards</div>
+      <div class="nav-item active" onclick="showView('dashboard')" id="nav-dashboard"><span class="nav-icon">dashboard</span> Dashboard</div>
+      <div class="nav-item" onclick="showView('add')" id="nav-add"><span class="nav-icon">person_add</span> Ongeza Mwanafunzi</div>
+      <div class="nav-item" onclick="showView('students')" id="nav-students"><span class="nav-icon">group</span> Wanafunzi Wote</div>
+      <div class="nav-item" onclick="showView('import')" id="nav-import"><span class="nav-icon">file_download</span> Import Data</div>
+      <div class="nav-item" onclick="showView('reports')" id="nav-reports"><span class="nav-icon">description</span> Report Cards</div>
       <div class="nav-divider"></div>
-      <div class="nav-item" onclick="showView('analytics')" id="nav-analytics"><span class="nav-icon">📈</span> Uchambuzi</div>
-      <div class="nav-item" onclick="showView('settings')" id="nav-settings"><span class="nav-icon">⚙️</span> Mipangilio</div>
-      <div class="nav-item" onclick="showView('users')" id="nav-users" style="display:none"><span class="nav-icon">👤</span> Watumiaji (Admin)</div>
+      <div class="nav-item" onclick="showView('analytics')" id="nav-analytics"><span class="nav-icon">analytics</span> Uchambuzi</div>
+      <div class="nav-item" onclick="showView('settings')" id="nav-settings"><span class="nav-icon">settings</span> Mipangilio</div>
+      <div class="nav-item" onclick="showView('users')" id="nav-users" style="display:none"><span class="nav-icon">manage_accounts</span> Watumiaji (Admin)</div>
     </nav>
     <div class="sb-ft">
       <div class="sync-badge sync-off" id="sync-badge">
@@ -792,7 +802,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
         <span class="sync-dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></span>
         <span id="session-text" style="color:var(--amber)">Session: 30:00</span>
       </div>
-      <button class="btn-logout" onclick="doLogout()"><span>🚪</span> Toka Mfumo</button>
+      <button class="btn-logout" onclick="doLogout()"><span class="material-icons" style="font-size:18px">logout</span> Toka Mfumo</button>
     </div>
   </aside>
 
@@ -808,12 +818,12 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
         <div class="skeleton skel-stat"></div><div class="skeleton skel-stat"></div><div class="skeleton skel-stat"></div><div class="skeleton skel-stat"></div>
       </div>
       <div class="cmp">
-        <div class="cmp-title">📊 Wastani wa Kila Somo</div>
+        <div class="cmp-title"><span class="material-icons" style="font-size:16px;vertical-align:middle;margin-right:4px">bar_chart</span> Wastani wa Kila Somo</div>
         <div class="ch"><canvas id="cmp-chart"></canvas><div class="skeleton skel-chart" id="skel-cmp" style="position:absolute;inset:0"></div></div>
       </div>
       <div class="tw">
         <div class="t-toolbar">
-          <span class="sec-t">🏆 Wanafunzi Bora (Top 10)</span>
+          <span class="sec-t"><span class="material-icons" style="font-size:16px;vertical-align:middle;margin-right:4px">emoji_events</span> Wanafunzi Bora (Top 10)</span>
           <a class="va" onclick="showView('students')">Ona wote →</a>
         </div>
         <div style="overflow-x:auto">
@@ -838,8 +848,8 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
         <p class="fsec">MATOKEO YA MASOMO (0 – 100)</p>
         <div class="subj-grid" id="subj-grid"></div>
         <div class="fa">
-          <button class="btn-pri" onclick="saveStudent()">💾 HIFADHI MATOKEO</button>
-          <button class="btn-sec" onclick="resetForm()">✖ Futa Fomu</button>
+          <button class="btn-pri" onclick="saveStudent()"><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:4px">save</span> HIFADHI MATOKEO</button>
+          <button class="btn-sec" onclick="resetForm()"><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:4px">close</span> Futa Fomu</button>
         </div>
       </div>
     </section>
@@ -853,13 +863,13 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
       <div class="tw">
         <div class="t-toolbar">
           <div class="sw-r">
-            <span class="si">🔍</span>
+            <span class="si"><span class="material-icons" style="font-size:16px">search</span></span>
             <input class="search-inp" type="text" id="srch" placeholder="Tafuta jina..." oninput="renderTable()">
           </div>
           <div class="exp-btns">
-            <button class="btn-exp bp" onclick="expPDF()">📄 PDF</button>
-            <button class="btn-exp bx" onclick="expExcel()">📊 Excel</button>
-            <button class="btn-exp" onclick="window.print()" style="background:rgba(76,175,80,.08);color:var(--green);border-color:rgba(76,175,80,.2)">🖨️ Print</button>
+            <button class="btn-exp bp" onclick="expPDF()"><span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">picture_as_pdf</span> PDF</button>
+            <button class="btn-exp bx" onclick="expExcel()"><span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">table_chart</span> Excel</button>
+            <button class="btn-exp" onclick="window.print()" style="background:rgba(33,150,243,.08);color:var(--green);border-color:rgba(33,150,243,.2)"><span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">print</span> Print</button>
           </div>
         </div>
         <div style="overflow-x:auto" class="stu-table-wrap">
@@ -875,7 +885,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
     <section class="view" id="view-import">
       <div class="ph"><h1>Import Data</h1><p>Pakia faili ya Excel au CSV ya wanafunzi kwa pamoja</p></div>
       <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-inp').click()">
-        <div class="dz-icon">📁</div>
+        <div class="dz-icon"><span class="material-icons" style="font-size:48px;color:var(--green)">folder_open</span></div>
         <div class="dz-text">Bonyeza hapa au buruta faili yako</div>
         <div class="dz-sub">Excel (.xlsx, .xls) au CSV — Max 5MB</div>
         <input type="file" id="file-inp" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFile(this.files[0])">
@@ -883,7 +893,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
       <div id="import-section" style="display:none">
         <div class="import-preview" id="import-preview">
           <div class="ip-hd">
-            <span>📋 Preview ya Data</span>
+            <span><span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">assignment</span> Preview ya Data</span>
             <span id="import-count" style="color:var(--accent);font-size:13px"></span>
           </div>
           <div style="overflow-x:auto">
@@ -891,8 +901,8 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           </div>
         </div>
         <div class="fa">
-          <button class="btn-pri" onclick="confirmImport()">✅ INGIZA WANAFUNZI</button>
-          <button class="btn-sec" onclick="cancelImport()">✖ Ghairi</button>
+          <button class="btn-pri" onclick="confirmImport()"><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:4px">check_circle</span> INGIZA WANAFUNZI</button>
+          <button class="btn-sec" onclick="cancelImport()"><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:4px">close</span> Ghairi</button>
         </div>
       </div>
       <div class="form-card" style="margin-top:24px;max-width:100%">
@@ -905,7 +915,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           </table>
         </div>
         <div style="margin-top:14px">
-          <button class="btn-exp bx" onclick="downloadTemplate()">📥 Pakua Template (Excel)</button>
+          <button class="btn-exp bx" onclick="downloadTemplate()"><span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">file_download</span> Pakua Template (Excel)</button>
         </div>
       </div>
     </section>
@@ -922,7 +932,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
             <p style="font-size:14px;font-weight:600">Wanafunzi: <span id="rep-count" style="color:var(--accent)">0</span></p>
           </div>
           <div class="exp-btns">
-            <button class="btn-exp bp" onclick="genAllReports()">📄 Tengeneza Zote</button>
+            <button class="btn-exp bp" onclick="genAllReports()"><span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">picture_as_pdf</span> Tengeneza Zote</button>
           </div>
         </div>
         <div style="overflow-x:auto">
@@ -948,7 +958,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 
       <div class="settings-grid">
         <div class="settings-card">
-          <h3>🏫 Taarifa za Shule</h3>
+          <h3><span class="material-icons" style="font-size:18px;color:var(--accent)">school</span> Taarifa za Shule</h3>
           <div class="fg" style="margin-bottom:14px">
             <label>Jina la Shule</label>
             <input type="text" id="set-school" placeholder="Mfano: Shule ya Msingi Galaxia" oninput="saveSettings()">
@@ -964,7 +974,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
         </div>
 
         <div class="settings-card" id="card-grading">
-          <h3>🎓 Mipaka ya Gredi (Wewe Unaweka)</h3>
+          <h3><span class="material-icons" style="font-size:18px;color:var(--accent)">grading</span> Mipaka ya Gredi (Wewe Unaweka)</h3>
           <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Weka alama ya chini kabisa ya kila gredi. F ni chini ya D.</p>
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
             <div class="fg"><label>A ≥</label><input type="number" id="gb-A" min="0" max="100" oninput="saveGrading()"></div>
@@ -982,7 +992,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
         </div>
 
         <div class="settings-card">
-          <h3>📚 Madarasa</h3>
+          <h3><span class="material-icons" style="font-size:18px;color:var(--accent)">menu_book</span> Madarasa</h3>
           <div class="tag-list" id="class-tags"></div>
           <div class="tag-add">
             <input type="text" id="new-class" placeholder="Ongeza darasa (mfano: 7A)" onkeydown="if(event.key==='Enter')addClass()">
@@ -991,7 +1001,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
         </div>
 
         <div class="settings-card">
-          <h3>📅 Muda wa Masomo (Terms)</h3>
+          <h3><span class="material-icons" style="font-size:18px;color:var(--accent)">calendar_today</span> Muda wa Masomo (Terms)</h3>
           <div class="tag-list" id="term-tags"></div>
           <div class="tag-add">
             <input type="text" id="new-term" placeholder="Ongeza muda (mfano: Term 1)" onkeydown="if(event.key==='Enter')addTerm()">
@@ -1000,24 +1010,24 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
         </div>
 
         <div class="settings-card" id="card-joincode" style="display:none">
-          <h3>🤝 Join Code (Walimu Kujiunga)</h3>
+          <h3><span class="material-icons" style="font-size:18px;color:var(--accent)">group_add</span> Join Code (Walimu Kujiunga)</h3>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
-            <span id="joincode-value" style="font-family:'Cinzel',serif;font-size:26px;font-weight:700;letter-spacing:4px;color:var(--accent);background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);border-radius:10px;padding:8px 18px">——</span>
-            <button class="btn-sec" onclick="regenJoinCode()" style="font-size:12px">🔄 Badilisha</button>
+            <span id="joincode-value" style="font-family:'Cinzel',serif;font-size:26px;font-weight:700;letter-spacing:4px;color:var(--accent);background:rgba(33,150,243,.08);border:1px solid rgba(33,150,243,.2);border-radius:10px;padding:8px 18px">——</span>
+            <button class="btn-sec" onclick="regenJoinCode()" style="font-size:12px"><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:2px">refresh</span> Badilisha</button>
           </div>
           <p style="font-size:11px;color:var(--muted);line-height:1.6">Mwalimu mpya ajiandikishe akitumia code hii atakuwa <strong>Teacher</strong> kwenye shule hii. Kubadilisha code kunafuta ile ya zamani.</p>
         </div>
 
         <div class="settings-card" id="card-users" style="display:none">
-          <h3>👤 Watumiaji wa Shule</h3>
+          <h3><span class="material-icons" style="font-size:18px;color:var(--accent)">manage_accounts</span> Watumiaji wa Shule</h3>
           <div id="users-list" style="font-size:13px"></div>
         </div>
       </div>
 
         <div class="settings-card">
-          <h3>☁️ Cloud Sync (Firebase)</h3>
+          <h3><span class="material-icons" style="font-size:18px;color:var(--accent)">cloud</span> Cloud Sync (Firebase)</h3>
           <div class="fb-status fb-no" id="fb-status">
-            <span>⚪</span> <span>Inaunganisha...</span>
+            <span><span class="material-icons" style="font-size:16px;color:var(--muted)">circle</span></span> <span>Inaunganisha...</span>
           </div>
           <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6">
             Data inahifadhiwa kwenye cloud na inapatikana kwenye vifaa vyote. Bila mtandao, data inabaki kwenye kifaa na inasync ukirudi mtandaoni. Usanidi wa Firebase uko kwenye code (config za web si siri kwa design — usalama unatoka kwenye Firestore rules na Firebase Auth).
@@ -1026,13 +1036,13 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
       </div>
 
       <div class="settings-card" style="max-width:100%">
-        <h3>💾 Data Management</h3>
+        <h3><span class="material-icons" style="font-size:18px;color:var(--accent)">storage</span> Data Management</h3>
         <div class="fa" style="margin-top:0">
-          <button class="btn-exp bx" onclick="exportAllData()">📤 Export Data Yote (Backup)</button>
-          <button class="btn-exp bx" onclick="document.getElementById('json-inp').click()" style="background:rgba(66,165,245,.08);color:var(--blue);border-color:rgba(66,165,245,.2)">📥 Import Backup (JSON)</button>
+          <button class="btn-exp bx" onclick="exportAllData()"><span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">file_upload</span> Export Data Yote (Backup)</button>
+          <button class="btn-exp bx" onclick="document.getElementById('json-inp').click()" style="background:rgba(66,165,245,.08);color:var(--blue);border-color:rgba(66,165,245,.2)"><span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">file_download</span> Import Backup (JSON)</button>
           <input type="file" id="json-inp" accept=".json" style="display:none" onchange="importBackup(this.files[0])">
-          <button class="btn-exp" onclick="importOldData()" style="background:rgba(255,183,77,.08);color:var(--amber);border-color:rgba(255,183,77,.2)">🕰️ Leta Data ya Kale (localStorage)</button>
-          <button class="btn-exp bp" onclick="confirmClearAll()" id="btn-clearall" style="border-color:rgba(239,83,80,.2)">🗑️ Futa Data Yote</button>
+          <button class="btn-exp" onclick="importOldData()" style="background:rgba(255,183,77,.08);color:var(--amber);border-color:rgba(255,183,77,.2)"><span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">history</span> Leta Data ya Kale (localStorage)</button>
+          <button class="btn-exp bp" onclick="confirmClearAll()" id="btn-clearall" style="border-color:rgba(239,83,80,.2)"><span class="material-icons" style="font-size:15px;vertical-align:middle;margin-right:4px">delete</span> Futa Data Yote</button>
         </div>
         <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6">
           Import ya backup inaonyesha preview kwanzi: utaona nini kitaongezwa na nini kubadilishwa kabla ya kuthibitisha. Kitufe cha "Data ya Kale" kinachukua wanafunzi waliohifadhiwa kwenye browser hii na toleo la zamani la mfumo.
@@ -1057,7 +1067,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 
 <div id="modal-ov" onclick="closeModal()">
   <div class="mbox" onclick="event.stopPropagation()">
-    <h3 class="mt" id="modal-title">⚠️ Thibitisha</h3>
+    <h3 class="mt" id="modal-title"><span class="material-icons" style="font-size:18px;vertical-align:middle;margin-right:4px">warning</span> Thibitisha</h3>
     <p class="mb" id="modal-body">Je, una uhakika?</p>
     <div class="ma">
       <button class="btn-sec" onclick="closeModal()">Hapana</button>
@@ -1066,7 +1076,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
   </div>
 </div>
 
-<div id="toast"><div class="toast-body"><span id="t-ico">✅</span><span id="t-msg">Imehifadhiwa!</span></div><div class="toast-progress" id="toast-progress"></div></div>
+<div id="toast"><div class="toast-body"><span id="t-ico"><span class="material-icons" style="font-size:20px">check_circle</span></span><span id="t-msg">Imehifadhiwa!</span></div><div class="toast-progress" id="toast-progress"></div></div>
 
 <script>
 const SUBS = [
@@ -1135,7 +1145,7 @@ function flushPush() {
   if (!window.Auth || !Auth.current) return;
   Cloud.pushStudents(DATA, DELETED_IDS.splice(0))
     .then(() => updateSyncBadge())
-    .catch(err => { toast('⚠️', 'Cloud save imeshindikana — data iko local. ' + (Cloud.state.msg||'')); updateSyncBadge(); });
+    .catch(err => { toast('warning', 'Cloud save imeshindikana — data iko local. ' + (Cloud.state.msg||'')); updateSyncBadge(); });
 }
 function save() { markDirtyAndPush(); } // compatibility wrapper for existing calls
 function saveSettings() {
@@ -1143,7 +1153,7 @@ function saveSettings() {
   SETTINGS.year = document.getElementById('set-year').value || '2026';
   SETTINGS.teacherName = document.getElementById('set-teacher').value || '';
   localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
-  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('⚠️','Settings haziku-sync: ' + (Cloud.state.msg||err.message)));
+  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('warning','Settings haziku-sync: ' + (Cloud.state.msg||err.message)));
   refreshAllSelects();
 }
 
@@ -1157,7 +1167,7 @@ function initFirebase() {
 function setFbStatus(kind, msg) {
   const el = document.getElementById('fb-status');
   if (!el) return;
-  const ico = kind === 'ok' ? '🟢' : kind === 'err' ? '🔴' : '⚪';
+  const ico = kind === 'ok' ? '<span class="material-icons" style="font-size:16px;color:var(--green)">check_circle</span>' : kind === 'err' ? '<span class="material-icons" style="font-size:16px;color:var(--red)">error</span>' : '<span class="material-icons" style="font-size:16px;color:var(--muted)">circle</span>';
   el.className = 'fb-status ' + (kind === 'ok' ? 'fb-ok' : kind === 'err' ? 'fb-err' : 'fb-no');
   el.innerHTML = '<span>' + ico + '</span> <span>' + esc(msg) + '</span>';
 }
@@ -1168,10 +1178,10 @@ function updateSyncBadge() {
   const dot = b ? b.querySelector('.sync-dot') : null;
   if (!b || !t) return;
   b.className = 'sync-badge';
-  if (st.state === 'ok') { b.style.background='rgba(76,175,80,.1)'; b.style.borderColor='rgba(76,175,80,.2)'; t.style.color='var(--green)'; if(dot) dot.style.background='var(--green)'; t.textContent = 'Cloud Sync ON'; }
+  if (st.state === 'ok') { b.style.background='rgba(33,150,243,.1)'; b.style.borderColor='rgba(33,150,243,.2)'; t.style.color='var(--green)'; if(dot) dot.style.background='var(--green)'; t.textContent = 'Cloud Sync ON'; }
   else if (st.state === 'syncing') { b.style.background='rgba(66,165,245,.1)'; b.style.borderColor='rgba(66,165,245,.2)'; t.style.color='var(--blue)'; if(dot) dot.style.background='var(--blue)'; t.textContent = 'Inasync...'; }
   else if (st.state === 'error') { b.style.background='rgba(239,83,80,.1)'; b.style.borderColor='rgba(239,83,80,.2)'; t.style.color='var(--red)'; if(dot) dot.style.background='var(--red)'; t.textContent = 'Sync Imeshindikana'; }
-  else { b.style.background='rgba(107,154,107,.08)'; b.style.borderColor='rgba(255,255,255,.3)'; t.style.color='var(--muted)'; if(dot) dot.style.background='var(--muted)'; t.textContent = 'Offline Mode'; }
+  else { b.style.background='rgba(100,160,200,.08)'; b.style.borderColor='rgba(255,255,255,.3)'; t.style.color='var(--muted)'; if(dot) dot.style.background='var(--muted)'; t.textContent = 'Offline Mode'; }
 }
 
 /* ---------- Auth state ---------- */
@@ -1232,7 +1242,7 @@ function afterDataLoad() {
   if (pendingJoinCode && IS_ADMIN) {
     const code = pendingJoinCode;
     pendingJoinCode = null;
-    showConfirm('🔑 Join Code ya Shule Yako',
+    showConfirm('<span class="material-icons" style="font-size:18px;vertical-align:middle;margin-right:4px">key</span> Join Code ya Shule Yako',
       'Wape code hii walimu wako ili wajiunge na shule yako wakijiandikisha:<br><br>' +
       '<div style="font-size:2em;letter-spacing:.35em;font-weight:800;color:var(--gold);text-align:center;padding:.3em 0;background:rgba(255,255,255,.05);border-radius:8px">' + esc(code) + '</div>' +
       '<br>Ukipoteza, itaonekana kwenye <strong>Settings</strong> au ubadilishe huko.',
@@ -1240,7 +1250,7 @@ function afterDataLoad() {
   }
 }
 function promptSyncConflict(localData, res) {
-  showConfirm('⚠️ Mgongano wa Data',
+  showConfirm('<span class="material-icons" style="font-size:18px;vertical-align:middle;margin-right:4px">warning</span> Mgongano wa Data',
     'Data ya local na cloud zinatofautiana. Chagua: <br><br><strong>Cloud</strong> — tumia data ya cloud, punguzi local (backup itapakuliwa kwanzi).<br><strong>Local</strong> — tumia data ya kifaa hiki na itapelekwa cloud.',
     [
       {label:'Tumia Cloud', cls:'btn-e', fn: () => {
@@ -1279,8 +1289,14 @@ function showAuthError(elId, msg) {
 }
 function setAuthBusy(btnId, busy, label) {
   const b = document.getElementById(btnId);
+  if (!b) return;
   b.disabled = busy;
-  b.textContent = busy ? 'SUBIRI...' : label;
+  if (btnId === 'btn-google-signin') {
+    if (busy) { b.dataset.origHtml = b.innerHTML; b.innerHTML = '<span class="material-icons" style="font-size:18px;margin-right:8px;animation:spin 1s linear infinite">progress_activity</span> SUBIRI...'; }
+    else if (b.dataset.origHtml) { b.innerHTML = b.dataset.origHtml; }
+  } else {
+    b.textContent = busy ? 'SUBIRI...' : label;
+  }
   b.style.opacity = busy ? '.6' : '1';
 }
 
@@ -1294,6 +1310,27 @@ function doLogin() {
     // onUserChanged handles UI on success; show error here on failure
     .catch(e => { showAuthError('l-err', e.message); })
     .finally(() => setAuthBusy('btn-login', false, 'INGIA →'));
+}
+
+var _googleUser = null;
+function doGoogleSignIn() {
+  setAuthBusy('btn-google-signin', true, 'Inaunganisha...');
+  Auth.googleSignIn()
+    .then(function (result) {
+      if (result.isNew) {
+        _googleUser = { fullName: result.user.displayName || '', email: result.user.email || '' };
+        toggleAuthForm('signup');
+        document.getElementById('su-name').value = _googleUser.fullName;
+        document.getElementById('su-email').value = _googleUser.email;
+        document.getElementById('su-email').readOnly = true;
+        document.getElementById('su-pass').parentElement.style.display = 'none';
+        document.getElementById('su-pass2').parentElement.style.display = 'none';
+        document.getElementById('btn-signup').textContent = 'KAMILISHA KUJIANDIKISHA →';
+        document.getElementById('l-err').style.display = 'none';
+      }
+    })
+    .catch(function (e) { showAuthError('l-err', e.message); })
+    .finally(function () { setAuthBusy('btn-google-signin', false); });
 }
 
 function signupMode() {
@@ -1314,6 +1351,23 @@ function doSignup() {
   const schoolName = (document.getElementById('su-school').value || '').trim();
   const joinCode = (document.getElementById('su-code').value || '').trim().toUpperCase();
 
+  if (_googleUser) {
+    if (!fullName) { showAuthError('su-err', 'Weka jina kamili.'); return; }
+    if (mode === 'create' && !schoolName) { showAuthError('su-err', 'Weka jina la shule.'); return; }
+    if (mode === 'join' && !joinCode) { showAuthError('su-err', 'Weka Join Code ya shule.'); return; }
+    setAuthBusy('btn-signup', true, 'INAKAMILISHA...');
+    Auth.completeGoogleSignup({fullName, mode, schoolName, joinCode})
+      .then(function (jc) {
+        document.getElementById('su-err').style.display = 'none';
+        if (mode === 'create' && jc) pendingJoinCode = jc;
+        _googleUser = null;
+        toast('celebration', 'Karibu ' + fullName + '!');
+      })
+      .catch(e => { showAuthError('su-err', e.message); })
+      .finally(() => setAuthBusy('btn-signup', false, 'KAMILISHA KUJIANDIKISHA →'));
+    return;
+  }
+
   if (!fullName || !email || !pass || !pass2) { showAuthError('su-err', 'Tafadhali jaza sehemu zote.'); return; }
   if (pass.length < 8) { showAuthError('su-err', 'Nywila iwe angalau herufi 8.'); return; }
   if (pass !== pass2) { showAuthError('su-err', 'Nywila hazifanani. Angalia tena.'); return; }
@@ -1325,10 +1379,10 @@ function doSignup() {
     .then(joinCodeCreated => {
       document.getElementById('su-err').style.display = 'none';
       if (mode === 'create' && joinCodeCreated) {
-        pendingJoinCode = joinCodeCreated; // shown after entering app
-        toast('🎉', 'Karibu ' + fullName + '! Shule imefunguliwa.');
+        pendingJoinCode = joinCodeCreated;
+        toast('celebration', 'Karibu ' + fullName + '! Shule imefunguliwa.');
       } else {
-        toast('🎉', 'Karibu ' + fullName + '! Umejiunge na shule.');
+        toast('celebration', 'Karibu ' + fullName + '! Umejiunge na shule.');
       }
     })
     .catch(e => showAuthError('su-err', e.message))
@@ -1345,13 +1399,20 @@ function toggleAuthForm(type) {
     loginForm.style.display = 'none';
     signupForm.style.display = 'block';
     errS.style.display = 'none';
-    document.getElementById('su-name').value = '';
-    document.getElementById('su-email').value = '';
-    document.getElementById('su-pass').value = '';
-    document.getElementById('su-pass2').value = '';
+    if (!_googleUser) {
+      document.getElementById('su-name').value = '';
+      document.getElementById('su-email').value = '';
+      document.getElementById('su-email').readOnly = false;
+      document.getElementById('su-pass').value = '';
+      document.getElementById('su-pass2').value = '';
+      document.getElementById('su-pass').parentElement.style.display = '';
+      document.getElementById('su-pass2').parentElement.style.display = '';
+      document.getElementById('btn-signup').textContent = 'FUNGUA AKOUNTI →';
+    }
     document.getElementById('su-school').value = '';
     document.getElementById('su-code').value = '';
   } else {
+    _googleUser = null;
     signupForm.style.display = 'none';
     loginForm.style.display = 'block';
     errL.style.display = 'none';
@@ -1460,7 +1521,7 @@ function getFilteredForAnalytics() {
 }
 
 function grade(s) { return Core.grade(s, SETTINGS.gradeBoundaries); }
-function gColor(g) { return {A:'#4caf50',B:'#42a5f5',C:'#ffb74d',D:'#ffa726',F:'#ef5350'}[g] || '#6b9a6b'; }
+function gColor(g) { return {A:'#2196f5',B:'#42a5f5',C:'#ffb74d',D:'#ffa726',F:'#ef5350'}[g] || '#6a8a9a'; }
 function gDesc(g) { return {A:'Bora sana',B:'Vizuri',C:'Wastani',D:'Dhaifu',F:'Shindwa'}[g] || '–'; }
 function gComment(g) { return {A:'Mwanafunzi bora. Endelea hivyo!',B:'Vizuri sana. Unaweza kufanya vizuri zaidi.',C:'Wastani. Jitahidi zaidi.',D:'Dhaifu. Unahitaji msaada wa ziada.',F:'Shindwa. Tafadhali mzunge mwalimu.'}[g] || ''; }
 function avg(stu) { return Core.avg(stu, SUBS, SETTINGS.avgMode); }
@@ -1474,7 +1535,7 @@ function buildSubjInputs() {
   SUBS.forEach(sub => {
     const d = document.createElement('div');
     d.className = 'sbox';
-    d.innerHTML = '<div class="sname">📚 ' + esc(sub.label) + '</div><div class="srow"><input class="sinp" type="number" id="sc-' + sub.key + '" min="0" max="100" placeholder="0-100" oninput="liveGrade(\'' + sub.key + '\')"><div class="lgr gb" id="gr-' + sub.key + '">–</div><div class="sbar"><div class="sbfill" id="bar-' + sub.key + '"></div></div></div>';
+    d.innerHTML = '<div class="sname"><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:2px">menu_book</span> ' + esc(sub.label) + '</div><div class="srow"><input class="sinp" type="number" id="sc-' + sub.key + '" min="0" max="100" placeholder="0-100" oninput="liveGrade(\'' + sub.key + '\')"><div class="lgr gb" id="gr-' + sub.key + '">–</div><div class="sbar"><div class="sbfill" id="bar-' + sub.key + '"></div></div></div>';
     g.appendChild(d);
   });
 }
@@ -1502,23 +1563,23 @@ function saveStudent() {
   const cls = document.getElementById('f-class').value;
   const term = document.getElementById('f-term').value;
   const eid = document.getElementById('edit-id').value;
-  if (!name) { document.getElementById('f-name').classList.add('err'); toast('⚠️','Weka jina la mwanafunzi'); return; }
-  if (!cls) { toast('⚠️','Chagua darasa'); return; }
-  if (!term) { toast('⚠️','Chagua muda wa masomo'); return; }
+  if (!name) { document.getElementById('f-name').classList.add('err'); toast('warning','Weka jina la mwanafunzi'); return; }
+  if (!cls) { toast('warning','Chagua darasa'); return; }
+  if (!term) { toast('warning','Chagua muda wa masomo'); return; }
   const scores = {};
   SUBS.forEach(sub => {
     const v = document.getElementById('sc-' + sub.key).value;
     scores[sub.key] = v !== '' ? Number(v) : null;
   });
   const scoreErrors = Core.validateScores(scores, SUBS);
-  if (scoreErrors.length) { toast('⚠️','Alama si sahihi: ' + scoreErrors[0]); return; }
+  if (scoreErrors.length) { toast('warning','Alama si sahihi: ' + scoreErrors[0]); return; }
   if (eid) {
     const i = DATA.findIndex(s => s.id === eid);
     if (i !== -1) { DATA[i] = {...DATA[i], name, class:cls, term, scores, updatedAt: new Date().toISOString(), _dirty: true}; }
   } else {
     DATA.push({id: newId(), name, class:cls, term, year:SETTINGS.year, scores, createdAt: new Date().toISOString(), _dirty: true});
   }
-  save(); resetForm(); showView('students'); toast('✅','Imehifadhiwa!');
+  save(); resetForm(); showView('students'); toast('check_circle','Imehifadhiwa!');
 }
 
 function renderTable() {
@@ -1528,20 +1589,20 @@ function renderTable() {
   const cards = document.getElementById('stu-cards');
   if (!d.length) {
     body.innerHTML = '<tr class="empty-row"><td colspan="13">Hakuna wanafunzi. Ongeza mwanafunzi au import data.</td></tr>';
-    cards.innerHTML = '<div class="empty-state"><span class="es-icon">👥</span><div class="es-title">Hakuna Wanafunzi</div><div class="es-sub">Ongeza mwanafunzi mmoja mmoja au import data kwa pamoja</div></div>';
+    cards.innerHTML = '<div class="empty-state"><span class="es-icon"><span class="material-icons" style="font-size:56px">group</span></span><div class="es-title">Hakuna Wanafunzi</div><div class="es-sub">Ongeza mwanafunzi mmoja mmoja au import data kwa pamoja</div></div>';
     return;
   }
   body.innerHTML = d.map((s, i) => {
     const a = avg(s);
     const pos = positions[s.id];
     const posClass = pos === 1 ? 'pos-1' : pos === 2 ? 'pos-2' : pos === 3 ? 'pos-3' : '';
-    return '<tr><td>' + (i+1) + '</td><td><strong>' + esc(s.name) + '</strong></td><td>' + esc(s.class || '–') + '</td><td>' + esc(s.term || '–') + '</td>' + SUBS.map(sub => '<td>' + fmt(s.scores[sub.key]) + '</td>').join('') + '<td class="avg-cell">' + a + '</td><td class="pos-cell ' + posClass + '">' + (pos || '–') + '</td><td><div class="act"><button class="btn-e" onclick="editStu(\'' + s.id + '\')">✏️</button><button class="btn-rc" onclick="genReport(\'' + s.id + '\')">📄</button><button class="btn-d" onclick="confirmDel(\'' + s.id + '\')">🗑️</button></div></td></tr>';
+    return '<tr><td>' + (i+1) + '</td><td><strong>' + esc(s.name) + '</strong></td><td>' + esc(s.class || '–') + '</td><td>' + esc(s.term || '–') + '</td>' + SUBS.map(sub => '<td>' + fmt(s.scores[sub.key]) + '</td>').join('') + '<td class="avg-cell">' + a + '</td><td class="pos-cell ' + posClass + '">' + (pos || '–') + '</td><td><div class="act"><button class="btn-e" onclick="editStu(\'' + s.id + '\')"><span class="material-icons" style="font-size:15px">edit</span></button><button class="btn-rc" onclick="genReport(\'' + s.id + '\')"><span class="material-icons" style="font-size:15px">description</span></button><button class="btn-d" onclick="confirmDel(\'' + s.id + '\')"><span class="material-icons" style="font-size:15px">delete</span></button></div></td></tr>';
   }).join('');
   cards.innerHTML = d.map((s, i) => {
     const a = avg(s);
     const pos = positions[s.id];
     const posClass = pos === 1 ? 'pos-1' : pos === 2 ? 'pos-2' : pos === 3 ? 'pos-3' : '';
-    return '<div class="stu-card"><div class="sc-name">' + esc(s.name) + '</div><div class="sc-meta"><span>📚 ' + esc(s.class || '–') + '</span><span>📅 ' + esc(s.term || '–') + '</span></div><div class="sc-grades">' + SUBS.map(sub => '<div class="sc-g"><div class="sc-g-label">' + esc(sub.label.length > 6 ? sub.label.slice(0,6) + '..' : sub.label) + '</div><div class="sc-g-val" style="color:' + gColor(grade(s.scores[sub.key])) + '">' + fmt(s.scores[sub.key]) + '</div></div>').join('') + '</div><div class="sc-foot"><div><div class="sc-avg">' + a + '</div><div class="sc-pos ' + posClass + '">Nafasi: ' + (pos || '–') + '</div></div><div class="sc-acts"><button class="btn-e" onclick="editStu(\'' + s.id + '\')">✏️</button><button class="btn-rc" onclick="genReport(\'' + s.id + '\')">📄</button><button class="btn-d" onclick="confirmDel(\'' + s.id + '\')">🗑️</button></div></div></div>';
+    return '<div class="stu-card"><div class="sc-name">' + esc(s.name) + '</div><div class="sc-meta"><span><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:2px">menu_book</span> ' + esc(s.class || '–') + '</span><span><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:2px">calendar_today</span> ' + esc(s.term || '–') + '</span></div><div class="sc-grades">' + SUBS.map(sub => '<div class="sc-g"><div class="sc-g-label">' + esc(sub.label.length > 6 ? sub.label.slice(0,6) + '..' : sub.label) + '</div><div class="sc-g-val" style="color:' + gColor(grade(s.scores[sub.key])) + '">' + fmt(s.scores[sub.key]) + '</div></div>').join('') + '</div><div class="sc-foot"><div><div class="sc-avg">' + a + '</div><div class="sc-pos ' + posClass + '">Nafasi: ' + (pos || '–') + '</div></div><div class="sc-acts"><button class="btn-e" onclick="editStu(\'' + s.id + '\')"><span class="material-icons" style="font-size:15px">edit</span></button><button class="btn-rc" onclick="genReport(\'' + s.id + '\')"><span class="material-icons" style="font-size:15px">description</span></button><button class="btn-d" onclick="confirmDel(\'' + s.id + '\')"><span class="material-icons" style="font-size:15px">delete</span></button></div></div></div>';
   }).join('');
 }
 
@@ -1569,33 +1630,33 @@ function editStu(id) {
 function confirmDel(id) {
   if (!IS_ADMIN) { toast('⛔','Kufuta ni kwa Admin tu. Wasiliana na mkuu wa shule.'); return; }
   PENDING_DEL = id;
-  showConfirm('⚠️ Thibitisha Kufuta', 'Je, una uhakika unataka kufuta mwanafunzi huyu? Hatua hii haiwezi kurudishwa.', [
+  showConfirm('<span class="material-icons" style="font-size:18px;vertical-align:middle;margin-right:4px">warning</span> Thibitisha Kufuta', 'Je, una uhakika unataka kufuta mwanafunzi huyu? Hatua hii haiwezi kurudishwa.', [
     {label:'Hapana', cls:'btn-sec'},
     {label:'Ndio, Futa', cls:'btn-d', fn: () => {
       const stu = DATA.find(s => s.id === PENDING_DEL);
       DATA = DATA.filter(s => s.id !== PENDING_DEL);
       if (stu) DELETED_IDS.push(stu.id);
       Cloud.setDirty(true);
-      save(); renderTable(); toast('🗑️','Imefutwa');
+      save(); renderTable(); toast('delete','Imefutwa');
     }}
   ]);
 }
 function confirmClearAll() {
   if (!IS_ADMIN) { toast('⛔','Hii ni kwa Admin tu.'); return; }
-  showConfirm('⚠️ Futa Data Yote', 'Una uhakika unataka kufuta data YA WOTE wanafunzi? Hatua hii haiwezi kurudishwa!', [
+  showConfirm('<span class="material-icons" style="font-size:18px;vertical-align:middle;margin-right:4px">warning</span> Futa Data Yote', 'Una uhakika unataka kufuta data YA WOTE wanafunzi? Hatua hii haiwezi kurudishwa!', [
     {label:'Hapana', cls:'btn-sec'},
     {label:'Ndio, Futa Yote', cls:'btn-d', fn: () => {
-      Cloud.deleteAllStudents(DATA).catch(err => toast('⚠️','Cloud delete imeshindikana: ' + err.message));
+      Cloud.deleteAllStudents(DATA).catch(err => toast('warning','Cloud delete imeshindikana: ' + err.message));
       DATA = [];
       DELETED_IDS = [];
       Cloud.setDirty(true);
-      save(); renderDash(); toast('🗑️','Data yote imefutwa');
+      save(); renderDash(); toast('delete','Data yote imefutwa');
     }}
   ]);
 }
 function showConfirm(title, bodyHtml, actions) {
   // actions: [{label, cls, fn}] — flexible confirm dialog (also used as simple OK/cancel)
-  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-title').innerHTML = title;
   document.getElementById('modal-body').innerHTML = bodyHtml;
   const ma = document.querySelector('#modal-ov .ma');
   ma.innerHTML = '';
@@ -1616,7 +1677,7 @@ function renderDash() {
   const total = d.length;
   if (!total) {
     document.getElementById('stats-grid').innerHTML = '';
-    document.getElementById('top-body').innerHTML = '<tr class="empty-row"><td colspan="9"><div class="empty-state"><span class="es-icon">📊</span><div class="es-title">Dashboard Tupu</div><div class="es-sub">Ongeza wanafunzi au import data ili kuona takwimu</div></div></td></tr>';
+    document.getElementById('top-body').innerHTML = '<tr class="empty-row"><td colspan="9"><div class="empty-state"><span class="es-icon"><span class="material-icons" style="font-size:56px">dashboard</span></span><div class="es-title">Dashboard Tupu</div><div class="es-sub">Ongeza wanafunzi au import data ili kuona takwimu</div></div></td></tr>';
     if (CMP_CHART) { CMP_CHART.destroy(); CMP_CHART = null; }
     const ctx = document.getElementById('cmp-chart');
     if (ctx) ctx.getContext('2d').clearRect(0,0,ctx.width,ctx.height);
@@ -1659,14 +1720,14 @@ function renderCmpChart(d) {
       labels: SUBS.map(s => s.label.length > 12 ? s.label.slice(0,12) + '..' : s.label),
       datasets: [{label: 'Wastani', data: avgs, backgroundColor: avgs.map(v => gColor(Core.grade(v, boundaries()))), borderRadius: 8, borderSkipped: false}]
     },
-    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, max: 100, grid: {color: 'rgba(200,230,200,.4)'}, ticks: {color: '#6b9a6b', font: {size: 10}}}, x: {grid: {display: false}, ticks: {color: '#6b9a6b', font: {size: 10}}}}}
+    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, max: 100, grid: {color: 'rgba(200,220,240,.4)'}, ticks: {color: '#6a8a9a', font: {size: 10}}}, x: {grid: {display: false}, ticks: {color: '#6a8a9a', font: {size: 10}}}}}
   });
 }
 
 function renderAnalytics() {
   const d = getFilteredForAnalytics();
   const grid = document.getElementById('an-grid');
-  if (!d.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><span class="es-icon">📈</span><div class="es-title">Hakuna Data ya Kuchambua</div><div class="es-sub">Ongeza wanafunzi kwanza ili kupata grafu na takwimu</div></div>'; return; }
+  if (!d.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><span class="es-icon"><span class="material-icons" style="font-size:56px">analytics</span></span><div class="es-title">Hakuna Data ya Kuchambua</div><div class="es-sub">Ongeza wanafunzi kwanza ili kupata grafu na takwimu</div></div>'; return; }
   grid.innerHTML = '';
   SUBS.forEach((sub, idx) => {
     const vals = d.map(s => s.scores[sub.key]).filter(v => v !== null && v !== undefined && !isNaN(Number(v)));
@@ -1686,8 +1747,8 @@ function renderAnalytics() {
       if (CHARTS['an-'+idx]) CHARTS['an-'+idx].destroy();
       CHARTS['an-'+idx] = new Chart(ctx, {
         type: 'doughnut',
-        data: {labels: ['A','B','C','D','F'], datasets: [{data: [grades.A,grades.B,grades.C,grades.D,grades.F], backgroundColor: ['rgba(76,175,80,.65)','rgba(66,165,245,.65)','rgba(255,183,77,.65)','rgba(255,167,38,.65)','rgba(239,83,80,.65)'], borderWidth: 0}]},
-        options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'right', labels: {color: '#6b9a6b', font: {size: 11}, padding: 10}}}}
+        data: {labels: ['A','B','C','D','F'], datasets: [{data: [grades.A,grades.B,grades.C,grades.D,grades.F], backgroundColor: ['rgba(33,150,243,.65)','rgba(66,165,245,.65)','rgba(255,183,77,.65)','rgba(255,167,38,.65)','rgba(239,83,80,.65)'], borderWidth: 0}]},
+        options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'right', labels: {color: '#6a8a9a', font: {size: 11}, padding: 10}}}}
       });
     }, 50);
   });
@@ -1697,7 +1758,7 @@ function onDashFilterChange() { renderDash(); }
 
 function expPDF() {
   const d = getFilteredData();
-  if (!d.length) { toast('⚠️','Hakuna data ya kupakua'); return; }
+  if (!d.length) { toast('warning','Hakuna data ya kupakua'); return; }
   const {jsPDF} = window.jspdf;
   const doc = new jsPDF();
   const positions = computePositions(d);
@@ -1713,11 +1774,11 @@ function expPDF() {
     alternateRowStyles: {fillColor: [240,248,240]},
   });
   doc.save('matokeo-' + (SETTINGS.year||'') + '.pdf');
-  toast('📄','PDF imepakuliwa!');
+  toast('picture_as_pdf','PDF imepakuliwa!');
 }
 function expExcel() {
   const d = getFilteredData();
-  if (!d.length) { toast('⚠️','Hakuna data ya kupakua'); return; }
+  if (!d.length) { toast('warning','Hakuna data ya kupakua'); return; }
   const positions = computePositions(d);
   const rows = d.map((s,i) => ({
     '#': i+1, 'Jina': s.name, 'Darasa': s.class||'', 'Muda': s.term||'',
@@ -1728,15 +1789,15 @@ function expExcel() {
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append(wb, ws, 'Matokeo');
   XLSX.writeFile(wb, 'matokeo-' + (SETTINGS.year||'') + '.xlsx');
-  toast('📊','Excel imepakuliwa!');
+  toast('bar_chart','Excel imepakuliwa!');
 }
 
 function handleFile(file) {
   if (!file) return;
   const okTypes = ['.xlsx','.xls','.csv'];
   const lower = (file.name || '').toLowerCase();
-  if (!okTypes.some(t => lower.endsWith(t))) { toast('⚠️','Faili lazima iwe .xlsx, .xls au .csv'); return; }
-  if (file.size > 5*1024*1024) { toast('⚠️','Faili kubwa sana (max 5MB)'); return; }
+  if (!okTypes.some(t => lower.endsWith(t))) { toast('warning','Faili lazima iwe .xlsx, .xls au .csv'); return; }
+  if (file.size > 5*1024*1024) { toast('warning','Faili kubwa sana (max 5MB)'); return; }
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
@@ -1744,7 +1805,7 @@ function handleFile(file) {
       const ws = wb.Sheets[wb.SheetNames[0]];
       if (!ws) { toast('❌','Faili haina sheet'); return; }
       const json = XLSX.utils.sheet_to_json(ws, {defval: ''});
-      if (!json.length) { toast('⚠️','Faili haina data'); return; }
+      if (!json.length) { toast('warning','Faili haina data'); return; }
       // Strict parsing: invalid rows are REPORTED, not silently nulled (Core).
       IMPORT_DATA = Core.parseImportRows(json, SUBS, SETTINGS, DATA);
       showImportPreview();
@@ -1776,17 +1837,17 @@ function showImportPreview() {
 
   const btn = document.querySelector('#import-section .btn-pri');
   if (!ok.length) { btn.disabled = true; btn.style.opacity = '.5'; btn.textContent = '🚫 Hakuna Mstari Sahihi'; }
-  else { btn.disabled = false; btn.style.opacity = '1'; btn.textContent = '✅ INGIZA ' + ok.length + ' WANAFUNZI'; }
+  else { btn.disabled = false; btn.style.opacity = '1'; btn.innerHTML = '<span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:4px">check_circle</span> INGIZA ' + ok.length + ' WANAFUNZI'; }
 }
 function confirmImport() {
-  if (!IMPORT_DATA || !IMPORT_DATA.rows.length) { toast('⚠️','Hakuna data sahihi ya kuingiza'); return; }
+  if (!IMPORT_DATA || !IMPORT_DATA.rows.length) { toast('warning','Hakuna data sahihi ya kuingiza'); return; }
   // Atomic: rows were fully validated in parseImportRows — nothing partial gets written.
   IMPORT_DATA.rows.forEach(bs => {
     DATA.push({id: newId(), name: bs.name, class: bs.class, term: bs.term, year: bs.year || SETTINGS.year, scores: bs.scores, createdAt: new Date().toISOString(), _dirty: true});
   });
   const n = IMPORT_DATA.rows.length;
   save();
-  toast('✅', n + ' wameingizwa!' + (IMPORT_DATA.errors.length ? ' (' + IMPORT_DATA.errors.length + ' mistari ilirukwa kwa makosa)' : ''));
+  toast('check_circle', n + ' wameingizwa!' + (IMPORT_DATA.errors.length ? ' (' + IMPORT_DATA.errors.length + ' mistari ilirukwa kwa makosa)' : ''));
   cancelImport();
   showView('students');
 }
@@ -1822,13 +1883,13 @@ function genReport(studentId) {
 function genAllReports() {
   const cls = document.getElementById('f-class-rep').value;
   const term = document.getElementById('f-term-rep').value;
-  if (!cls || !term) { toast('⚠️','Chagua darasa na muda kwanza'); return; }
+  if (!cls || !term) { toast('warning','Chagua darasa na muda kwanza'); return; }
   const d = DATA.filter(s => s.class === cls && s.term === term);
-  if (!d.length) { toast('⚠️','Hakuna wanafunzi'); return; }
+  if (!d.length) { toast('warning','Hakuna wanafunzi'); return; }
   const positions = computePositions(d);
   d.sort((a,b) => avg(b) - avg(a));
   d.forEach(s => buildReportPDF(s, positions[s.id] || 0, d.length, true));
-  toast('📄', d.length + ' report cards zimetengenezwa!');
+  toast('picture_as_pdf', d.length + ' report cards zimetengenezwa!');
 }
 function buildReportPDF(s, pos, total, silent) {
   const {jsPDF} = window.jspdf;
@@ -1882,7 +1943,7 @@ function buildReportPDF(s, pos, total, silent) {
   doc.text('Tarehe: ' + new Date().toLocaleDateString('sw-TZ'), 130, finalY + 38);
 
   doc.save('report-' + s.name.replace(/\s+/g,'_') + '-' + (s.term||'') + '.pdf');
-  if (!silent) toast('📄','Report card imetengenezwa!');
+  if (!silent) toast('picture_as_pdf','Report card imetengenezwa!');
 }
 function hexToRgb(hex) {
   const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
@@ -1903,7 +1964,7 @@ function loadRepStudents() {
   body.innerHTML = d.map((s,i) => {
     const pos = positions[s.id];
     const posClass = pos === 1 ? 'pos-1' : pos === 2 ? 'pos-2' : pos === 3 ? 'pos-3' : '';
-    return '<tr><td>' + (i+1) + '</td><td><strong>' + esc(s.name) + '</strong></td><td>' + esc(s.class) + '</td><td>' + esc(s.term||'') + '</td><td class="avg-cell">' + avg(s) + '</td><td class="pos-cell ' + posClass + '">' + pos + '</td><td><button class="btn-rc" onclick="genReport(\'' + s.id + '\')">📄 Report Card</button></td></tr>';
+    return '<tr><td>' + (i+1) + '</td><td><strong>' + esc(s.name) + '</strong></td><td>' + esc(s.class) + '</td><td>' + esc(s.term||'') + '</td><td class="avg-cell">' + avg(s) + '</td><td class="pos-cell ' + posClass + '">' + pos + '</td><td><button class="btn-rc" onclick="genReport(\'' + s.id + '\')"><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:2px">description</span> Report Card</button></td></tr>';
   }).join('');
 }
 
@@ -1928,11 +1989,11 @@ function saveGrading() {
   };
   const next = {...SETTINGS, gradeBoundaries: gb, avgMode: document.getElementById('set-avgmode').value};
   const errs = Core.validateSettings(next);
-  if (errs.length) { toast('⚠️', errs[0]); return; }
+  if (errs.length) { toast('warning', errs[0]); return; }
   SETTINGS.gradeBoundaries = gb;
   SETTINGS.avgMode = next.avgMode;
   localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
-  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('⚠️','Grading haziku-sync: ' + (Cloud.state.msg||err.message)));
+  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('warning','Grading haziku-sync: ' + (Cloud.state.msg||err.message)));
   renderDash(); renderTable();
 }
 function renderClassTags() {
@@ -1949,20 +2010,20 @@ function renderTermTags() {
 }
 function pushSettingsChange() {
   localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
-  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('⚠️','Settings haziku-sync: ' + (Cloud.state.msg||err.message)));
+  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('warning','Settings haziku-sync: ' + (Cloud.state.msg||err.message)));
 }
 function addClass() {
   if (!IS_ADMIN) { toast('⛔','Madarasa yanabadilishwa na Admin tu.'); return; }
   const inp = document.getElementById('new-class');
   const v = inp.value.trim();
   if (!v) return;
-  if (SETTINGS.classes.includes(v)) { toast('⚠️','Darasa lipo tayari'); return; }
+  if (SETTINGS.classes.includes(v)) { toast('warning','Darasa lipo tayari'); return; }
   SETTINGS.classes.push(v);
   pushSettingsChange();
   inp.value = '';
   renderClassTags();
   refreshAllSelects();
-  toast('✅','Darasa limeongezwa');
+  toast('check_circle','Darasa limeongezwa');
 }
 function removeClass(i) {
   if (!IS_ADMIN) return;
@@ -1976,13 +2037,13 @@ function addTerm() {
   const inp = document.getElementById('new-term');
   const v = inp.value.trim();
   if (!v) return;
-  if (SETTINGS.terms.includes(v)) { toast('⚠️','Muda upo tayari'); return; }
+  if (SETTINGS.terms.includes(v)) { toast('warning','Muda upo tayari'); return; }
   SETTINGS.terms.push(v);
   pushSettingsChange();
   inp.value = '';
   renderTermTags();
   refreshAllSelects();
-  toast('✅','Muda umeongezwa');
+  toast('check_circle','Muda umeongezwa');
 }
 function removeTerm(i) {
   if (!IS_ADMIN) return;
@@ -2003,11 +2064,11 @@ function loadJoinCodeUI() {
 }
 function regenJoinCode() {
   if (!IS_ADMIN) return;
-  showConfirm('🔄 Badilisha Join Code', 'Code ya zamani itaacha kutumika. Walimu waliokuwa wamejiunga hawathiriki.', [
+  showConfirm('<span class="material-icons" style="font-size:18px;vertical-align:middle;margin-right:4px">refresh</span> Badilisha Join Code', 'Code ya zamani itaacha kutumika. Walimu waliokuwa wamejiunga hawathiriki.', [
     {label:'Ghairi', cls:'btn-sec'},
     {label:'Badilisha', cls:'btn-d', fn: () => {
       Cloud.regenerateJoinCode()
-        .then(code => { SETTINGS.joinCode = code; document.getElementById('joincode-value').textContent = code; toast('✅','Join code mpya: ' + code); })
+        .then(code => { SETTINGS.joinCode = code; document.getElementById('joincode-value').textContent = code; toast('check_circle','Join code mpya: ' + code); })
         .catch(err => toast('❌','Imeshindikana: ' + err.message));
     }}
   ]);
@@ -2024,8 +2085,8 @@ function loadUsersUI() {
       let act = '';
       if (!isMe) {
         act = u.role === 'teacher'
-          ? '<button class="btn-rc" onclick="changeUserRole(\'' + u.uid + '\',\'admin\')">⬆️ Fanya Admin</button>'
-          : '<button class="btn-e" onclick="changeUserRole(\'' + u.uid + '\',\'teacher\')">⬇️ Fanya Teacher</button>';
+          ? '<button class="btn-rc" onclick="changeUserRole(\'' + u.uid + '\',\'admin\')"><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:2px">arrow_upward</span> Fanya Admin</button>'
+          : '<button class="btn-e" onclick="changeUserRole(\'' + u.uid + '\',\'teacher\')"><span class="material-icons" style="font-size:14px;vertical-align:middle;margin-right:2px">arrow_downward</span> Fanya Teacher</button>';
       } else act = '<em style="color:var(--muted);font-size:12px">Wewe</em>';
       return '<tr><td><strong>' + esc(u.fullName || '') + '</strong></td><td>' + esc(u.email || '') + '</td><td>' + roleBadge + '</td><td>' + act + '</td></tr>';
     }).join('');
@@ -2034,11 +2095,11 @@ function loadUsersUI() {
   });
 }
 function changeUserRole(uid2, role) {
-  showConfirm('👤 Badilisha Jukumu', 'Unahakika unataka kubadilisha jukumu la mtumiaji hku kuwa <strong>' + (role === 'admin' ? 'Admin' : 'Teacher') + '</strong>?', [
+  showConfirm('<span class="material-icons" style="font-size:18px;vertical-align:middle;margin-right:4px">manage_accounts</span> Badilisha Jukumu', 'Unahakika unataka kubadilisha jukumu la mtumiaji hku kuwa <strong>' + (role === 'admin' ? 'Admin' : 'Teacher') + '</strong>?', [
     {label:'Hapana', cls:'btn-sec'},
     {label:'Ndio', cls:'btn-d', fn: () => {
       Cloud.setUserRole(uid2, role)
-        .then(() => { toast('✅','Jukumu limebadilishwa'); loadUsersUI(); })
+        .then(() => { toast('check_circle','Jukumu limebadilishwa'); loadUsersUI(); })
         .catch(err => toast('❌','Imeshindikana: ' + err.message));
     }}
   ]);
@@ -2058,9 +2119,9 @@ function importOldData() {
       }
     }
   } catch(e) {}
-  if (!found.length) { toast('ℹ️','Hakuna data ya kale iliyopatikana kwenye browser hii'); return; }
+  if (!found.length) { toast('info','Hakuna data ya kale iliyopatikana kwenye browser hii'); return; }
   const total = found.reduce((a,f) => a + f.students.length, 0);
-  showConfirm('🕰️ Leta Data ya Kale',
+  showConfirm('<span class="material-icons" style="font-size:18px;vertical-align:middle;margin-right:4px">history</span> Leta Data ya Kale',
     'Nimepata rekodi <strong>' + total + '</strong> za toleo la zamani (browser hii tu). Zitaongezwa kama wanafunzi wapya; zilizopo hazibadilishwi.',
     [
       {label:'Ghairi', cls:'btn-sec'},
@@ -2075,7 +2136,7 @@ function importOldData() {
         }));
         save();
         renderDash(); renderTable();
-        toast('✅', added + ' za kale zimeletwa!');
+        toast('check_circle', added + ' za kale zimeletwa!');
       }}
     ]);
 }
@@ -2092,7 +2153,7 @@ function exportAllData(silent) {
 
 function toast(ico, msg) {
   const el = document.getElementById('toast');
-  document.getElementById('t-ico').textContent = ico;
+  document.getElementById('t-ico').innerHTML = '<span class="material-icons" style="font-size:20px">' + ico + '</span>';
   document.getElementById('t-msg').textContent = msg;
   const prog = document.getElementById('toast-progress');
   prog.style.animation = 'none';
@@ -2160,7 +2221,7 @@ function importBackup(file) {
         '<span style="color:var(--amber)">✎ Watabadilishwa (sasa hivi: ' + plan.toUpdate.length + '): ' + plan.toUpdate.length + '</span><br><br>' +
         'Walio wapyo hawajathirika. Ukiendelea, data ya sasa ya walio hapo juu itabadilishwa.';
       if (settingsErrors.length) body += '<br><br><span style="color:var(--red)">Settings za backup zitarukwa: ' + esc(settingsErrors[0]) + '</span>';
-      showConfirm('📥 Thibitisha Import ya Backup', body, [
+      showConfirm('<span class="material-icons" style="font-size:18px;vertical-align:middle;margin-right:4px">file_download</span> Thibitisha Import ya Backup', body, [
         {label:'Ghairi', cls:'btn-sec'},
         {label:'Endelea', cls:'btn-d', fn: () => {
           plan.toUpdate.forEach(u => {
@@ -2175,7 +2236,7 @@ function importBackup(file) {
           }
           save();
           renderDash(); renderTable(); refreshSettingsUI(); refreshAllSelects();
-          toast('✅', plan.toAdd.length + ' wameongezwa, ' + plan.toUpdate.length + ' wamesasishwa!');
+          toast('check_circle', plan.toAdd.length + ' wameongezwa, ' + plan.toUpdate.length + ' wamesasishwa!');
         }}
       ]);
     } catch(err) { toast('❌','File si JSON sahihi: ' + err.message); }

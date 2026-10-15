@@ -106,6 +106,63 @@
     return firebase.auth().signOut();
   }
 
+  function googleSignIn() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    return firebase.auth().signInWithPopup(provider)
+      .then(function (cred) {
+        return firebase.firestore().collection('users').doc(cred.user.uid).get()
+          .then(function (doc) {
+            return { user: cred.user, isNew: !doc.exists };
+          });
+      })
+      .catch(function (err) { throw translateError(err); });
+  }
+
+  function completeGoogleSignup(opts) {
+    var user = firebase.auth().currentUser;
+    if (!user) return Promise.reject(new Error('Hujaingia. Jaribu tena.'));
+    if (opts.mode !== 'create' && opts.mode !== 'join') return Promise.reject(new Error('Chagua aina ya akaunti.'));
+    if (opts.mode === 'create' && !(opts.schoolName || '').trim()) return Promise.reject(new Error('Weka jina la shule.'));
+    if (opts.mode === 'join' && !(opts.joinCode || '').trim()) return Promise.reject(new Error('Weka Join Code ya shule.'));
+
+    var db = firebase.firestore();
+    var uid = user.uid;
+
+    if (opts.mode === 'join') {
+      return db.collection('joinCodes').doc(opts.joinCode.trim().toUpperCase()).get()
+        .then(function (snap) {
+          if (!snap.exists) throw new Error('Join Code haipo. Uliandikwa sawa?');
+          var schoolId = snap.data().schoolId;
+          return db.collection('users').doc(uid).set({
+            fullName: opts.fullName || user.displayName || '',
+            email: user.email || '',
+            role: 'teacher',
+            schoolId: schoolId,
+            joinCode: opts.joinCode.trim().toUpperCase(),
+            createdAt: new Date().toISOString()
+          });
+        });
+    }
+    var schoolId = 'sch_' + uid.slice(0, 10) + '_' + Date.now().toString(36);
+    var joinCode = genJoinCode();
+    return db.collection('schools').doc(schoolId).set({
+      name: opts.schoolName.trim(),
+      createdBy: uid,
+      joinCode: joinCode,
+      createdAt: new Date().toISOString()
+    }).then(function () {
+      return db.collection('joinCodes').doc(joinCode).set({ schoolId: schoolId, createdBy: uid, createdAt: new Date().toISOString() });
+    }).then(function () {
+      return db.collection('users').doc(uid).set({
+        fullName: opts.fullName || user.displayName || '',
+        email: user.email || '',
+        role: 'admin',
+        schoolId: schoolId,
+        createdAt: new Date().toISOString()
+      });
+    }).then(function () { return joinCode; });
+  }
+
   function genJoinCode() {
     var abc = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no confusing chars (0/O, 1/I)
     var s = '';
@@ -128,5 +185,5 @@
     return err instanceof Error ? err : new Error((err && err.message) || 'Hitilafu haijulikani');
   }
 
-  window.Auth = { init: init, signUp: signUp, signIn: signIn, signOut: signOut, get current() { return current; } };
+  window.Auth = { init: init, signUp: signUp, signIn: signIn, signOut: signOut, googleSignIn: googleSignIn, completeGoogleSignup: completeGoogleSignup, get current() { return current; } };
 })();
