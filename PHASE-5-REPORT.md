@@ -90,14 +90,26 @@ index.html inline scripts: OK   |   js/core.js: OK   |   js/auth.js: OK   |   js
 - Import button inazuiwa (`🚫 Hakuna Mstari Sahihi`) kama hakuna mstari sahihi ✓
 - Console: **0 errors** (baada ya kurekebisha CSP) ✓
 
+### e) Live E2E test kwenye Firebase production (`node live-e2e.test.js`)
+```
+LIVE E2E TESTS  PASSED: 18   FAILED: 0
+```
+Imethibitisha dhidi ya **Firebase project halisi** (matokeo-platform):
+- Firebase Auth: createUser, signIn, signOut — zote zinafanya kazi ✓
+- Firestore rules zimedeploy na zinateliziwa server-side ✓
+- Admin anaweza create school + profile + join code ✓
+- Teacher anaweza join kwa code na kuongeza mwanafunzi ✓
+- Teacher CANNOT delete student (PERMISSION_DENIED kama inavyotarajiwa) ✓
+- Admin CAN delete student ✓
+- Cleanup: test users na join code zimefutwa; school doc imebaki (rules: delete: if false) ✓
+
 ---
 
 ## 4. Tests Zilizoshindwa / Zisizofanyika
 
 | Test | Hali | Sababu |
 |---|---|---|
-| E2E live kwenye Firebase project yako HALISI (signup → login → sync → rules) | **HAIKUFANYIKA** | Inahitaji idhini yako: itaunda test user + data ya "TEST-DELETE-ME" kwenye project ya production. Logic yake imethibitishwa kwa emulator, lakini Auth ya mtandao halisi haijajaribiwa |
-| Automated E2E (Playwright/Cypress) | HAUKUFANYIKA | Nimeepuka kuanzisha framework mpya kwa mujibu wa masharti yako; smoke test ya mikono + unit tests ndizo zilizotumika |
+| Automated E2E (Playwright/Cypress) | HAUKUFANYIKA | Nimeepuka kuanzisha framework mpya kwa mujibu wa masharti yako; smoke test ya mikono + unit tests + live E2E ndizo zilizotumika |
 | Print ya PDF halisi (kila printer) | HAUKUFANYIKA | jsPDF logic haijagusa isipokuwa thresholds za gredi |
 | Vipimo vya performance / simu halisi | HAUKUFANYIKA | Nje ya scope ya usalama |
 
