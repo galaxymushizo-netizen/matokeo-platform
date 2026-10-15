@@ -5,123 +5,130 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Matokeo Platform v2.2</title>
 
-<meta name="theme-color" content="#dbeafe">
+<meta name="theme-color" content="#e8f5e9">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Matokeo%20Platform%22,%22short_name%22:%22Matokeo%22,%22start_url%22:%22index.html%22,%22display%22:%22standalone%22,%22background_color%22:%22#eff6ff%22,%22theme_color%22:%22#3b82f6%22,%22icons%22:[{%22src%22:%22https://via.placeholder.com/192/3b82f6/ffffff?text=MP%22,%22sizes%22:%22192x192%22,%22type%22:%22image/png%22}]}">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com; img-src 'self' data:; manifest-src data:; object-src 'none'; base-uri 'self'">
+<!-- frame-ancestors needs an HTTP header (impossible on GitHub Pages); JS frame-buster used instead -->
+<script>if (self !== top) { try { top.location = self.location; } catch (e) { document.body && (document.body.innerHTML = ''); } }</script>
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Matokeo%20Platform%22,%22short_name%22:%22Matokeo%22,%22start_url%22:%22index.html%22,%22display%22:%22standalone%22,%22background_color%22:%22%23e8f5e9%22,%22theme_color%22:%22%2366bb6a%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20192%20192'%3E%3Crect%20width='192'%20height='192'%20rx='40'%20fill='%234caf50'/%3E%3Ctext%20x='96'%20y='122'%20font-size='88'%20text-anchor='middle'%20fill='white'%20font-family='serif'%20font-weight='bold'%3EMP%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]}">
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha384-e6nUZLBkQ86NJ6TVVKAeSaK8jWa3NhkYWZFomE39AvDbQWeie9PlQqM3pmYW5d1g" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js" integrity="sha384-fCAW/rDWORTbQXSiB7mOg0QtQ5c+r0f544y6XoKjuVva0nMBlCpNUjiFeG5iMdS3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" integrity="sha384-yuGdyIzzYtOBlBG6JOWn+Ey9kpq7HocusNuxEGyyohr1eEyXpeEyehIIXC/hznw4" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js" integrity="sha384-lI+CxEx/bCvWP1b0OK13j5HTrTZP7yf1xle8TVOFq2smz6KC1RChTarRV/RHP5PP" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js" integrity="sha384-nwX2Qpkhc2sv6L0ZPkLefLGguao67toSowvePuQvGF6cG+8MUphGI2uI94Ls3JF7" crossorigin="anonymous"></script>
+
+<script src="js/core.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/cloud.js"></script>
 
 <style>
 :root {
-  --bg:#f0f4fa; --bg2:#e3ecf7;
-  --glass:rgba(255,255,255,0.60); --glass2:rgba(255,255,255,0.42); --glass3:rgba(255,255,255,0.75);
-  --border:rgba(255,255,255,0.65); --border2:rgba(100,160,230,0.25);
-  --green:#2563eb; --green2:#3b82f6; --green3:#60a5fa; --green4:#93c5fd; --green5:#bfdbfe;
-  --accent:#1d4ed8; --accent2:#1e40af;
-  --text:#0f172a; --text2:#1e3a5f; --muted:#6478a0;
+  --bg:#eef6ee; --bg2:#e0f2e0;
+  --glass:rgba(255,255,255,0.55); --glass2:rgba(255,255,255,0.38); --glass3:rgba(255,255,255,0.72);
+  --border:rgba(255,255,255,0.6); --border2:rgba(130,200,150,0.25);
+  --green:#4caf50; --green2:#66bb6a; --green3:#81c784; --green4:#a5d6a7; --green5:#c8e6c9;
+  --accent:#388e3c; --accent2:#2e7d32;
+  --text:#1b3a1b; --text2:#2e5a2e; --muted:#6b9a6b;
   --blue:#42a5f5; --amber:#ffb74d; --orange:#ffa726; --red:#ef5350;
-  --shadow:0 8px 32px rgba(30,64,175,0.10);
+  --shadow:0 8px 32px rgba(50,120,70,0.10);
   --sw:260px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;position:relative;overflow-x:hidden}
-body::before{content:'';position:fixed;top:-20%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(96,165,250,0.35) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(147,197,253,0.30) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;position:relative;overflow-x:hidden}
+body::before{content:'';position:fixed;top:-20%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(129,199,132,0.35) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-15%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(165,214,167,0.30) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0}
 ::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:rgba(191,219,254,0.3)}
+::-webkit-scrollbar-track{background:rgba(200,230,200,0.3)}
 ::-webkit-scrollbar-thumb{background:var(--green4);border-radius:3px}
 
-#login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#eff6ff 0%,#f0f4ff 40%,#e8f0fe 100%);display:flex;align-items:center;justify-content:center;z-index:999;overflow:hidden}
-.l-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(37,99,235,.12) 0,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(96,165,250,.10) 0,transparent 40%)}
+#login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#e8f5e9 0%,#f1f8e9 40%,#e0f2f1 100%);display:flex;align-items:center;justify-content:center;z-index:999;overflow:hidden}
+.l-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(76,175,80,.12) 0,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(129,199,132,.10) 0,transparent 40%)}
 .l-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.4) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.4) 1px,transparent 1px);background-size:44px 44px;opacity:.25;animation:gp 4s ease-in-out infinite}
 @keyframes gp{0%,100%{opacity:.15}50%{opacity:.30}}
-.l-card{position:relative;background:rgba(255,255,255,0.55);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:1px solid rgba(255,255,255,0.7);border-radius:20px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 25px 60px rgba(30,64,175,.12),0 0 0 1px rgba(255,255,255,0.3),inset 0 1px 0 rgba(255,255,255,0.5);animation:ci .6s cubic-bezier(.16,1,.3,1) forwards}
+.l-card{position:relative;background:rgba(255,255,255,0.55);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border:1px solid rgba(255,255,255,0.7);border-radius:20px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 25px 60px rgba(50,120,70,.12),0 0 0 1px rgba(255,255,255,0.3),inset 0 1px 0 rgba(255,255,255,0.5);animation:ci .6s cubic-bezier(.16,1,.3,1) forwards}
 @keyframes ci{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-.l-icon{width:58px;height:58px;background:linear-gradient(135deg,var(--green),var(--green3));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 8px 22px rgba(37,99,235,.25);animation:ip 2.5s ease-in-out infinite}
-@keyframes ip{0%,100%{box-shadow:0 8px 22px rgba(37,99,235,.2)}50%{box-shadow:0 8px 32px rgba(37,99,235,.4)}}
-.l-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;text-align:center;letter-spacing:1px;margin-bottom:4px;color:var(--accent2)}
+.l-icon{width:58px;height:58px;background:linear-gradient(135deg,var(--green),var(--green3));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 8px 22px rgba(76,175,80,.25);animation:ip 2.5s ease-in-out infinite}
+@keyframes ip{0%,100%{box-shadow:0 8px 22px rgba(76,175,80,.2)}50%{box-shadow:0 8px 32px rgba(76,175,80,.4)}}
+.l-title{font-family:'Cinzel',serif;font-size:22px;font-weight:600;text-align:center;letter-spacing:1px;margin-bottom:4px;color:var(--accent2)}
 .l-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:6px}
 .l-ver{text-align:center;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:28px}
 .fw{margin-bottom:16px}
 .fw label{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
-.fw input{width:100%;background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.6);border-radius:10px;padding:11px 14px;color:var(--text);font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
+.fw input{width:100%;background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.6);border-radius:10px;padding:11px 14px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
 .fw input::placeholder{color:var(--muted)}
-.fw input:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(37,99,235,.12);background:rgba(255,255,255,0.7)}
+.fw input:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(76,175,80,.12);background:rgba(255,255,255,0.7)}
 .l-err{background:rgba(239,83,80,.08);border:1px solid rgba(239,83,80,.2);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:14px;display:none}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-.btn-login{width:100%;background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;border:none;border-radius:10px;padding:13px;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:6px;box-shadow:0 4px 15px rgba(37,99,235,.2)}
-.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(37,99,235,.3)}
+.btn-login{width:100%;background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:2px;border:none;border-radius:10px;padding:13px;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:6px;box-shadow:0 4px 15px rgba(76,175,80,.2)}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(76,175,80,.3)}
 
 #app{display:flex;min-height:100vh;position:relative;z-index:1}
-#sidebar{width:var(--sw);background:rgba(255,255,255,0.45);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border-right:1px solid rgba(255,255,255,0.5);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s;overflow-y:auto;box-shadow:4px 0 30px rgba(30,64,175,0.05)}
+#sidebar{width:var(--sw);background:rgba(255,255,255,0.45);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border-right:1px solid rgba(255,255,255,0.5);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s;overflow-y:auto;box-shadow:4px 0 30px rgba(50,120,70,0.05)}
 .sb-hd{padding:22px 18px;border-bottom:1px solid rgba(255,255,255,0.4)}
 .sb-logo{display:flex;align-items:center;gap:10px}
-.sb-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green3));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;box-shadow:0 4px 12px rgba(37,99,235,.2)}
-.sb-name{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;line-height:1.3;color:var(--accent2)}
-.sb-name small{font-size:10px;color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-weight:400}
+.sb-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--green),var(--green3));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;box-shadow:0 4px 12px rgba(76,175,80,.2)}
+.sb-name{font-family:'Cinzel',serif;font-size:13px;font-weight:600;line-height:1.3;color:var(--accent2)}
+.sb-name small{font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400}
 .sb-nav{flex:1;padding:14px 10px;display:flex;flex-direction:column;gap:4px}
 .nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all .2s;color:var(--muted);font-size:13px;font-weight:500;user-select:none;border:1px solid transparent}
 .nav-item:hover{background:rgba(255,255,255,0.5);color:var(--text);border-color:rgba(255,255,255,0.4)}
-.nav-item.active{background:rgba(255,255,255,0.6);color:var(--accent);border-color:rgba(37,99,235,.25);box-shadow:0 4px 16px rgba(37,99,235,.08),inset 0 0 8px rgba(37,99,235,.04)}
+.nav-item.active{background:rgba(255,255,255,0.6);color:var(--accent);border-color:rgba(76,175,80,.25);box-shadow:0 4px 16px rgba(76,175,80,.08),inset 0 0 8px rgba(76,175,80,.04)}
 .nav-icon{font-size:16px;width:22px;text-align:center}
 .nav-divider{height:1px;background:rgba(255,255,255,0.4);margin:8px 12px}
 .sb-ft{padding:14px 10px;border-top:1px solid rgba(255,255,255,0.4)}
 .sync-badge{display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:8px;border-radius:8px;font-size:11px;font-weight:600}
-.sync-on{background:rgba(37,99,235,.1);color:var(--green);border:1px solid rgba(37,99,235,.2)}
+.sync-on{background:rgba(76,175,80,.1);color:var(--green);border:1px solid rgba(76,175,80,.2)}
 .sync-off{background:rgba(107,154,107,.08);color:var(--muted);border:1px solid rgba(255,255,255,0.3)}
 .sync-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .sync-on .sync-dot{background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite}
 .sync-off .sync-dot{background:var(--muted)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.btn-logout{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:none;border:1px solid rgba(255,255,255,0.4);color:var(--muted);font-size:13px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.btn-logout{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:none;border:1px solid rgba(255,255,255,0.4);color:var(--muted);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
 .btn-logout:hover{background:rgba(239,83,80,.06);color:var(--red);border-color:rgba(239,83,80,.2)}
 #content{margin-left:var(--sw);flex:1;padding:32px;min-width:0;position:relative;z-index:1}
 .view{display:none}
 .view.active{display:block;animation:vi .3s ease}
 @keyframes vi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .ph{margin-bottom:26px}
-.ph h1{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:600;margin-bottom:4px;color:var(--accent2)}
+.ph h1{font-family:'Cinzel',serif;font-size:24px;font-weight:600;margin-bottom:4px;color:var(--accent2)}
 .ph p{color:var(--muted);font-size:14px}
 
 .filters-bar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
-.filter-sel{background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:8px 14px;color:var(--text);font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;cursor:pointer;min-width:160px;transition:border-color .2s}
+.filter-sel{background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:8px 14px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer;min-width:160px;transition:border-color .2s}
 .filter-sel:focus{border-color:var(--green3)}
 .filter-sel option{background:#fff;color:var(--text)}
 
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px;margin-bottom:24px}
-.stat-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;transition:all .25s;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(30,64,175,0.06)}
-.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(37,99,235,.3),transparent);opacity:0;transition:opacity .3s}
-.stat-card:hover{border-color:rgba(37,99,235,.3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(30,64,175,0.1)}
+.stat-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;transition:all .25s;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(76,175,80,.3),transparent);opacity:0;transition:opacity .3s}
+.stat-card:hover{border-color:rgba(76,175,80,.3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(50,120,70,0.1)}
 .stat-card:hover::before{opacity:1}
 .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:8px}
-.stat-value{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:var(--accent)}
+.stat-value{font-family:'Cinzel',serif;font-size:30px;font-weight:700;color:var(--accent)}
 .stat-sub{font-size:12px;color:var(--muted);margin-top:4px}
 
-.tw{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(30,64,175,0.06)}
+.tw{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
 .t-toolbar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.4);gap:12px;flex-wrap:wrap}
 .sw-r{position:relative;display:flex;align-items:center}
 .sw-r .si{position:absolute;left:10px;color:var(--muted);font-size:14px;pointer-events:none}
-.search-inp{background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:8px 14px 8px 36px;color:var(--text);font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;width:220px;transition:border-color .2s}
+.search-inp{background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:8px 14px 8px 36px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:220px;transition:border-color .2s}
 .search-inp:focus{border-color:var(--green3)}
 .search-inp::placeholder{color:var(--muted)}
 table{width:100%;border-collapse:collapse}
 thead th{padding:11px 14px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);text-align:left;background:rgba(255,255,255,0.35);border-bottom:1px solid rgba(255,255,255,0.4);white-space:nowrap}
-tbody tr{border-bottom:1px solid rgba(191,219,254,0.3);transition:background .15s}
+tbody tr{border-bottom:1px solid rgba(200,230,200,0.3);transition:background .15s}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:rgba(37,99,235,.04)}
+tbody tr:hover{background:rgba(76,175,80,.04)}
 td{padding:11px 14px;font-size:13px;vertical-align:middle}
 .gb{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-weight:700;font-size:11px}
-.gA{background:rgba(37,99,235,.15);color:var(--green)}
+.gA{background:rgba(76,175,80,.15);color:var(--green)}
 .gB{background:rgba(66,165,245,.15);color:var(--blue)}
 .gC{background:rgba(255,183,77,.15);color:var(--amber)}
 .gD{background:rgba(255,167,38,.15);color:var(--orange)}
@@ -132,105 +139,105 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 .pos-2{color:#78909c}
 .pos-3{color:#8d6e63}
 .act{display:flex;gap:7px}
-.btn-e,.btn-d,.btn-rc{padding:5px 11px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.btn-e,.btn-d,.btn-rc{padding:5px 11px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid;font-family:'DM Sans',sans-serif;transition:all .15s}
 .btn-e{background:rgba(66,165,245,.08);color:var(--blue);border-color:rgba(66,165,245,.2)}
 .btn-e:hover{background:rgba(66,165,245,.15)}
 .btn-d{background:rgba(239,83,80,.08);color:var(--red);border-color:rgba(239,83,80,.2)}
 .btn-d:hover{background:rgba(239,83,80,.15)}
-.btn-rc{background:rgba(37,99,235,.08);color:var(--green);border-color:rgba(37,99,235,.2)}
-.btn-rc:hover{background:rgba(37,99,235,.15)}
+.btn-rc{background:rgba(76,175,80,.08);color:var(--green);border-color:rgba(76,175,80,.2)}
+.btn-rc:hover{background:rgba(76,175,80,.15)}
 .exp-btns{display:flex;gap:9px;flex-wrap:wrap}
-.btn-exp{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.btn-exp{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid;font-family:'DM Sans',sans-serif;transition:all .15s}
 .bp{background:rgba(239,83,80,.08);color:var(--red);border-color:rgba(239,83,80,.2)}
 .bp:hover{background:rgba(239,83,80,.15);transform:translateY(-1px)}
-.bx{background:rgba(37,99,235,.08);color:var(--green);border-color:rgba(37,99,235,.2)}
-.bx:hover{background:rgba(37,99,235,.15);transform:translateY(-1px)}
+.bx{background:rgba(76,175,80,.08);color:var(--green);border-color:rgba(76,175,80,.2)}
+.bx:hover{background:rgba(76,175,80,.15);transform:translateY(-1px)}
 .empty-row td{text-align:center;padding:40px;color:var(--muted);font-style:italic}
 
-.form-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:26px;max-width:740px;box-shadow:0 4px 20px rgba(30,64,175,0.06)}
-.fsec{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--accent);letter-spacing:1px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.4)}
+.form-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:26px;max-width:740px;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+.fsec{font-family:'Cinzel',serif;font-size:12px;color:var(--accent);letter-spacing:1px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.4)}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 .frow-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
 .fg label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:6px}
-.fg input,.fg select{width:100%;background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:10px 13px;color:var(--text);font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
-.fg input:focus,.fg select:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(37,99,235,.1);background:rgba(255,255,255,0.7)}
+.fg input,.fg select{width:100%;background:rgba(255,255,255,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:10px 13px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s}
+.fg input:focus,.fg select:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(76,175,80,.1);background:rgba(255,255,255,0.7)}
 .fg input::placeholder{color:var(--muted)}
 .fg input.err{border-color:var(--red)}
 .fg select option{background:#fff;color:var(--text)}
 .subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
 .sbox{background:rgba(255,255,255,0.45);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:12px;padding:13px;transition:border-color .2s}
-.sbox:focus-within{border-color:rgba(37,99,235,.35)}
+.sbox:focus-within{border-color:rgba(76,175,80,.35)}
 .sname{font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .srow{display:flex;align-items:center;gap:9px}
-.sinp{width:72px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:8px;padding:7px 10px;color:var(--text);font-size:14px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;outline:none;text-align:center;transition:border-color .2s}
+.sinp{width:72px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:8px;padding:7px 10px;color:var(--text);font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;outline:none;text-align:center;transition:border-color .2s}
 .sinp:focus{border-color:var(--green3)}
 .sinp.err{border-color:var(--red)}
 .lgr{font-size:12px;font-weight:700;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all .2s;background:rgba(255,255,255,0.4);color:var(--muted)}
-.sbar{flex:1;height:4px;background:rgba(191,219,254,0.4);border-radius:2px;overflow:hidden}
+.sbar{flex:1;height:4px;background:rgba(200,230,200,0.4);border-radius:2px;overflow:hidden}
 .sbfill{height:100%;border-radius:2px;transition:width .3s,background .3s;background:var(--green);width:0%}
 .fa{display:flex;gap:11px;align-items:center;margin-top:4px;flex-wrap:wrap}
-.btn-pri{background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;border:none;border-radius:10px;padding:12px 26px;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 15px rgba(37,99,235,.15)}
-.btn-pri:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(37,99,235,.25)}
-.btn-sec{background:rgba(255,255,255,0.5);color:var(--text);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:11px 18px;font-size:13px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s;backdrop-filter:blur(8px)}
+.btn-pri{background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:1.5px;border:none;border-radius:10px;padding:12px 26px;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 15px rgba(76,175,80,.15)}
+.btn-pri:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(76,175,80,.25)}
+.btn-sec{background:rgba(255,255,255,0.5);color:var(--text);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:11px 18px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;backdrop-filter:blur(8px)}
 .btn-sec:hover{background:rgba(255,255,255,0.7)}
 
 .an-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px;margin-bottom:24px}
-.cc{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;transition:all .25s;box-shadow:0 4px 20px rgba(30,64,175,0.06)}
-.cc:hover{border-color:rgba(37,99,235,.2);box-shadow:0 8px 30px rgba(30,64,175,0.1)}
-.ct{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;margin-bottom:3px;color:var(--accent2)}
+.cc{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;transition:all .25s;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+.cc:hover{border-color:rgba(76,175,80,.2);box-shadow:0 8px 30px rgba(50,120,70,0.1)}
+.ct{font-family:'Cinzel',serif;font-size:13px;font-weight:600;margin-bottom:3px;color:var(--accent2)}
 .ca{font-size:12px;color:var(--muted);margin-bottom:14px}
 .ca span{color:var(--accent);font-weight:700}
 .ch{position:relative;height:185px}
-.cmp{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;margin-bottom:20px;box-shadow:0 4px 20px rgba(30,64,175,0.06)}
-.cmp-title{font-family:'Space Grotesk',sans-serif;font-size:14px;margin-bottom:16px;color:var(--accent2)}
+.cmp{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:20px;margin-bottom:20px;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+.cmp-title{font-family:'Cinzel',serif;font-size:14px;margin-bottom:16px;color:var(--accent2)}
 
 .sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
-.sec-t{font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--accent2)}
+.sec-t{font-family:'Cinzel',serif;font-size:14px;color:var(--accent2)}
 .va{font-size:12px;color:var(--green);cursor:pointer}
 .va:hover{color:var(--accent)}
 .rank{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;background:rgba(255,255,255,0.4);color:var(--muted)}
-.r1{background:rgba(37,99,235,.15);color:var(--accent)}
+.r1{background:rgba(76,175,80,.15);color:var(--accent)}
 .r2{background:rgba(120,144,156,.12);color:#78909c}
 .r3{background:rgba(141,110,99,.12);color:#8d6e63}
 
-.drop-zone{border:2px dashed rgba(37,99,235,.3);border-radius:14px;padding:48px 24px;text-align:center;transition:all .3s;cursor:pointer;margin-bottom:20px;background:rgba(255,255,255,0.25)}
-.drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(37,99,235,.06)}
+.drop-zone{border:2px dashed rgba(76,175,80,.3);border-radius:14px;padding:48px 24px;text-align:center;transition:all .3s;cursor:pointer;margin-bottom:20px;background:rgba(255,255,255,0.25)}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--green);background:rgba(76,175,80,.06)}
 .drop-zone .dz-icon{font-size:48px;margin-bottom:12px}
 .drop-zone .dz-text{font-size:15px;color:var(--text);margin-bottom:6px}
 .drop-zone .dz-sub{font-size:12px;color:var(--muted)}
-.import-preview{background:rgba(255,255,255,0.45);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.5);border-radius:14px;overflow:hidden;margin-bottom:20px;box-shadow:0 4px 20px rgba(30,64,175,0.06)}
+.import-preview{background:rgba(255,255,255,0.45);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.5);border-radius:14px;overflow:hidden;margin-bottom:20px;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
 .import-preview .ip-hd{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.4);display:flex;justify-content:space-between;align-items:center}
-.import-preview .ip-hd span{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--accent2)}
+.import-preview .ip-hd span{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--accent2)}
 .import-preview table{max-height:300px;overflow-y:auto;display:block}
 .import-preview thead th{position:sticky;top:0;z-index:1}
 
 .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
-.settings-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:22px;transition:all .25s;box-shadow:0 4px 20px rgba(30,64,175,0.06)}
-.settings-card:hover{border-color:rgba(37,99,235,.2)}
-.settings-card h3{font-family:'Space Grotesk',sans-serif;font-size:14px;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--accent2)}
+.settings-card{background:rgba(255,255,255,0.5);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:22px;transition:all .25s;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+.settings-card:hover{border-color:rgba(76,175,80,.2)}
+.settings-card h3{font-family:'Cinzel',serif;font-size:14px;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--accent2)}
 .tag-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;backdrop-filter:blur(6px)}
 .tag .tag-rm{cursor:pointer;color:var(--red);font-size:14px;line-height:1}
 .tag .tag-rm:hover{color:#e53935}
 .tag-add{display:flex;gap:8px}
-.tag-add input{flex:1;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none}
+.tag-add input{flex:1;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none}
 .tag-add input:focus{border-color:var(--green3)}
 .tag-add button{background:linear-gradient(135deg,var(--green),var(--green3));color:#fff;border:none;border-radius:8px;padding:8px 16px;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s}
-.tag-add button:hover{box-shadow:0 4px 12px rgba(37,99,235,.2)}
+.tag-add button:hover{box-shadow:0 4px 12px rgba(76,175,80,.2)}
 .fb-status{padding:12px;border-radius:10px;font-size:13px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.fb-ok{background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);color:var(--green)}
+.fb-ok{background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);color:var(--green)}
 .fb-no{background:rgba(107,154,107,.06);border:1px solid rgba(255,255,255,0.3);color:var(--muted)}
 .fb-err{background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.15);color:var(--red)}
-.fg textarea{width:100%;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:10px 13px;color:var(--text);font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;resize:vertical;min-height:80px;transition:border-color .2s;backdrop-filter:blur(8px)}
-.fg textarea:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(37,99,235,.1);background:rgba(255,255,255,0.7)}
+.fg textarea{width:100%;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.5);border-radius:10px;padding:10px 13px;color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;min-height:80px;transition:border-color .2s;backdrop-filter:blur(8px)}
+.fg textarea:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(76,175,80,.1);background:rgba(255,255,255,0.7)}
 
-#toast{position:fixed;bottom:22px;right:22px;background:rgba(255,255,255,0.75);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:0;font-size:13px;color:var(--text);display:flex;align-items:stretch;gap:0;box-shadow:0 12px 40px rgba(30,64,175,.12),0 0 0 1px rgba(255,255,255,0.3);z-index:9999;transform:translateX(120%);opacity:0;transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .3s;max-width:320px;overflow:hidden}
+#toast{position:fixed;bottom:22px;right:22px;background:rgba(255,255,255,0.75);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:0;font-size:13px;color:var(--text);display:flex;align-items:stretch;gap:0;box-shadow:0 12px 40px rgba(50,120,70,.12),0 0 0 1px rgba(255,255,255,0.3);z-index:9999;transform:translateX(120%);opacity:0;transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .3s;max-width:320px;overflow:hidden}
 #toast.show{transform:translateX(0);opacity:1}
 
-#modal-ov{position:fixed;inset:0;background:rgba(191,219,254,.45);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:500}
-.mbox{background:rgba(255,255,255,0.75);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid rgba(255,255,255,0.7);border-radius:18px;padding:28px;max-width:420px;width:90%;animation:mi .25s cubic-bezier(.16,1,.3,1);box-shadow:0 25px 60px rgba(30,64,175,.12)}
+#modal-ov{position:fixed;inset:0;background:rgba(200,230,200,.45);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:500}
+.mbox{background:rgba(255,255,255,0.75);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);border:1px solid rgba(255,255,255,0.7);border-radius:18px;padding:28px;max-width:420px;width:90%;animation:mi .25s cubic-bezier(.16,1,.3,1);box-shadow:0 25px 60px rgba(50,120,70,.12)}
 @keyframes mi{from{transform:scale(.95) translateY(8px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
-.mt{font-family:'Space Grotesk',sans-serif;font-size:16px;margin-bottom:10px;color:var(--accent2)}
+.mt{font-family:'Cinzel',serif;font-size:16px;margin-bottom:10px;color:var(--accent2)}
 .mb{font-size:14px;color:var(--muted);margin-bottom:22px;line-height:1.6}
 .ma{display:flex;gap:10px;justify-content:flex-end}
 
@@ -257,14 +264,14 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
   .stat-card,.tw,.form-card,.cc,.cmp,.settings-card,.import-preview{border:1px solid #ddd;background:#fff;break-inside:avoid}
   .stat-value,.avg-cell{color:var(--accent)!important}
   table{font-size:10px}
-  thead th{background:#e8f0fe!important;color:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  thead th{background:#e8f5e9!important;color:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .gb,.lgr{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .ph h1{color:var(--accent2)}
   .ph p{color:#555}
   .view:not(.print-active){display:none!important}
 }
 
-.skeleton{background:linear-gradient(90deg,rgba(191,219,254,0.4) 25%,rgba(191,219,254,0.6) 50%,rgba(191,219,254,0.4) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+.skeleton{background:linear-gradient(90deg,rgba(200,230,200,0.4) 25%,rgba(200,230,200,0.6) 50%,rgba(200,230,200,0.4) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .skel-stat{height:90px}
 .skel-row{height:42px;margin-bottom:6px}
@@ -276,7 +283,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 
 .empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
 .empty-state .es-icon{font-size:56px;margin-bottom:16px;opacity:.6;display:block}
-.empty-state .es-title{font-family:'Space Grotesk',sans-serif;font-size:16px;color:var(--accent2);margin-bottom:6px}
+.empty-state .es-title{font-family:'Cinzel',serif;font-size:16px;color:var(--accent2);margin-bottom:6px}
 .empty-state .es-sub{font-size:13px;line-height:1.6}
 
 .view.active .stat-card,.view.active .cc,.view.active .settings-card,.view.active .form-card,.view.active .tw{animation:fadeUp .4s ease both}
@@ -292,14 +299,14 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 .view.active .cc:nth-child(6){animation-delay:.3s}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-.btn-pri:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(37,99,235,.25),0 0 0 2px rgba(37,99,235,.1)}
-.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(37,99,235,.3),0 0 0 2px rgba(37,99,235,.12)}
+.btn-pri:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(76,175,80,.25),0 0 0 2px rgba(76,175,80,.1)}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(76,175,80,.3),0 0 0 2px rgba(76,175,80,.12)}
 
 @media(max-width:768px){
   .stu-table-wrap table{display:none}
   .stu-cards{display:flex!important;flex-direction:column;gap:12px}
-  .stu-card{background:rgba(255,255,255,0.55);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:16px;position:relative;box-shadow:0 4px 20px rgba(30,64,175,0.06)}
-  .stu-card .sc-name{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;margin-bottom:8px;padding-right:60px;color:var(--accent2)}
+  .stu-card{background:rgba(255,255,255,0.55);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.6);border-radius:14px;padding:16px;position:relative;box-shadow:0 4px 20px rgba(50,120,70,0.06)}
+  .stu-card .sc-name{font-family:'Cinzel',serif;font-size:14px;font-weight:600;margin-bottom:8px;padding-right:60px;color:var(--accent2)}
   .stu-card .sc-meta{display:flex;gap:12px;font-size:12px;color:var(--muted);margin-bottom:10px}
   .stu-card .sc-meta span{display:flex;align-items:center;gap:4px}
   .stu-card .sc-grades{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
@@ -307,7 +314,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
   .stu-card .sc-g .sc-g-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
   .stu-card .sc-g .sc-g-val{font-size:14px;font-weight:700}
   .stu-card .sc-foot{display:flex;justify-content:space-between;align-items:center}
-  .stu-card .sc-avg{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--accent)}
+  .stu-card .sc-avg{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--accent)}
   .stu-card .sc-pos{font-size:12px;font-weight:700}
   .stu-card .sc-acts{display:flex;gap:6px}
 }
@@ -316,129 +323,129 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 }
 
 /* ===== LANDING PAGE v2 ===== */
-#landing-page{position:fixed;inset:0;background:#eff6ff;z-index:1000;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth}
+#landing-page{position:fixed;inset:0;background:#f8fdf8;z-index:1000;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth}
 .lp-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .lp-blob{position:absolute;border-radius:50%;filter:blur(80px)}
-.lp-b1{width:500px;height:500px;top:-15%;left:-10%;background:rgba(37,99,235,0.12);animation:lpFloat 14s ease-in-out infinite}
-.lp-b2{width:400px;height:400px;bottom:-10%;right:-8%;background:rgba(96,165,250,0.10);animation:lpFloat 11s ease-in-out infinite 3s}
-.lp-b3{width:300px;height:300px;top:50%;left:55%;background:rgba(147,197,253,0.08);animation:lpFloat 9s ease-in-out infinite 5s}
+.lp-b1{width:500px;height:500px;top:-15%;left:-10%;background:rgba(76,175,80,0.12);animation:lpFloat 14s ease-in-out infinite}
+.lp-b2{width:400px;height:400px;bottom:-10%;right:-8%;background:rgba(129,199,132,0.10);animation:lpFloat 11s ease-in-out infinite 3s}
+.lp-b3{width:300px;height:300px;top:50%;left:55%;background:rgba(165,214,167,0.08);animation:lpFloat 9s ease-in-out infinite 5s}
 @keyframes lpFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(25px,-15px) scale(1.04)}66%{transform:translate(-15px,10px) scale(0.96)}}
 
 /* NAV */
-.lp-nav{position:sticky;top:0;z-index:100;background:rgba(240,244,255,0.85);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid rgba(37,99,235,0.08)}
+.lp-nav{position:sticky;top:0;z-index:100;background:rgba(248,253,248,0.82);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid rgba(76,175,80,0.08)}
 .lp-nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1140px;margin:0 auto;padding:14px 32px}
 .lp-nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none}
-.lp-nav-icon{width:38px;height:38px;background:linear-gradient(135deg,#2563eb,#60a5fa);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 3px 12px rgba(37,99,235,.2)}
-.lp-nav-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#1e40af;line-height:1.2}
-.lp-nav-name small{font-size:9px;color:#6478a0;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;letter-spacing:1px;display:block}
+.lp-nav-icon{width:38px;height:38px;background:linear-gradient(135deg,#4caf50,#81c784);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 3px 12px rgba(76,175,80,.2)}
+.lp-nav-name{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:#1b5e20;line-height:1.2}
+.lp-nav-name small{font-size:9px;color:#6b9a6b;font-family:'DM Sans',sans-serif;font-weight:500;letter-spacing:1px;display:block}
 .lp-nav-links{display:flex;align-items:center;gap:8px}
-.lp-nav-link{padding:8px 16px;font-size:13px;font-weight:500;color:#4a6a9a;border-radius:8px;cursor:pointer;transition:all .15s;text-decoration:none;border:none;background:none;font-family:'Plus Jakarta Sans',sans-serif}
-.lp-nav-link:hover{color:#1d4ed8;background:rgba(37,99,235,.06)}
-.lp-nav-cta{background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:9px;padding:9px 22px;cursor:pointer;transition:all .2s;box-shadow:0 3px 12px rgba(37,99,235,.18);font-family:'Plus Jakarta Sans',sans-serif}
-.lp-nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(37,99,235,.28)}
+.lp-nav-link{padding:8px 16px;font-size:13px;font-weight:500;color:#4a7a4a;border-radius:8px;cursor:pointer;transition:all .15s;text-decoration:none;border:none;background:none;font-family:'DM Sans',sans-serif}
+.lp-nav-link:hover{color:#2e7d32;background:rgba(76,175,80,.06)}
+.lp-nav-cta{background:linear-gradient(135deg,#4caf50,#66bb6a);color:#fff;font-size:13px;font-weight:600;border:none;border-radius:9px;padding:9px 22px;cursor:pointer;transition:all .2s;box-shadow:0 3px 12px rgba(76,175,80,.18);font-family:'DM Sans',sans-serif}
+.lp-nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(76,175,80,.28)}
 
 /* HERO */
 .lp-hero{position:relative;z-index:10;text-align:center;padding:100px 24px 70px;max-width:820px;margin:0 auto}
-.lp-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.15);border-radius:50px;padding:7px 18px;font-size:12px;font-weight:600;color:#2563eb;letter-spacing:.5px;margin-bottom:32px;animation:lpUp .7s ease both}
-.lp-pill-dot{width:7px;height:7px;background:#2563eb;border-radius:50%;box-shadow:0 0 6px #2563eb;animation:pulse 2s infinite}
-.lp-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(34px,5.5vw,56px);font-weight:700;color:#0f172a;line-height:1.12;margin-bottom:20px;letter-spacing:-0.5px;animation:lpUp .7s ease .1s both}
-.lp-hero h1 .lp-grad{background:linear-gradient(135deg,#2563eb 0%,#1d4ed8 50%,#3b82f6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.lp-hero .lp-desc{font-size:clamp(15px,2vw,18px);color:#5a7a9a;line-height:1.75;max-width:620px;margin:0 auto 40px;animation:lpUp .7s ease .2s both}
+.lp-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(76,175,80,.07);border:1px solid rgba(76,175,80,.15);border-radius:50px;padding:7px 18px;font-size:12px;font-weight:600;color:#388e3c;letter-spacing:.5px;margin-bottom:32px;animation:lpUp .7s ease both}
+.lp-pill-dot{width:7px;height:7px;background:#4caf50;border-radius:50%;box-shadow:0 0 6px #4caf50;animation:pulse 2s infinite}
+.lp-hero h1{font-family:'Cinzel',serif;font-size:clamp(34px,5.5vw,56px);font-weight:700;color:#1b3a1b;line-height:1.12;margin-bottom:20px;letter-spacing:-0.5px;animation:lpUp .7s ease .1s both}
+.lp-hero h1 .lp-grad{background:linear-gradient(135deg,#4caf50 0%,#2e7d32 50%,#66bb6a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lp-hero .lp-desc{font-size:clamp(15px,2vw,18px);color:#5a8a5a;line-height:1.75;max-width:620px;margin:0 auto 40px;animation:lpUp .7s ease .2s both}
 .lp-hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:lpUp .7s ease .3s both}
-.lp-btn-pri{background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;border:none;border-radius:12px;padding:15px 36px;cursor:pointer;transition:all .2s;box-shadow:0 6px 24px rgba(37,99,235,.22)}
-.lp-btn-pri:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(37,99,235,.32)}
-.lp-btn-sec{background:#fff;color:#1d4ed8;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:600;border:1.5px solid rgba(37,99,235,.2);border-radius:12px;padding:15px 36px;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.03)}
-.lp-btn-sec:hover{border-color:rgba(37,99,235,.4);background:rgba(37,99,235,.03);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.lp-btn-pri{background:linear-gradient(135deg,#4caf50,#66bb6a);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;border:none;border-radius:12px;padding:15px 36px;cursor:pointer;transition:all .2s;box-shadow:0 6px 24px rgba(76,175,80,.22)}
+.lp-btn-pri:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(76,175,80,.32)}
+.lp-btn-sec{background:#fff;color:#2e7d32;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;border:1.5px solid rgba(76,175,80,.2);border-radius:12px;padding:15px 36px;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.lp-btn-sec:hover{border-color:rgba(76,175,80,.4);background:rgba(76,175,80,.03);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.06)}
 
 /* HERO MOCKUP */
 .lp-mockup{position:relative;z-index:10;max-width:900px;margin:0 auto 20px;padding:0 24px;animation:lpUp .7s ease .4s both}
-.lp-mockup-img{background:rgba(255,255,255,.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);border-radius:16px;padding:16px;box-shadow:0 20px 60px rgba(30,64,175,.08),0 1px 3px rgba(0,0,0,.04)}
+.lp-mockup-img{background:rgba(255,255,255,.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.8);border-radius:16px;padding:16px;box-shadow:0 20px 60px rgba(50,120,70,.08),0 1px 3px rgba(0,0,0,.04)}
 .lp-mockup-bar{display:flex;gap:6px;margin-bottom:12px}
 .lp-mockup-dot{width:10px;height:10px;border-radius:50%}
 .lp-mockup-dot:nth-child(1){background:#ef5350}
 .lp-mockup-dot:nth-child(2){background:#ffb74d}
-.lp-mockup-dot:nth-child(3){background:#2563eb}
+.lp-mockup-dot:nth-child(3){background:#4caf50}
 .lp-mockup-body{display:grid;grid-template-columns:200px 1fr;gap:12px;min-height:220px}
-.lp-mockup-side{background:rgba(37,99,235,.05);border-radius:10px;padding:14px}
-.lp-mockup-side-item{height:10px;border-radius:5px;margin-bottom:10px;background:rgba(37,99,235,.12)}
+.lp-mockup-side{background:rgba(76,175,80,.05);border-radius:10px;padding:14px}
+.lp-mockup-side-item{height:10px;border-radius:5px;margin-bottom:10px;background:rgba(76,175,80,.12)}
 .lp-mockup-side-item:nth-child(2){width:75%}
 .lp-mockup-side-item:nth-child(3){width:60%}
 .lp-mockup-side-item:nth-child(4){width:85%}
-.lp-mockup-side-item.active{background:rgba(37,99,235,.3)}
+.lp-mockup-side-item.active{background:rgba(76,175,80,.3)}
 .lp-mockup-main{display:flex;flex-direction:column;gap:10px}
 .lp-mockup-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.lp-mockup-stat{background:rgba(37,99,235,.04);border-radius:8px;padding:12px 8px;text-align:center}
-.lp-mockup-stat-val{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#1d4ed8}
-.lp-mockup-stat-lbl{font-size:8px;color:#6478a0;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-.lp-mockup-chart{flex:1;background:rgba(37,99,235,.03);border-radius:10px;position:relative;overflow:hidden}
+.lp-mockup-stat{background:rgba(76,175,80,.04);border-radius:8px;padding:12px 8px;text-align:center}
+.lp-mockup-stat-val{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:#2e7d32}
+.lp-mockup-stat-lbl{font-size:8px;color:#6b9a6b;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.lp-mockup-chart{flex:1;background:rgba(76,175,80,.03);border-radius:10px;position:relative;overflow:hidden}
 .lp-mockup-chart-bars{display:flex;align-items:flex-end;gap:6px;height:80px;padding:12px}
-.lp-mbar{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(to top,rgba(37,99,235,.3),rgba(37,99,235,.15));animation:lpBarGrow 1.2s ease forwards}
+.lp-mbar{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(to top,rgba(76,175,80,.3),rgba(76,175,80,.15));animation:lpBarGrow 1.2s ease forwards}
 @keyframes lpBarGrow{from{height:0}to{height:var(--h)}}
 
 /* TRUST BAR */
 .lp-trust{position:relative;z-index:10;text-align:center;padding:30px 24px 50px;animation:lpUp .7s ease .5s both}
 .lp-trust-row{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
-.lp-trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#6478a0;font-weight:500}
+.lp-trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#6b9a6b;font-weight:500}
 .lp-trust-ico{font-size:16px}
 
 /* SECTION COMMON */
 .lp-section{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:80px 32px}
 .lp-sec-head{text-align:center;margin-bottom:48px}
-.lp-sec-tag{display:inline-block;font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
-.lp-sec-head h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:700;color:#0f172a;margin-bottom:10px}
-.lp-sec-head p{font-size:15px;color:#6478a0;max-width:540px;margin:0 auto;line-height:1.7}
+.lp-sec-tag{display:inline-block;font-size:11px;font-weight:700;color:#4caf50;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
+.lp-sec-head h2{font-family:'Cinzel',serif;font-size:clamp(24px,3.5vw,36px);font-weight:700;color:#1b3a1b;margin-bottom:10px}
+.lp-sec-head p{font-size:15px;color:#6b9a6b;max-width:540px;margin:0 auto;line-height:1.7}
 
 /* FEATURES */
 .lp-feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.lp-feat{background:#fff;border:1px solid rgba(37,99,235,.08);border-radius:16px;padding:30px 26px;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.02)}
-.lp-feat:hover{transform:translateY(-4px);border-color:rgba(37,99,235,.18);box-shadow:0 12px 40px rgba(30,64,175,.08)}
+.lp-feat{background:#fff;border:1px solid rgba(76,175,80,.08);border-radius:16px;padding:30px 26px;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.02)}
+.lp-feat:hover{transform:translateY(-4px);border-color:rgba(76,175,80,.18);box-shadow:0 12px 40px rgba(50,120,70,.08)}
 .lp-feat-ico{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:18px}
-.lp-feat-ico.green{background:rgba(37,99,235,.08)}
+.lp-feat-ico.green{background:rgba(76,175,80,.08)}
 .lp-feat-ico.blue{background:rgba(66,165,245,.08)}
 .lp-feat-ico.amber{background:rgba(255,183,77,.08)}
 .lp-feat-ico.red{background:rgba(239,83,80,.08)}
 .lp-feat-ico.teal{background:rgba(77,182,172,.08)}
 .lp-feat-ico.purple{background:rgba(171,130,255,.08)}
-.lp-feat h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#0f172a;margin-bottom:8px}
-.lp-feat p{font-size:13px;color:#6478a0;line-height:1.65}
+.lp-feat h3{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:#1b3a1b;margin-bottom:8px}
+.lp-feat p{font-size:13px;color:#6b9a6b;line-height:1.65}
 
 /* HOW IT WORKS */
 .lp-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative}
-.lp-steps::before{content:'';position:absolute;top:38px;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,rgba(37,99,235,.15),transparent)}
+.lp-steps::before{content:'';position:absolute;top:38px;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,rgba(76,175,80,.15),transparent)}
 .lp-step{text-align:center;position:relative}
-.lp-step-num{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#60a5fa);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 6px 20px rgba(37,99,235,.2);position:relative;z-index:2}
-.lp-step h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#0f172a;margin-bottom:8px}
-.lp-step p{font-size:13px;color:#6478a0;line-height:1.6;max-width:260px;margin:0 auto}
+.lp-step-num{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#4caf50,#81c784);color:#fff;font-family:'Cinzel',serif;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 6px 20px rgba(76,175,80,.2);position:relative;z-index:2}
+.lp-step h3{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:#1b3a1b;margin-bottom:8px}
+.lp-step p{font-size:13px;color:#6b9a6b;line-height:1.6;max-width:260px;margin:0 auto}
 
 /* TESTIMONIALS */
 .lp-test-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.lp-test{background:#fff;border:1px solid rgba(37,99,235,.08);border-radius:16px;padding:28px;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.02)}
-.lp-test:hover{border-color:rgba(37,99,235,.15);box-shadow:0 8px 28px rgba(30,64,175,.06)}
+.lp-test{background:#fff;border:1px solid rgba(76,175,80,.08);border-radius:16px;padding:28px;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,.02)}
+.lp-test:hover{border-color:rgba(76,175,80,.15);box-shadow:0 8px 28px rgba(50,120,70,.06)}
 .lp-test-stars{color:#ffb74d;font-size:14px;margin-bottom:12px;letter-spacing:2px}
-.lp-test p{font-size:14px;color:#3a5a7a;line-height:1.7;margin-bottom:16px;font-style:italic}
+.lp-test p{font-size:14px;color:#3a6a3a;line-height:1.7;margin-bottom:16px;font-style:italic}
 .lp-test-author{display:flex;align-items:center;gap:10px}
-.lp-test-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(96,165,250,.12));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#1d4ed8}
-.lp-test-name{font-size:13px;font-weight:600;color:#0f172a}
-.lp-test-role{font-size:11px;color:#6478a0}
+.lp-test-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(76,175,80,.12),rgba(129,199,132,.12));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#2e7d32}
+.lp-test-name{font-size:13px;font-weight:600;color:#1b3a1b}
+.lp-test-role{font-size:11px;color:#6b9a6b}
 
 /* CTA BANNER */
 .lp-cta-banner{position:relative;z-index:10;max-width:1060px;margin:0 auto 80px;padding:0 32px}
-.lp-cta-card{background:linear-gradient(135deg,#1e3a8a,#1d4ed8,#2563eb);border-radius:20px;padding:56px 48px;text-align:center;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(30,58,138,.2)}
+.lp-cta-card{background:linear-gradient(135deg,#1b5e20,#2e7d32,#388e3c);border-radius:20px;padding:56px 48px;text-align:center;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(27,94,32,.2)}
 .lp-cta-card::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 70%);border-radius:50%}
-.lp-cta-card h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:700;color:#fff;margin-bottom:12px;position:relative}
+.lp-cta-card h2{font-family:'Cinzel',serif;font-size:clamp(22px,3vw,32px);font-weight:700;color:#fff;margin-bottom:12px;position:relative}
 .lp-cta-card p{font-size:15px;color:rgba(255,255,255,.8);margin-bottom:28px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7;position:relative}
-.lp-cta-card .lp-btn-white{background:#fff;color:#1d4ed8;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;border:none;border-radius:12px;padding:15px 40px;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(0,0,0,.1);position:relative}
+.lp-cta-card .lp-btn-white{background:#fff;color:#2e7d32;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;border:none;border-radius:12px;padding:15px 40px;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(0,0,0,.1);position:relative}
 .lp-cta-card .lp-btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.15)}
 
 /* FOOTER */
-.lp-footer{position:relative;z-index:10;border-top:1px solid rgba(37,99,235,.08);padding:40px 32px;background:rgba(240,244,255,.6)}
+.lp-footer{position:relative;z-index:10;border-top:1px solid rgba(76,175,80,.08);padding:40px 32px;background:rgba(248,253,248,.6)}
 .lp-footer-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}
-.lp-footer-brand p{font-size:13px;color:#6478a0;line-height:1.7;margin-top:12px;max-width:300px}
-.lp-footer-col h4{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#0f172a;margin-bottom:14px}
-.lp-footer-col a{display:block;font-size:13px;color:#6478a0;text-decoration:none;margin-bottom:8px;transition:color .15s;cursor:pointer}
-.lp-footer-col a:hover{color:#2563eb}
-.lp-footer-bottom{max-width:1060px;margin:24px auto 0;padding-top:20px;border-top:1px solid rgba(37,99,235,.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.lp-footer-bottom p{font-size:12px;color:#8a9aba}
+.lp-footer-brand p{font-size:13px;color:#6b9a6b;line-height:1.7;margin-top:12px;max-width:300px}
+.lp-footer-col h4{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#1b3a1b;margin-bottom:14px}
+.lp-footer-col a{display:block;font-size:13px;color:#6b9a6b;text-decoration:none;margin-bottom:8px;transition:color .15s;cursor:pointer}
+.lp-footer-col a:hover{color:#4caf50}
+.lp-footer-bottom{max-width:1060px;margin:24px auto 0;padding-top:20px;border-top:1px solid rgba(76,175,80,.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.lp-footer-bottom p{font-size:12px;color:#8aaa8a}
 
 @keyframes lpUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 
@@ -587,7 +594,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
   </div>
 
   <!-- HOW IT WORKS -->
-  <div class="lp-section" id="lp-how" style="background:rgba(37,99,235,.02);max-width:100%;padding-left:0;padding-right:0">
+  <div class="lp-section" id="lp-how" style="background:rgba(76,175,80,.02);max-width:100%;padding-left:0;padding-right:0">
     <div style="max-width:1060px;margin:0 auto;padding:0 32px">
       <div class="lp-sec-head">
         <div class="lp-sec-tag">Jinsi Inafanya Kazi</div>
@@ -663,8 +670,8 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
     <div class="lp-footer-inner">
       <div class="lp-footer-brand">
         <div style="display:flex;align-items:center;gap:10px">
-          <div style="width:34px;height:34px;background:linear-gradient(135deg,#2563eb,#60a5fa);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px">🎓</div>
-          <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:#1e40af">Matokeo Platform</div>
+          <div style="width:34px;height:34px;background:linear-gradient(135deg,#4caf50,#81c784);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px">🎓</div>
+          <div style="font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:#1b5e20">Matokeo Platform</div>
         </div>
         <p>Mfumo wa kisasa wa kusimamia matokeo ya shule kwa walimu wa Tanzania. Bure, rahisi, na wa kuaminika.</p>
       </div>
@@ -695,61 +702,59 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
     <p class="l-sub">School Results Management System</p>
     <p class="l-ver">VERSION 3.0</p>
 
-    <!-- LOGIN FORM -->
+    <!-- LOGIN FORM (Firebase Auth) -->
     <div id="login-form">
       <div class="fw">
-        <label>Barua Pepe (Email)</label>
-        <input type="email" id="inp-email" placeholder="mfano@email.com" onkeydown="if(event.key==='Enter')document.getElementById('inp-p').focus()">
+        <label>Barua Pepe</label>
+        <input type="email" id="inp-e" placeholder="weka@barua.com" onkeydown="if(event.key==='Enter')doLogin()">
       </div>
       <div class="fw">
         <label>Nywila</label>
         <input type="password" id="inp-p" placeholder="Weka nywila..." onkeydown="if(event.key==='Enter')doLogin()">
       </div>
       <div class="l-err" id="l-err">Jina au nywila si sahihi. Jaribu tena.</div>
-      <button class="btn-login" onclick="doLogin()">INGIA →</button>
+      <button class="btn-login" id="btn-login" onclick="doLogin()">INGIA →</button>
       <div class="l-toggle">
         Huna akaunti? <a onclick="toggleAuthForm('signup')">Jiandikishe hapa</a>
       </div>
       <p style="text-align:center;margin-top:10px"><a href="#" onclick="event.preventDefault();goToLanding()" style="color:var(--muted);font-size:12px;text-decoration:none" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">← Rudi Nyumbani</a></p>
     </div>
 
-    <!-- FIREBASE SETUP (shown when no config) -->
-    <div id="fb-setup-form" style="display:none">
-      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6">
-        Matokeo Platform inahitaji Firebase kwa ajili ya usalama wa data yako. Weka Firebase config yako hapa chini.
-      </p>
-      <div class="fw">
-        <label>Firebase Config (JSON)</label>
-        <textarea id="fb-config-login" placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","messagingSenderId":"...","appId":"..."}' style="width:100%;min-height:100px;background:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.6);border-radius:10px;padding:10px;font-size:11px;font-family:monospace;color:var(--text);outline:none;resize:vertical"></textarea>
-      </div>
-      <div class="l-err" id="fb-setup-err"></div>
-      <button class="btn-login" onclick="setupFirebaseFromLogin()">🔗 UNGANISHA FIREBASE →</button>
-      <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6">
-        Nenda <strong>Firebase Console</strong> → Create Project → Authentication → Enable Email/Password → Firestore Database → Project Settings → Web app → Copy config JSON.
-      </p>
-      <p style="text-align:center;margin-top:10px"><a href="#" onclick="event.preventDefault();goToLanding()" style="color:var(--muted);font-size:12px;text-decoration:none" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">← Rudi Nyumbani</a></p>
-    </div>
-
-    <!-- SIGNUP FORM -->
+    <!-- SIGNUP FORM (Firebase Auth + school create/join) -->
     <div id="signup-form" style="display:none">
       <div class="fw">
         <label>Jina Kamili</label>
         <input type="text" id="su-name" placeholder="Mfano: Mwl. Amina Hassan" onkeydown="if(event.key==='Enter')document.getElementById('su-email').focus()">
       </div>
       <div class="fw">
-        <label>Barua Pepe (Email)</label>
-        <input type="email" id="su-email" placeholder="mfano@email.com" onkeydown="if(event.key==='Enter')document.getElementById('su-pass').focus()">
+        <label>Barua Pepe</label>
+        <input type="email" id="su-email" placeholder="weka@barua.com" onkeydown="if(event.key==='Enter')document.getElementById('su-pass').focus()">
       </div>
       <div class="fw">
-        <label>Nywila</label>
-        <input type="password" id="su-pass" placeholder="Angalau herufi 6..." onkeydown="if(event.key==='Enter')document.getElementById('su-pass2').focus()">
+        <label>Nywila (angalau herufi 8)</label>
+        <input type="password" id="su-pass" placeholder="Nywila yenye usalama..." onkeydown="if(event.key==='Enter')document.getElementById('su-pass2').focus()">
       </div>
       <div class="fw">
         <label>Thibitisha Nywila</label>
         <input type="password" id="su-pass2" placeholder="Rudia nywila..." onkeydown="if(event.key==='Enter')doSignup()">
       </div>
+      <div class="fw">
+        <label>Aina ya Akaunti</label>
+        <div style="display:flex;gap:10px">
+          <label style="flex:1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);text-transform:none;letter-spacing:0;font-weight:500;cursor:pointer;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:10px 12px"><input type="radio" name="su-mode" value="create" checked onchange="onSignupModeChange()">🏫 Fungua Shule (Admin)</label>
+          <label style="flex:1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text);text-transform:none;letter-spacing:0;font-weight:500;cursor:pointer;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:10px 12px"><input type="radio" name="su-mode" value="join" onchange="onSignupModeChange()">🤝 Jiunge (Teacher)</label>
+        </div>
+      </div>
+      <div class="fw" id="su-school-row">
+        <label>Jina la Shule</label>
+        <input type="text" id="su-school" placeholder="Mfano: Shule ya Msingi Galaxia" onkeydown="if(event.key==='Enter')doSignup()">
+      </div>
+      <div class="fw" id="su-code-row" style="display:none">
+        <label>Join Code ya Shule</label>
+        <input type="text" id="su-code" placeholder="Mfano: AB12CD" style="text-transform:uppercase" onkeydown="if(event.key==='Enter')doSignup()">
+      </div>
       <div class="l-err" id="su-err"></div>
-      <button class="btn-login" onclick="doSignup()">FUNGUA AKOUNTI →</button>
+      <button class="btn-login" id="btn-signup" onclick="doSignup()">FUNGUA AKOUNTI →</button>
       <div class="l-toggle">
         Una akaunti tayari? <a onclick="toggleAuthForm('login')">Ingia hapa</a>
       </div>
@@ -776,6 +781,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
       <div class="nav-divider"></div>
       <div class="nav-item" onclick="showView('analytics')" id="nav-analytics"><span class="nav-icon">📈</span> Uchambuzi</div>
       <div class="nav-item" onclick="showView('settings')" id="nav-settings"><span class="nav-icon">⚙️</span> Mipangilio</div>
+      <div class="nav-item" onclick="showView('users')" id="nav-users" style="display:none"><span class="nav-icon">👤</span> Watumiaji (Admin)</div>
     </nav>
     <div class="sb-ft">
       <div class="sync-badge sync-off" id="sync-badge">
@@ -853,7 +859,7 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           <div class="exp-btns">
             <button class="btn-exp bp" onclick="expPDF()">📄 PDF</button>
             <button class="btn-exp bx" onclick="expExcel()">📊 Excel</button>
-            <button class="btn-exp" onclick="window.print()" style="background:rgba(37,99,235,.08);color:var(--green);border-color:rgba(37,99,235,.2)">🖨️ Print</button>
+            <button class="btn-exp" onclick="window.print()" style="background:rgba(76,175,80,.08);color:var(--green);border-color:rgba(76,175,80,.2)">🖨️ Print</button>
           </div>
         </div>
         <div style="overflow-x:auto" class="stu-table-wrap">
@@ -957,6 +963,24 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           </div>
         </div>
 
+        <div class="settings-card" id="card-grading">
+          <h3>🎓 Mipaka ya Gredi (Wewe Unaweka)</h3>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Weka alama ya chini kabisa ya kila gredi. F ni chini ya D.</p>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
+            <div class="fg"><label>A ≥</label><input type="number" id="gb-A" min="0" max="100" oninput="saveGrading()"></div>
+            <div class="fg"><label>B ≥</label><input type="number" id="gb-B" min="0" max="100" oninput="saveGrading()"></div>
+            <div class="fg"><label>C ≥</label><input type="number" id="gb-C" min="0" max="100" oninput="saveGrading()"></div>
+            <div class="fg"><label>D ≥</label><input type="number" id="gb-D" min="0" max="100" oninput="saveGrading()"></div>
+          </div>
+          <div class="fg">
+            <label>Wastani unahesabiwa na</label>
+            <select id="set-avgmode" onchange="saveGrading()">
+              <option value="all">Masomo yote (6) — masomo yasiyo na alama huhesabiwa 0</option>
+              <option value="scored">Masomo yenye alama tu</option>
+            </select>
+          </div>
+        </div>
+
         <div class="settings-card">
           <h3>📚 Madarasa</h3>
           <div class="tag-list" id="class-tags"></div>
@@ -975,21 +999,28 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           </div>
         </div>
 
+        <div class="settings-card" id="card-joincode" style="display:none">
+          <h3>🤝 Join Code (Walimu Kujiunga)</h3>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+            <span id="joincode-value" style="font-family:'Cinzel',serif;font-size:26px;font-weight:700;letter-spacing:4px;color:var(--accent);background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);border-radius:10px;padding:8px 18px">——</span>
+            <button class="btn-sec" onclick="regenJoinCode()" style="font-size:12px">🔄 Badilisha</button>
+          </div>
+          <p style="font-size:11px;color:var(--muted);line-height:1.6">Mwalimu mpya ajiandikishe akitumia code hii atakuwa <strong>Teacher</strong> kwenye shule hii. Kubadilisha code kunafuta ile ya zamani.</p>
+        </div>
+
+        <div class="settings-card" id="card-users" style="display:none">
+          <h3>👤 Watumiaji wa Shule</h3>
+          <div id="users-list" style="font-size:13px"></div>
+        </div>
+      </div>
+
         <div class="settings-card">
           <h3>☁️ Cloud Sync (Firebase)</h3>
           <div class="fb-status fb-no" id="fb-status">
-            <span>⚪</span> <span>Haijawekwa — data inahifadhiwa local tu</span>
-          </div>
-          <div class="fg" style="margin-bottom:12px">
-            <label>Firebase Config (JSON)</label>
-            <textarea id="fb-config" placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","messagingSenderId":"...","appId":"..."}'></textarea>
-          </div>
-          <div class="fa">
-            <button class="btn-pri" onclick="connectFirebase()" style="font-size:11px;padding:10px 18px">🔗 Unganisha</button>
-            <button class="btn-sec" onclick="disconnectFirebase()" style="font-size:12px">Ondoa</button>
+            <span>⚪</span> <span>Inaunganisha...</span>
           </div>
           <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6">
-            Nenda <span style="color:var(--accent)">Firebase Console</span> → Create Project → Firestore Database → Project Settings → Your apps → Web app → Copy config JSON.
+            Data inahifadhiwa kwenye cloud na inapatikana kwenye vifaa vyote. Bila mtandao, data inabaki kwenye kifaa na inasync ukirudi mtandaoni. Usanidi wa Firebase uko kwenye code (config za web si siri kwa design — usalama unatoka kwenye Firestore rules na Firebase Auth).
           </p>
         </div>
       </div>
@@ -1000,13 +1031,26 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
           <button class="btn-exp bx" onclick="exportAllData()">📤 Export Data Yote (Backup)</button>
           <button class="btn-exp bx" onclick="document.getElementById('json-inp').click()" style="background:rgba(66,165,245,.08);color:var(--blue);border-color:rgba(66,165,245,.2)">📥 Import Backup (JSON)</button>
           <input type="file" id="json-inp" accept=".json" style="display:none" onchange="importBackup(this.files[0])">
-          <button class="btn-exp bp" onclick="confirmClearAll()" style="border-color:rgba(239,83,80,.2)">🗑️ Futa Data Yote</button>
+          <button class="btn-exp" onclick="importOldData()" style="background:rgba(255,183,77,.08);color:var(--amber);border-color:rgba(255,183,77,.2)">🕰️ Leta Data ya Kale (localStorage)</button>
+          <button class="btn-exp bp" onclick="confirmClearAll()" id="btn-clearall" style="border-color:rgba(239,83,80,.2)">🗑️ Futa Data Yote</button>
         </div>
         <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6">
-          Import ita-merge data ya backup na data ya sasa. Wanafunzi walio na jina, darasa na muda sawa wata-update badala ya ku-duplicate.
+          Import ya backup inaonyesha preview kwanzi: utaona nini kitaongezwa na nini kubadilishwa kabla ya kuthibitisha. Kitufe cha "Data ya Kale" kinachukua wanafunzi waliohifadhiwa kwenye browser hii na toleo la zamani la mfumo.
         </p>
       </div>
-    </div>
+    </section>
+
+    <section class="view" id="view-users">
+      <div class="ph"><h1>Watumiaji wa Shule</h1><p>Simamia walimu na majukumu yao (Admin pekee)</p></div>
+      <div class="tw" style="max-width:760px">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Jina</th><th>Barua Pepe</th><th>Jukumu</th><th>Kitendo</th></tr></thead>
+            <tbody id="users-body"><tr class="empty-row"><td colspan="4">Inapakia...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
   </main>
 </div>
@@ -1025,8 +1069,6 @@ td{padding:11px 14px;font-size:13px;vertical-align:middle}
 <div id="toast"><div class="toast-body"><span id="t-ico">✅</span><span id="t-msg">Imehifadhiwa!</span></div><div class="toast-progress" id="toast-progress"></div></div>
 
 <script>
-/* ===== MATOKEO PLATFORM v3.0 — SECURED WITH FIREBASE AUTH ===== */
-
 const SUBS = [
   {key:'hisabati', label:'Hisabati'},
   {key:'kiswahili', label:'Kiswahili'},
@@ -1036,249 +1078,284 @@ const SUBS = [
   {key:'historia', label:'Historia na Maadili'},
 ];
 
-let CURRENT_USER = null;   // {uid, email, fullName}
-let FB_APP = null;
-let FB_AUTH = null;
-let FB_DB = null;
-let FB_CONNECTED = false;
+/* Firebase web config — public by design (identifies the project only).
+ * Security comes from Firebase Auth + firestore.rules, NOT from this config. */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBXkSCW7SMaT9Iig6TvaKVDd4aBubRw1t0",
+  authDomain: "matokeo-platform.firebaseapp.com",
+  projectId: "matokeo-platform",
+  storageBucket: "matokeo-platform.firebasestorage.app",
+  messagingSenderId: "909369498980",
+  appId: "1:909369498980:web:c4cfb48b726f71f9706e71",
+  measurementId: "G-RTJRH6WWYR"
+};
 
 let DATA = [];
-let SETTINGS = {classes:['7A','7B','8A','8B'], terms:['Term 1','Term 2','Term 3'], year:'2026', schoolName:'Shule Yako', teacherName:'Mwl. Mwalimu'};
+let CURRENT_USER = null;
+let SETTINGS = {
+  classes:['7A','7B','8A','8B'], terms:['Term 1','Term 2','Term 3'],
+  year:'2026', schoolName:'Shule Yako', teacherName:'',
+  gradeBoundaries:{A:75,B:60,C:45,D:30},
+  avgMode:'all'
+};
+let DELETED_IDS = [];   // student ids to delete on next cloud push
+let IS_ADMIN = false;
 let CHARTS = {};
 let CMP_CHART = null;
 let PENDING_DEL = null;
-let IMPORT_DATA = [];
-let TOAST_T;
-let SESSION_T;
-let SESSION_SEC = 30 * 60;
-let SESSION_WARN = false;
+let IMPORT_DATA = null; // {rows, errors} from Core.parseImportRows
+let SYNC_PENDING_PUSH = false;
 
-/* ========== FIREBASE INIT ========== */
+const boundaries = () => Core.normalizeBoundaries(SETTINGS.gradeBoundaries);
+const avgFn = (s) => Core.avg(s, SUBS, SETTINGS.avgMode);
+function newId() { return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'id_' + Date.now().toString(36) + Math.random().toString(36).slice(2,10); }
 
-function tryInitFirebase() {
-  const raw = localStorage.getItem('matokeo_fb');
-  if (!raw) return false;
+/* ---------- Local cache + sync ---------- */
+function cacheKey(suffix) { return 'mtk_cache_' + (window.Auth && Auth.current ? Auth.current.uid : 'anon') + '_' + suffix; }
+
+function load() {
+  try { DATA = JSON.parse(localStorage.getItem(cacheKey('students')) || '[]'); } catch(e) { DATA = []; }
   try {
-    const cfg = JSON.parse(raw);
-    if (!cfg.projectId || !cfg.apiKey) return false;
-    if (firebase.apps.length) firebase.apps.forEach(a => a.delete().catch(()=>{}));
-    FB_APP = firebase.initializeApp(cfg);
-    FB_AUTH = firebase.auth();
-    FB_DB = firebase.firestore();
-    FB_CONNECTED = true;
-    updateSyncBadge();
-    return true;
-  } catch(e) {
-    console.warn('Firebase init failed:', e);
-    return false;
+    const s = JSON.parse(localStorage.getItem(cacheKey('settings')) || 'null');
+    if (s) SETTINGS = {...SETTINGS, ...s, gradeBoundaries: {...SETTINGS.gradeBoundaries, ...(s.gradeBoundaries||{})}};
+  } catch(e) {}
+}
+function persistLocal() {
+  try { localStorage.setItem(cacheKey('students'), JSON.stringify(DATA)); } catch(e) { toast('❌','Hifadhi ya local imejaa — backup faili zako ni muhimu!'); }
+}
+function markDirtyAndPush() {
+  persistLocal();
+  Cloud.setDirty(true);
+  if (!SYNC_PENDING_PUSH) {
+    SYNC_PENDING_PUSH = true;
+    setTimeout(() => { SYNC_PENDING_PUSH = false; flushPush(); }, 400);
   }
 }
-
-function setupFirebaseFromLogin() {
-  const raw = (document.getElementById('fb-config-login').value || '').trim();
-  const errEl = document.getElementById('fb-setup-err');
-  if (!raw) { errEl.textContent = 'Weka Firebase config JSON.'; errEl.style.display = 'block'; return; }
-  try {
-    const cfg = JSON.parse(raw);
-    if (!cfg.projectId || !cfg.apiKey) throw new Error('projectId na apiKey zinahitajika');
-    localStorage.setItem('matokeo_fb', raw);
-    if (tryInitFirebase()) {
-      errEl.style.display = 'none';
-      toast('✅', 'Firebase imeunganishwa! Sasa fungua akaunti au ingia.');
-      showLoginForm();
-    } else {
-      throw new Error('Imeshindwa kuunganisha');
-    }
-  } catch(e) {
-    errEl.textContent = 'Config si sahihi: ' + e.message;
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-  }
+function flushPush() {
+  if (!window.Auth || !Auth.current) return;
+  Cloud.pushStudents(DATA, DELETED_IDS.splice(0))
+    .then(() => updateSyncBadge())
+    .catch(err => { toast('⚠️', 'Cloud save imeshindikana — data iko local. ' + (Cloud.state.msg||'')); updateSyncBadge(); });
+}
+function save() { markDirtyAndPush(); } // compatibility wrapper for existing calls
+function saveSettings() {
+  SETTINGS.schoolName = document.getElementById('set-school').value || 'Shule Yako';
+  SETTINGS.year = document.getElementById('set-year').value || '2026';
+  SETTINGS.teacherName = document.getElementById('set-teacher').value || '';
+  localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('⚠️','Settings haziku-sync: ' + (Cloud.state.msg||err.message)));
+  refreshAllSelects();
 }
 
-function showSetupForm() {
-  document.getElementById('login-form').style.display = 'none';
-  document.getElementById('signup-form').style.display = 'none';
-  document.getElementById('fb-setup-form').style.display = 'block';
+/* ---------- Firebase init (config embedded, see top of script) ---------- */
+function initFirebase() {
+  try { firebase.initializeApp(FIREBASE_CONFIG); }
+  catch(e) { setFbStatus('err', 'Firebase init imeshindikana: ' + e.message); return; }
+  Cloud.setSyncListener(updateSyncBadge);
+  Auth.init(onUserChanged);
+}
+function setFbStatus(kind, msg) {
+  const el = document.getElementById('fb-status');
+  if (!el) return;
+  const ico = kind === 'ok' ? '🟢' : kind === 'err' ? '🔴' : '⚪';
+  el.className = 'fb-status ' + (kind === 'ok' ? 'fb-ok' : kind === 'err' ? 'fb-err' : 'fb-no');
+  el.innerHTML = '<span>' + ico + '</span> <span>' + esc(msg) + '</span>';
+}
+function updateSyncBadge() {
+  const st = Cloud.state;
+  const b = document.getElementById('sync-badge');
+  const t = document.getElementById('sync-text');
+  const dot = b ? b.querySelector('.sync-dot') : null;
+  if (!b || !t) return;
+  b.className = 'sync-badge';
+  if (st.state === 'ok') { b.style.background='rgba(76,175,80,.1)'; b.style.borderColor='rgba(76,175,80,.2)'; t.style.color='var(--green)'; if(dot) dot.style.background='var(--green)'; t.textContent = 'Cloud Sync ON'; }
+  else if (st.state === 'syncing') { b.style.background='rgba(66,165,245,.1)'; b.style.borderColor='rgba(66,165,245,.2)'; t.style.color='var(--blue)'; if(dot) dot.style.background='var(--blue)'; t.textContent = 'Inasync...'; }
+  else if (st.state === 'error') { b.style.background='rgba(239,83,80,.1)'; b.style.borderColor='rgba(239,83,80,.2)'; t.style.color='var(--red)'; if(dot) dot.style.background='var(--red)'; t.textContent = 'Sync Imeshindikana'; }
+  else { b.style.background='rgba(107,154,107,.08)'; b.style.borderColor='rgba(255,255,255,.3)'; t.style.color='var(--muted)'; if(dot) dot.style.background='var(--muted)'; t.textContent = 'Offline Mode'; }
 }
 
-function showLoginForm() {
-  document.getElementById('login-form').style.display = 'block';
-  document.getElementById('signup-form').style.display = 'none';
-  document.getElementById('fb-setup-form').style.display = 'none';
-}
-
-/* ========== AUTH (Firebase Auth) ========== */
-
-function doLogin() {
-  if (!FB_CONNECTED) { toast('⚠️', 'Firebase haijaunganishwa. Weka config kwanza.'); showSetupForm(); return; }
-  const email = (document.getElementById('inp-email').value || '').trim();
-  const pass = (document.getElementById('inp-p').value || '').trim();
-  const errEl = document.getElementById('l-err');
-
-  if (!email || !pass) {
-    errEl.textContent = 'Weka barua pepe na nywila.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
+/* ---------- Auth state ---------- */
+function onUserChanged(user, err) {
+  if (err) { setFbStatus('err', 'Profile load imeshindikana: ' + err.message); return; }
+  if (!user) {
+    // signed out
+    clearInterval(SESSION_T);
+    DATA = [];
+    IS_ADMIN = false;
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('landing-page').style.display = 'block';
+    document.getElementById('login-screen').style.display = 'none';
     return;
   }
-
-  // Disable button during login
-  const btn = document.querySelector('#login-form .btn-login');
-  btn.disabled = true; btn.textContent = 'Inaingia...';
-
-  FB_AUTH.signInWithEmailAndPassword(email, pass)
-    .then(cred => handleAuthSuccess(cred.user))
-    .catch(err => {
-      const msg = err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential'
-        ? 'Barua pepe au nywila si sahihi.'
-        : err.code === 'auth/too-many-requests'
-        ? 'Majaribio mengi sana. Jaribu baadaye.'
-        : 'Hitilafu: ' + err.message;
-      errEl.textContent = msg;
-      errEl.style.display = 'block';
-      errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-      btn.disabled = false; btn.textContent = 'INGIA →';
-    });
-}
-
-function doSignup() {
-  if (!FB_CONNECTED) { toast('⚠️', 'Firebase haijaunganishwa.'); showSetupForm(); return; }
-  const fullName = (document.getElementById('su-name').value || '').trim();
-  const email = (document.getElementById('su-email').value || '').trim();
-  const pass = document.getElementById('su-pass').value || '';
-  const pass2 = document.getElementById('su-pass2').value || '';
-  const errEl = document.getElementById('su-err');
-
-  if (!fullName || !email || !pass || !pass2) {
-    errEl.textContent = 'Tafadhali jaza sehemu zote.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  if (pass.length < 6) {
-    errEl.textContent = 'Nywila iwe angalau herufi 6.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-  if (pass !== pass2) {
-    errEl.textContent = 'Nywila hazifanani. Angalia tena.';
-    errEl.style.display = 'block';
-    errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-    return;
-  }
-
-  const btn = document.querySelector('#signup-form .btn-login');
-  btn.disabled = true; btn.textContent = 'Inafungua akaunti...';
-
-  FB_AUTH.createUserWithEmailAndPassword(email, pass)
-    .then(cred => {
-      // Save user profile in Firestore
-      return cred.user.updateProfile({displayName: fullName}).then(() => {
-        return FB_DB.collection('users').doc(cred.user.uid).collection('data').doc('profile').set({
-          fullName: fullName,
-          email: email,
-          createdAt: new Date().toISOString()
-        });
-      }).then(() => cred);
-    })
-    .then(cred => {
-      // Initialize default settings for new user
-      SETTINGS = {classes:['7A','7B','8A','8B'], terms:['Term 1','Term 2','Term 3'], year:'2026', schoolName:'Shule Yako', teacherName: fullName};
-      return cloudSaveSettings().then(() => cred);
-    })
-    .then(cred => handleAuthSuccess(cred.user))
-    .catch(err => {
-      const msg = err.code === 'auth/email-already-in-use'
-        ? 'Barua pepe hii tayari ina akaunti.'
-        : err.code === 'auth/weak-password'
-        ? 'Nywila dhaifu sana. Tumia angalau herufi 6.'
-        : err.code === 'auth/invalid-email'
-        ? 'Barua pepe si sahihi.'
-        : 'Hitilafu: ' + err.message;
-      errEl.textContent = msg;
-      errEl.style.display = 'block';
-      errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
-      btn.disabled = false; btn.textContent = 'FUNGUA AKOUNTI →';
-    });
-}
-
-function handleAuthSuccess(firebaseUser) {
-  CURRENT_USER = {
-    uid: firebaseUser.uid,
-    email: firebaseUser.email,
-    fullName: firebaseUser.displayName || firebaseUser.email
-  };
-  localStorage.setItem('matokeo_session', JSON.stringify({uid: CURRENT_USER.uid, email: CURRENT_USER.email, fullName: CURRENT_USER.fullName}));
-
+  IS_ADMIN = user.role === 'admin';
+  CURRENT_USER = user;
   document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('landing-page').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
-
   const sbName = document.querySelector('.sb-name');
-  if (sbName) sbName.innerHTML = esc(CURRENT_USER.fullName) + '<br><small>' + esc(CURRENT_USER.email) + '</small>';
-
+  if (sbName) sbName.innerHTML = esc(user.fullName || user.email) + '<br><small>' + esc(user.role === 'admin' ? 'Admin — Matokeo Platform' : 'Teacher — Matokeo Platform') + '</small>';
+  applyRoleUI();
+  setFbStatus('ok', 'Imeunganishwa — data inasync kwenye cloud');
   load();
   startSessionTimer();
   buildSubjInputs();
   refreshSettingsUI();
   refreshAllSelects();
   renderDash();
-
-  // Load cloud data if connected
-  if (FB_CONNECTED) {
-    cloudLoad().then(() => { renderDash(); renderTable(); });
-    cloudLoadSettings().then(() => { refreshSettingsUI(); refreshAllSelects(); });
+  // Pull fresh cloud data (server is source of truth unless local has unsynced edits).
+  Cloud.loadAll()
+    .then(res => {
+      const localDirty = Cloud.isDirty();
+      const localData = DATA;
+      const cloudChanged = res.students.length !== localData.length ||
+        JSON.stringify(res.students.map(s=>s.id)) !== JSON.stringify(localData.map(s=>s.id));
+      if (localDirty && cloudChanged) {
+        promptSyncConflict(localData, res);
+        return;
+      }
+      if (!localDirty) {
+        DATA = res.students;
+        if (res.settings) SETTINGS = {...SETTINGS, ...res.settings, gradeBoundaries: {...SETTINGS.gradeBoundaries, ...(res.settings.gradeBoundaries||{})}};
+        persistLocal();
+        localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+      }
+      afterDataLoad();
+    })
+    .catch(() => { afterDataLoad(); });
+}
+function afterDataLoad() {
+  refreshSettingsUI();
+  refreshAllSelects();
+  renderDash();
+  renderTable();
+  if (IS_ADMIN) loadJoinCodeUI();
+  if (pendingJoinCode && IS_ADMIN) {
+    const code = pendingJoinCode;
+    pendingJoinCode = null;
+    showConfirm('🔑 Join Code ya Shule Yako',
+      'Wape code hii walimu wako ili wajiunge na shule yako wakijiandikisha:<br><br>' +
+      '<div style="font-size:2em;letter-spacing:.35em;font-weight:800;color:var(--gold);text-align:center;padding:.3em 0;background:rgba(255,255,255,.05);border-radius:8px">' + esc(code) + '</div>' +
+      '<br>Ukipoteza, itaonekana kwenye <strong>Settings</strong> au ubadilishe huko.',
+      [{label:'Nimeinakili', cls:'btn-e', fn:()=>{}}]);
   }
-
-  toast('🎉', 'Karibu ' + CURRENT_USER.fullName + '!');
+}
+function promptSyncConflict(localData, res) {
+  showConfirm('⚠️ Mgongano wa Data',
+    'Data ya local na cloud zinatofautiana. Chagua: <br><br><strong>Cloud</strong> — tumia data ya cloud, punguzi local (backup itapakuliwa kwanzi).<br><strong>Local</strong> — tumia data ya kifaa hiki na itapelekwa cloud.',
+    [
+      {label:'Tumia Cloud', cls:'btn-e', fn: () => {
+        exportAllData(true);
+        DATA = res.students;
+        if (res.settings) SETTINGS = {...SETTINGS, ...res.settings, gradeBoundaries: {...SETTINGS.gradeBoundaries, ...(res.settings.gradeBoundaries||{})}};
+        Cloud.setDirty(false);
+        persistLocal();
+        localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+        afterDataLoad();
+      }},
+      {label:'Tumia Local', cls:'btn-d', fn: () => {
+        DATA.forEach(s => s._dirty = true);
+        flushPush();
+        afterDataLoad();
+      }}
+    ]);
+}
+function applyRoleUI() {
+  document.getElementById('nav-users').style.display = IS_ADMIN ? 'flex' : 'none';
+  document.getElementById('card-joincode').style.display = IS_ADMIN ? 'block' : 'none';
+  document.getElementById('card-users').style.display = IS_ADMIN ? 'block' : 'none';
+  document.getElementById('btn-clearall').style.display = IS_ADMIN ? 'flex' : 'none';
+  // Settings inputs: teacher sees read-only
+  ['set-school','set-year','set-teacher','gb-A','gb-B','gb-C','gb-D','set-avgmode','new-class','new-term'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = !IS_ADMIN;
+  });
 }
 
-function doLogout() {
-  clearInterval(SESSION_T);
-  if (FB_AUTH) FB_AUTH.signOut().catch(()=>{});
-  CURRENT_USER = null;
-  localStorage.removeItem('matokeo_session');
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('landing-page').style.display = 'block';
-  // Clear form fields
-  document.getElementById('inp-email').value = '';
-  document.getElementById('inp-p').value = '';
-  document.getElementById('su-name').value = '';
-  document.getElementById('su-email').value = '';
-  document.getElementById('su-pass').value = '';
-  document.getElementById('su-pass2').value = '';
-  // Reset to login form
-  showLoginForm();
-  // Reset login button state
-  const loginBtn = document.querySelector('#login-form .btn-login');
-  if (loginBtn) { loginBtn.disabled = false; loginBtn.textContent = 'INGIA →'; }
-  const signupBtn = document.querySelector('#signup-form .btn-login');
-  if (signupBtn) { signupBtn.disabled = false; signupBtn.textContent = 'FUNGUA AKOUNTI →'; }
+function showAuthError(elId, msg) {
+  const errEl = document.getElementById(elId);
+  errEl.textContent = msg;
+  errEl.style.display = 'block';
+  errEl.style.animation = 'none'; void errEl.offsetWidth; errEl.style.animation = 'shake .4s ease';
 }
+function setAuthBusy(btnId, busy, label) {
+  const b = document.getElementById(btnId);
+  b.disabled = busy;
+  b.textContent = busy ? 'SUBIRI...' : label;
+  b.style.opacity = busy ? '.6' : '1';
+}
+
+function doLogin() {
+  const email = (document.getElementById('inp-e').value || '').trim();
+  const p = (document.getElementById('inp-p').value || '');
+  if (!email || !p) { showAuthError('l-err', 'Weka barua pepe na nywila.'); return; }
+  setAuthBusy('btn-login', true, 'INGIA →');
+  Auth.signIn(email, p)
+    .then(() => { document.getElementById('l-err').style.display = 'none'; })
+    // onUserChanged handles UI on success; show error here on failure
+    .catch(e => { showAuthError('l-err', e.message); })
+    .finally(() => setAuthBusy('btn-login', false, 'INGIA →'));
+}
+
+function signupMode() {
+  const r = document.querySelector('input[name="su-mode"]:checked');
+  return r ? r.value : 'create';
+}
+function onSignupModeChange() {
+  document.getElementById('su-school-row').style.display = signupMode() === 'create' ? 'block' : 'none';
+  document.getElementById('su-code-row').style.display = signupMode() === 'join' ? 'block' : 'none';
+}
+
+function doSignup() {
+  const fullName = (document.getElementById('su-name').value || '').trim();
+  const email = (document.getElementById('su-email').value || '').trim();
+  const pass = document.getElementById('su-pass').value || '';
+  const pass2 = document.getElementById('su-pass2').value || '';
+  const mode = signupMode();
+  const schoolName = (document.getElementById('su-school').value || '').trim();
+  const joinCode = (document.getElementById('su-code').value || '').trim().toUpperCase();
+
+  if (!fullName || !email || !pass || !pass2) { showAuthError('su-err', 'Tafadhali jaza sehemu zote.'); return; }
+  if (pass.length < 8) { showAuthError('su-err', 'Nywila iwe angalau herufi 8.'); return; }
+  if (pass !== pass2) { showAuthError('su-err', 'Nywila hazifanani. Angalia tena.'); return; }
+  if (mode === 'create' && !schoolName) { showAuthError('su-err', 'Weka jina la shule.'); return; }
+  if (mode === 'join' && !joinCode) { showAuthError('su-err', 'Weka Join Code ya shule.'); return; }
+
+  setAuthBusy('btn-signup', true, 'FUNGUA AKOUNTI →');
+  Auth.signUp({fullName, email, password: pass, mode, schoolName, joinCode})
+    .then(joinCodeCreated => {
+      document.getElementById('su-err').style.display = 'none';
+      if (mode === 'create' && joinCodeCreated) {
+        pendingJoinCode = joinCodeCreated; // shown after entering app
+        toast('🎉', 'Karibu ' + fullName + '! Shule imefunguliwa.');
+      } else {
+        toast('🎉', 'Karibu ' + fullName + '! Umejiunge na shule.');
+      }
+    })
+    .catch(e => showAuthError('su-err', e.message))
+    .finally(() => setAuthBusy('btn-signup', false, 'FUNGUA AKOUNTI →'));
+}
+let pendingJoinCode = null;
 
 function toggleAuthForm(type) {
   const loginForm = document.getElementById('login-form');
   const signupForm = document.getElementById('signup-form');
-  const setupForm = document.getElementById('fb-setup-form');
   const errL = document.getElementById('l-err');
   const errS = document.getElementById('su-err');
   if (type === 'signup') {
     loginForm.style.display = 'none';
     signupForm.style.display = 'block';
-    setupForm.style.display = 'none';
     errS.style.display = 'none';
     document.getElementById('su-name').value = '';
     document.getElementById('su-email').value = '';
     document.getElementById('su-pass').value = '';
     document.getElementById('su-pass2').value = '';
+    document.getElementById('su-school').value = '';
+    document.getElementById('su-code').value = '';
   } else {
     signupForm.style.display = 'none';
-    setupForm.style.display = 'none';
     loginForm.style.display = 'block';
     errL.style.display = 'none';
-    document.getElementById('inp-email').value = '';
+    document.getElementById('inp-e').value = '';
     document.getElementById('inp-p').value = '';
   }
 }
@@ -1292,204 +1369,25 @@ function goToLanding() {
 function goToSignup() {
   document.getElementById('landing-page').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
-  if (!FB_CONNECTED) { showSetupForm(); return; }
   toggleAuthForm('signup');
 }
 
+function doLogout() {
+  clearInterval(SESSION_T);
+  Auth.signOut().catch(() => {}); // onUserChanged resets UI
+  document.getElementById('inp-e').value = '';
+  document.getElementById('inp-p').value = '';
+  document.getElementById('login-form').style.display = 'block';
+  document.getElementById('signup-form').style.display = 'none';
+}
 function goToLogin() {
   document.getElementById('landing-page').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
-  if (!FB_CONNECTED) { showSetupForm(); return; }
   toggleAuthForm('login');
-  setTimeout(() => document.getElementById('inp-email').focus(), 100);
+  setTimeout(() => document.getElementById('inp-e').focus(), 100);
 }
 
-/* ========== SESSION RESTORE (Firebase Auth State) ========== */
-
-function tryRestoreSession() {
-  if (!FB_CONNECTED || !FB_AUTH) return false;
-
-  // Listen for Firebase auth state changes
-  FB_AUTH.onAuthStateChanged(user => {
-    if (user) {
-      CURRENT_USER = {
-        uid: user.uid,
-        email: user.email,
-        fullName: user.displayName || user.email
-      };
-      localStorage.setItem('matokeo_session', JSON.stringify({uid: user.uid, email: user.email, fullName: CURRENT_USER.fullName}));
-
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('app').style.display = 'flex';
-
-      const sbName = document.querySelector('.sb-name');
-      if (sbName) sbName.innerHTML = esc(CURRENT_USER.fullName) + '<br><small>' + esc(CURRENT_USER.email) + '</small>';
-
-      load();
-      startSessionTimer();
-      buildSubjInputs();
-      refreshSettingsUI();
-      refreshAllSelects();
-      renderDash();
-
-      // Load cloud data
-      cloudLoad().then(() => { renderDash(); renderTable(); });
-      cloudLoadSettings().then(() => { refreshSettingsUI(); refreshAllSelects(); });
-    } else {
-      // No authenticated user — show landing or login
-      document.getElementById('landing-page').style.display = 'block';
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('app').style.display = 'none';
-    }
-  });
-  return true; // We've set up the listener
-}
-
-/* ========== DATA STORAGE ========== */
-
-function getUserStorageKey(suffix) {
-  if (!CURRENT_USER) return 'matokeo_v2_anon_' + suffix;
-  return 'matokeo_v2_' + CURRENT_USER.uid + '_' + suffix;
-}
-
-function load() {
-  const key = getUserStorageKey('data');
-  try { DATA = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { DATA = []; }
-  const sKey = getUserStorageKey('settings');
-  try {
-    const s = JSON.parse(localStorage.getItem(sKey));
-    if (s) SETTINGS = {...SETTINGS, ...s};
-  } catch(e) {}
-}
-
-function save() {
-  localStorage.setItem(getUserStorageKey('data'), JSON.stringify(DATA));
-  if (FB_CONNECTED) cloudSave();
-}
-
-function saveSettings() {
-  SETTINGS.schoolName = document.getElementById('set-school').value || 'Shule Yako';
-  SETTINGS.year = document.getElementById('set-year').value || '2026';
-  SETTINGS.teacherName = document.getElementById('set-teacher').value || '';
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-  if (FB_CONNECTED) cloudSaveSettings();
-  refreshAllSelects();
-}
-
-/* ========== CLOUD OPERATIONS (with error handling) ========== */
-
-async function cloudSave() {
-  if (!FB_CONNECTED || !CURRENT_USER) return;
-  try {
-    await FB_DB.collection('users').doc(CURRENT_USER.uid).collection('data').doc('students')
-      .set({students: DATA, updatedAt: new Date().toISOString()});
-  } catch(e) {
-    console.warn('Cloud save failed:', e);
-    toast('⚠️', 'Cloud save imeshindwa: ' + (e.message || 'Angalia mtandao'));
-  }
-}
-
-async function cloudLoad() {
-  if (!FB_CONNECTED || !CURRENT_USER) return false;
-  try {
-    const doc = await FB_DB.collection('users').doc(CURRENT_USER.uid).collection('data').doc('students').get();
-    if (doc.exists && doc.data().students) {
-      const cloudData = doc.data().students;
-      // Merge strategy: if local data exists, compare timestamps
-      const localRaw = localStorage.getItem(getUserStorageKey('data'));
-      if (localRaw) {
-        const localData = JSON.parse(localRaw) || [];
-        if (localData.length > 0 && cloudData.length > 0) {
-          // Use the larger dataset (simple heuristic)
-          if (localData.length > cloudData.length) {
-            // Local has more data — upload local to cloud
-            await cloudSave();
-            return true;
-          }
-        }
-      }
-      DATA = cloudData;
-      localStorage.setItem(getUserStorageKey('data'), JSON.stringify(DATA));
-      return true;
-    }
-  } catch(e) {
-    console.warn('Cloud load failed:', e);
-    toast('⚠️', 'Cloud load imeshindwa: ' + (e.message || 'Angalia mtandao'));
-  }
-  return false;
-}
-
-async function cloudSaveSettings() {
-  if (!FB_CONNECTED || !CURRENT_USER) return;
-  try {
-    await FB_DB.collection('users').doc(CURRENT_USER.uid).collection('data').doc('settings').set(SETTINGS);
-  } catch(e) {
-    console.warn('Cloud save settings failed:', e);
-    toast('⚠️', 'Cloud settings save imeshindwa');
-  }
-}
-
-async function cloudLoadSettings() {
-  if (!FB_CONNECTED || !CURRENT_USER) return;
-  try {
-    const doc = await FB_DB.collection('users').doc(CURRENT_USER.uid).collection('data').doc('settings').get();
-    if (doc.exists) {
-      SETTINGS = {...SETTINGS, ...doc.data()};
-      localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-    }
-  } catch(e) {
-    console.warn('Cloud load settings failed:', e);
-  }
-}
-
-/* ========== FIREBASE CONFIG (Settings page) ========== */
-
-function connectFirebase() {
-  const raw = document.getElementById('fb-config').value.trim();
-  if (!raw) { toast('⚠️','Weka Firebase config kwanza'); return; }
-  try {
-    const cfg = JSON.parse(raw);
-    if (!cfg.projectId || !cfg.apiKey) throw new Error('Config si sahihi');
-    if (firebase.apps.length) firebase.apps.forEach(a => a.delete().catch(()=>{}));
-    FB_APP = firebase.initializeApp(cfg);
-    FB_AUTH = firebase.auth();
-    FB_DB = firebase.firestore();
-    FB_CONNECTED = true;
-    localStorage.setItem('matokeo_fb', raw);
-    updateSyncBadge();
-    document.getElementById('fb-status').className = 'fb-status fb-ok';
-    document.getElementById('fb-status').innerHTML = '<span>🟢</span> <span>Imeunganishwa — data inasync kwenye cloud</span>';
-    toast('☁️','Firebase imeunganishwa!');
-    cloudLoad().then(() => { renderDash(); renderTable(); });
-    cloudLoadSettings().then(() => { refreshSettingsUI(); refreshAllSelects(); });
-  } catch(e) {
-    document.getElementById('fb-status').className = 'fb-status fb-err';
-    document.getElementById('fb-status').innerHTML = '<span>🔴</span> <span>Config si sahihi: ' + esc(e.message) + '</span>';
-    toast('❌','Firebase config si sahihi');
-  }
-}
-
-function disconnectFirebase() {
-  FB_CONNECTED = false;
-  FB_APP = null; FB_AUTH = null; FB_DB = null;
-  localStorage.removeItem('matokeo_fb');
-  if (firebase.apps.length) firebase.apps.forEach(a => a.delete().catch(()=>{}));
-  updateSyncBadge();
-  document.getElementById('fb-status').className = 'fb-status fb-no';
-  document.getElementById('fb-status').innerHTML = '<span>⚪</span> <span>Haijawekwa — data inahifadhiwa local tu</span>';
-  document.getElementById('fb-config').value = '';
-  toast('📴','Cloud sync imeondolewa');
-}
-
-function updateSyncBadge() {
-  const b = document.getElementById('sync-badge');
-  const t = document.getElementById('sync-text');
-  if (!b || !t) return;
-  if (FB_CONNECTED) { b.className = 'sync-badge sync-on'; t.textContent = 'Cloud Sync ON'; }
-  else { b.className = 'sync-badge sync-off'; t.textContent = 'Offline Mode'; }
-}
-
-/* ========== NAVIGATION ========== */
+// Session restore is handled by Firebase Auth (Auth.init -> onAuthStateChanged).
 
 function showView(v) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
@@ -1501,12 +1399,11 @@ function showView(v) {
   if (v === 'analytics') renderAnalytics();
   if (v === 'reports') { loadRepStudents(); }
   if (v === 'settings') refreshSettingsUI();
+  if (v === 'users' && IS_ADMIN) loadUsersUI();
   if (v === 'add' && !document.getElementById('edit-id').value) resetForm();
   if (window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
 }
 function toggleSB() { document.getElementById('sidebar').classList.toggle('open'); }
-
-/* ========== SELECTS / FILTERS ========== */
 
 function refreshAllSelects() {
   const classFilters = ['f-class-dash','f-class-list','f-class-rep','f-class-an'];
@@ -1535,55 +1432,40 @@ function refreshAllSelects() {
   if (ft) { const v = ft.value; ft.innerHTML = ''; SETTINGS.terms.forEach(t => { const o = document.createElement('option'); o.value = t; o.textContent = t; ft.appendChild(o); }); ft.value = v || SETTINGS.terms[0] || ''; }
 }
 
-function getFilteredData(classElId, termElId, searchElId) {
+function getFilteredData() {
   let d = DATA;
-  const fc = classElId ? (document.getElementById(classElId)?.value || '') : '';
-  const ft = termElId ? (document.getElementById(termElId)?.value || '') : '';
-  const q = searchElId ? (document.getElementById(searchElId)?.value || '').toLowerCase() : '';
+  const fc = document.getElementById('f-class-list')?.value;
+  const ft = document.getElementById('f-term-list')?.value;
+  const q = (document.getElementById('srch')?.value || '').toLowerCase();
   if (fc) d = d.filter(s => s.class === fc);
   if (ft) d = d.filter(s => s.term === ft);
   if (q) d = d.filter(s => s.name.toLowerCase().includes(q));
   return d;
 }
-
-/* ========== CALCULATIONS ========== */
-
-function grade(s) {
-  const n = Number(s);
-  if (s === '' || s === null || s === undefined || isNaN(n)) return '-';
-  if (n >= 75) return 'A';
-  if (n >= 60) return 'B';
-  if (n >= 45) return 'C';
-  if (n >= 30) return 'D';
-  return 'F';
+function getFilteredForDash() {
+  let d = DATA;
+  const fc = document.getElementById('f-class-dash')?.value;
+  const ft = document.getElementById('f-term-dash')?.value;
+  if (fc) d = d.filter(s => s.class === fc);
+  if (ft) d = d.filter(s => s.term === ft);
+  return d;
 }
-function gColor(g) { return {A:'#2563eb',B:'#42a5f5',C:'#ffb74d',D:'#ffa726',F:'#ef5350'}[g] || '#6478a0'; }
-
-function avg(stu) {
-  const vals = SUBS.map(s => stu.scores[s.key]).filter(v => v !== null && v !== undefined && !isNaN(Number(v)));
-  if (!vals.length) return 0;
-  return Math.round((vals.reduce((a,b) => a + Number(b), 0) / vals.length) * 10) / 10;
+function getFilteredForAnalytics() {
+  let d = DATA;
+  const fc = document.getElementById('f-class-an')?.value;
+  const ft = document.getElementById('f-term-an')?.value;
+  if (fc) d = d.filter(s => s.class === fc);
+  if (ft) d = d.filter(s => s.term === ft);
+  return d;
 }
 
-function totalMarks(stu) {
-  return SUBS.map(s => stu.scores[s.key]).filter(v => v !== null && v !== undefined && !isNaN(Number(v))).reduce((a,b) => a + Number(b), 0);
-}
-
-/** Competition ranking: ties get same position, next position skips (1,1,3,4) */
-function computePositions(list) {
-  const sorted = [...list].sort((a,b) => avg(b) - avg(a));
-  const posMap = {};
-  let pos = 1;
-  for (let i = 0; i < sorted.length; i++) {
-    if (i > 0 && avg(sorted[i]) < avg(sorted[i-1])) {
-      pos = i + 1;
-    }
-    posMap[sorted[i].id] = pos;
-  }
-  return posMap;
-}
-
-/* ========== FORM / SUBJECT INPUTS ========== */
+function grade(s) { return Core.grade(s, SETTINGS.gradeBoundaries); }
+function gColor(g) { return {A:'#4caf50',B:'#42a5f5',C:'#ffb74d',D:'#ffa726',F:'#ef5350'}[g] || '#6b9a6b'; }
+function gDesc(g) { return {A:'Bora sana',B:'Vizuri',C:'Wastani',D:'Dhaifu',F:'Shindwa'}[g] || '–'; }
+function gComment(g) { return {A:'Mwanafunzi bora. Endelea hivyo!',B:'Vizuri sana. Unaweza kufanya vizuri zaidi.',C:'Wastani. Jitahidi zaidi.',D:'Dhaifu. Unahitaji msaada wa ziada.',F:'Shindwa. Tafadhali mzunge mwalimu.'}[g] || ''; }
+function avg(stu) { return Core.avg(stu, SUBS, SETTINGS.avgMode); }
+function totalMarks(stu) { return Core.totalMarks(stu, SUBS); }
+function computePositions(list) { return Core.computePositions(list, avgFn); }
 
 function buildSubjInputs() {
   const g = document.getElementById('subj-grid');
@@ -1596,14 +1478,13 @@ function buildSubjInputs() {
     g.appendChild(d);
   });
 }
-
 function liveGrade(k) {
   const inp = document.getElementById('sc-' + k);
   const v = inp.value;
   const n = Number(v);
   const valid = v !== '' && !isNaN(n) && n >= 0 && n <= 100;
   const invalid = v !== '' && (!isNaN(n) && (n < 0 || n > 100));
-  const g = valid ? (n>=75?'A':n>=60?'B':n>=45?'C':n>=30?'D':'F') : '–';
+  const g = valid ? Core.grade(n, boundaries()) : '–';
   const el = document.getElementById('gr-' + k);
   const bar = document.getElementById('bar-' + k);
   el.textContent = g;
@@ -1613,7 +1494,7 @@ function liveGrade(k) {
   else if (!invalid) { el.style.background = ''; el.style.color = ''; }
   const pct = valid ? n : 0;
   bar.style.width = pct + '%';
-  bar.style.background = pct >= 75 ? '#2563eb' : pct >= 60 ? '#42a5f5' : pct >= 45 ? '#ffb74d' : pct >= 30 ? '#ffa726' : '#ef5350';
+  bar.style.background = gColor(Core.grade(pct, boundaries()));
 }
 
 function saveStudent() {
@@ -1629,21 +1510,19 @@ function saveStudent() {
     const v = document.getElementById('sc-' + sub.key).value;
     scores[sub.key] = v !== '' ? Number(v) : null;
   });
-  const scoreErrors = validateScores(scores);
+  const scoreErrors = Core.validateScores(scores, SUBS);
   if (scoreErrors.length) { toast('⚠️','Alama si sahihi: ' + scoreErrors[0]); return; }
   if (eid) {
     const i = DATA.findIndex(s => s.id === eid);
-    if (i !== -1) DATA[i] = {...DATA[i], name, class:cls, term, scores};
+    if (i !== -1) { DATA[i] = {...DATA[i], name, class:cls, term, scores, updatedAt: new Date().toISOString(), _dirty: true}; }
   } else {
-    DATA.push({id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), name, class:cls, term, year:SETTINGS.year, scores});
+    DATA.push({id: newId(), name, class:cls, term, year:SETTINGS.year, scores, createdAt: new Date().toISOString(), _dirty: true});
   }
   save(); resetForm(); showView('students'); toast('✅','Imehifadhiwa!');
 }
 
-/* ========== TABLE RENDERING ========== */
-
 function renderTable() {
-  const d = getFilteredData('f-class-list', 'f-term-list', 'srch');
+  const d = getFilteredData();
   const positions = computePositions(d);
   const body = document.getElementById('stu-body');
   const cards = document.getElementById('stu-cards');
@@ -1673,7 +1552,6 @@ function resetForm() {
   document.getElementById('form-title').textContent = 'Ongeza Mwanafunzi';
   SUBS.forEach(sub => { document.getElementById('sc-' + sub.key).value = ''; liveGrade(sub.key); });
 }
-
 function editStu(id) {
   const s = DATA.find(x => x.id === id);
   if (!s) return;
@@ -1688,35 +1566,53 @@ function editStu(id) {
   });
   showView('add');
 }
-
 function confirmDel(id) {
+  if (!IS_ADMIN) { toast('⛔','Kufuta ni kwa Admin tu. Wasiliana na mkuu wa shule.'); return; }
   PENDING_DEL = id;
-  document.getElementById('modal-title').textContent = '⚠️ Thibitisha Kufuta';
-  document.getElementById('modal-body').textContent = 'Je, una uhakika unataka kufuta mwanafunzi huyu? Hatua hii haiwezi kurudishwa.';
-  document.getElementById('modal-confirm').onclick = () => {
-    DATA = DATA.filter(s => s.id !== PENDING_DEL);
-    save(); closeModal(); renderTable(); toast('🗑️','Imefutwa');
-  };
-  document.getElementById('modal-ov').style.display = 'flex';
+  showConfirm('⚠️ Thibitisha Kufuta', 'Je, una uhakika unataka kufuta mwanafunzi huyu? Hatua hii haiwezi kurudishwa.', [
+    {label:'Hapana', cls:'btn-sec'},
+    {label:'Ndio, Futa', cls:'btn-d', fn: () => {
+      const stu = DATA.find(s => s.id === PENDING_DEL);
+      DATA = DATA.filter(s => s.id !== PENDING_DEL);
+      if (stu) DELETED_IDS.push(stu.id);
+      Cloud.setDirty(true);
+      save(); renderTable(); toast('🗑️','Imefutwa');
+    }}
+  ]);
 }
-
 function confirmClearAll() {
-  document.getElementById('modal-title').textContent = '⚠️ Futa Data Yote';
-  document.getElementById('modal-body').textContent = 'Una uhakika unataka kufuta data YA WOTE wanafunzi? Hatua hii haiwezi kurudishwa!';
-  document.getElementById('modal-confirm').onclick = () => {
-    DATA = [];
-    save(); closeModal(); renderDash(); toast('🗑️','Data yote imefutwa');
-  };
+  if (!IS_ADMIN) { toast('⛔','Hii ni kwa Admin tu.'); return; }
+  showConfirm('⚠️ Futa Data Yote', 'Una uhakika unataka kufuta data YA WOTE wanafunzi? Hatua hii haiwezi kurudishwa!', [
+    {label:'Hapana', cls:'btn-sec'},
+    {label:'Ndio, Futa Yote', cls:'btn-d', fn: () => {
+      Cloud.deleteAllStudents(DATA).catch(err => toast('⚠️','Cloud delete imeshindikana: ' + err.message));
+      DATA = [];
+      DELETED_IDS = [];
+      Cloud.setDirty(true);
+      save(); renderDash(); toast('🗑️','Data yote imefutwa');
+    }}
+  ]);
+}
+function showConfirm(title, bodyHtml, actions) {
+  // actions: [{label, cls, fn}] — flexible confirm dialog (also used as simple OK/cancel)
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHtml;
+  const ma = document.querySelector('#modal-ov .ma');
+  ma.innerHTML = '';
+  (actions || [{label:'Sawa', cls:'btn-d', fn:closeModal}]).forEach((a, i) => {
+    const b = document.createElement('button');
+    b.className = a.cls || 'btn-sec';
+    b.textContent = a.label;
+    b.onclick = () => { closeModal(); if (a.fn) a.fn(); };
+    ma.appendChild(b);
+  });
   document.getElementById('modal-ov').style.display = 'flex';
 }
-
 function closeModal() { document.getElementById('modal-ov').style.display = 'none'; }
-
-/* ========== DASHBOARD ========== */
 
 function renderDash() {
   showSkeletons(false);
-  const d = getFilteredData('f-class-dash', 'f-term-dash', null);
+  const d = getFilteredForDash();
   const total = d.length;
   if (!total) {
     document.getElementById('stats-grid').innerHTML = '';
@@ -1727,7 +1623,7 @@ function renderDash() {
     return;
   }
   const avgAll = Math.round(d.reduce((a,b) => a + avg(b), 0) / total * 10) / 10;
-  const passCount = d.filter(s => avg(s) >= 45).length;
+  const passCount = d.filter(s => avg(s) >= boundaries().D).length; // pass = grade D or above
   const passRate = total ? Math.round(passCount / total * 100) : 0;
   const highest = total ? Math.max(...d.map(s => avg(s))) : 0;
   const lowest = total ? Math.min(...d.map(s => avg(s))) : 0;
@@ -1761,16 +1657,14 @@ function renderCmpChart(d) {
     type: 'bar',
     data: {
       labels: SUBS.map(s => s.label.length > 12 ? s.label.slice(0,12) + '..' : s.label),
-      datasets: [{label: 'Wastani', data: avgs, backgroundColor: avgs.map(v => v >= 75 ? 'rgba(37,99,235,.55)' : v >= 60 ? 'rgba(66,165,245,.55)' : v >= 45 ? 'rgba(255,183,77,.55)' : v >= 30 ? 'rgba(255,167,38,.55)' : 'rgba(239,83,80,.55)'), borderRadius: 8, borderSkipped: false}]
+      datasets: [{label: 'Wastani', data: avgs, backgroundColor: avgs.map(v => gColor(Core.grade(v, boundaries()))), borderRadius: 8, borderSkipped: false}]
     },
-    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, max: 100, grid: {color: 'rgba(191,219,254,.4)'}, ticks: {color: '#6478a0', font: {size: 10}}}, x: {grid: {display: false}, ticks: {color: '#6478a0', font: {size: 10}}}}}
+    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, max: 100, grid: {color: 'rgba(200,230,200,.4)'}, ticks: {color: '#6b9a6b', font: {size: 10}}}, x: {grid: {display: false}, ticks: {color: '#6b9a6b', font: {size: 10}}}}}
   });
 }
 
-/* ========== ANALYTICS ========== */
-
 function renderAnalytics() {
-  const d = getFilteredData('f-class-an', 'f-term-an', null);
+  const d = getFilteredForAnalytics();
   const grid = document.getElementById('an-grid');
   if (!d.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><span class="es-icon">📈</span><div class="es-title">Hakuna Data ya Kuchambua</div><div class="es-sub">Ongeza wanafunzi kwanza ili kupata grafu na takwimu</div></div>'; return; }
   grid.innerHTML = '';
@@ -1779,7 +1673,7 @@ function renderAnalytics() {
     const a = vals.length ? Math.round(vals.reduce((a,b) => a + Number(b), 0) / vals.length * 10) / 10 : 0;
     const mx = vals.length ? Math.max(...vals) : 0;
     const mn = vals.length ? Math.min(...vals) : 0;
-    const pass = vals.filter(v => Number(v) >= 45).length;
+    const pass = vals.filter(v => Number(v) >= 40).length;
     const div = document.createElement('div');
     div.className = 'cc';
     div.innerHTML = '<div class="ct">' + esc(sub.label) + '</div><div class="ca">Wastani: <span>' + a + '</span> | Juu: <span>' + mx + '</span> | Chini: <span>' + mn + '</span></div><div class="ch"><canvas id="an-c-' + idx + '"></canvas></div>';
@@ -1792,8 +1686,8 @@ function renderAnalytics() {
       if (CHARTS['an-'+idx]) CHARTS['an-'+idx].destroy();
       CHARTS['an-'+idx] = new Chart(ctx, {
         type: 'doughnut',
-        data: {labels: ['A','B','C','D','F'], datasets: [{data: [grades.A,grades.B,grades.C,grades.D,grades.F], backgroundColor: ['rgba(37,99,235,.65)','rgba(66,165,245,.65)','rgba(255,183,77,.65)','rgba(255,167,38,.65)','rgba(239,83,80,.65)'], borderWidth: 0}]},
-        options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'right', labels: {color: '#6478a0', font: {size: 11}, padding: 10}}}}
+        data: {labels: ['A','B','C','D','F'], datasets: [{data: [grades.A,grades.B,grades.C,grades.D,grades.F], backgroundColor: ['rgba(76,175,80,.65)','rgba(66,165,245,.65)','rgba(255,183,77,.65)','rgba(255,167,38,.65)','rgba(239,83,80,.65)'], borderWidth: 0}]},
+        options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'right', labels: {color: '#6b9a6b', font: {size: 11}, padding: 10}}}}
       });
     }, 50);
   });
@@ -1801,10 +1695,8 @@ function renderAnalytics() {
 
 function onDashFilterChange() { renderDash(); }
 
-/* ========== EXPORT ========== */
-
 function expPDF() {
-  const d = getFilteredData('f-class-list', 'f-term-list', 'srch');
+  const d = getFilteredData();
   if (!d.length) { toast('⚠️','Hakuna data ya kupakua'); return; }
   const {jsPDF} = window.jspdf;
   const doc = new jsPDF();
@@ -1817,15 +1709,14 @@ function expPDF() {
     head: [['#','Jina','Darasa','Muda', ...SUBS.map(s=>s.label),'Wastani','Nafasi']],
     body: d.map((s,i) => [i+1, s.name, s.class||'', s.term||'', ...SUBS.map(sub => fmt(s.scores[sub.key])), avg(s), positions[s.id]||'']),
     styles: {fontSize: 8, cellPadding: 3},
-    headStyles: {fillColor: [37,99,235], textColor: 255},
-    alternateRowStyles: {fillColor: [240,246,255]},
+    headStyles: {fillColor: [76,175,80], textColor: 255},
+    alternateRowStyles: {fillColor: [240,248,240]},
   });
   doc.save('matokeo-' + (SETTINGS.year||'') + '.pdf');
   toast('📄','PDF imepakuliwa!');
 }
-
 function expExcel() {
-  const d = getFilteredData('f-class-list', 'f-term-list', 'srch');
+  const d = getFilteredData();
   if (!d.length) { toast('⚠️','Hakuna data ya kupakua'); return; }
   const positions = computePositions(d);
   const rows = d.map((s,i) => ({
@@ -1840,142 +1731,70 @@ function expExcel() {
   toast('📊','Excel imepakuliwa!');
 }
 
-/* ========== IMPORT (with validation + error reporting) ========== */
-
 function handleFile(file) {
   if (!file) return;
+  const okTypes = ['.xlsx','.xls','.csv'];
+  const lower = (file.name || '').toLowerCase();
+  if (!okTypes.some(t => lower.endsWith(t))) { toast('⚠️','Faili lazima iwe .xlsx, .xls au .csv'); return; }
   if (file.size > 5*1024*1024) { toast('⚠️','Faili kubwa sana (max 5MB)'); return; }
-
-  const ext = file.name.split('.').pop().toLowerCase();
-  if (!['xlsx','xls','csv'].includes(ext)) { toast('❌','Aina ya faili si sahihi. Tumia .xlsx, .xls, au .csv'); return; }
-
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
       const wb = XLSX.read(e.target.result, {type: 'binary'});
       const ws = wb.Sheets[wb.SheetNames[0]];
-      const json = XLSX.utils.sheet_to_json(ws);
+      if (!ws) { toast('❌','Faili haina sheet'); return; }
+      const json = XLSX.utils.sheet_to_json(ws, {defval: ''});
       if (!json.length) { toast('⚠️','Faili haina data'); return; }
-
-      let errorCount = 0;
-      let warnCount = 0;
-      IMPORT_DATA = [];
-      IMPORT_ERRORS = [];
-
-      json.forEach((row, rowIdx) => {
-        const name = String(row['Jina'] || row['Name'] || row['jina'] || '').trim();
-        const cls = String(row['Darasa'] || row['Class'] || row['darasa'] || SETTINGS.classes[0] || '').trim();
-        const term = String(row['Muda'] || row['Term'] || row['muda'] || SETTINGS.terms[0] || '').trim();
-        const errors = [];
-
-        if (!name || name === 'undefined') { errors.push('Jina halijajazwa'); }
-
-        const scores = {};
-        SUBS.forEach(sub => {
-          const v = row[sub.label] || row[sub.key] || '';
-          if (v === '' || v === undefined || v === null) {
-            scores[sub.key] = null;
-          } else {
-            const n = Number(v);
-            if (isNaN(n) || n < 0 || n > 100) {
-              errors.push(sub.label + ': ' + v + ' (si sahihi, 0-100)');
-              scores[sub.key] = null;
-              warnCount++;
-            } else {
-              scores[sub.key] = n;
-            }
-          }
-        });
-
-        if (errors.length) {
-          errorCount++;
-          IMPORT_ERRORS.push({row: rowIdx + 2, name: name || '(haijulikani)', errors});
-        }
-
-        if (name && name !== 'undefined') {
-          IMPORT_DATA.push({
-            id: Date.now().toString(36) + Math.random().toString(36).slice(2,6) + rowIdx,
-            name, class: cls, term, year: SETTINGS.year, scores,
-            _hasErrors: errors.length > 0
-          });
-        }
-      });
-
+      // Strict parsing: invalid rows are REPORTED, not silently nulled (Core).
+      IMPORT_DATA = Core.parseImportRows(json, SUBS, SETTINGS, DATA);
       showImportPreview();
     } catch(err) { toast('❌','Hitilafu kusoma faili: ' + err.message); }
   };
   reader.readAsBinaryString(file);
 }
-
-let IMPORT_ERRORS = [];
-
 function showImportPreview() {
   document.getElementById('import-section').style.display = 'block';
-  const validCount = IMPORT_DATA.filter(r => !r._hasErrors).length;
-  const errRowCount = IMPORT_ERRORS.length;
-  let countText = validCount + ' wanafunzi wako tayari';
-  if (errRowCount > 0) countText += ' | ' + errRowCount + ' wana makosa';
-  document.getElementById('import-count').textContent = countText;
+  const ok = IMPORT_DATA.rows, errs = IMPORT_DATA.errors;
+  document.getElementById('import-count').innerHTML =
+    '<span style="color:var(--green)">' + ok.length + ' sahihi</span>' +
+    (errs.length ? ' · <span style="color:var(--red)">' + errs.length + ' zenye makosa</span>' : '');
 
-  document.getElementById('imp-head').innerHTML = '<tr><th>#</th><th>Jina</th><th>Darasa</th><th>Muda</th><th>Hisabati</th><th>Kiswahili</th><th>English</th><th>Sayansi</th><th>Hali</th></tr>';
-  document.getElementById('imp-body').innerHTML = IMPORT_DATA.slice(0, 50).map((r,i) => {
-    const status = r._hasErrors ? '<span style="color:var(--red)">⚠ Kosa</span>' : '<span style="color:var(--green)">✓ Saw</span>';
-    return '<tr' + (r._hasErrors ? ' style="background:rgba(239,83,80,.05)"' : '') + '><td>' + (i+1) + '</td><td>' + esc(r.name) + '</td><td>' + esc(r.class) + '</td><td>' + esc(r.term) + '</td>' + SUBS.slice(0,4).map(sub => '<td>' + fmt(r.scores[sub.key]) + '</td>').join('') + '<td>' + status + '</td></tr>';
-  }).join('');
-  if (IMPORT_DATA.length > 50) {
-    document.getElementById('imp-body').innerHTML += '<tr class="empty-row"><td colspan="9">...na wanafunzi ' + (IMPORT_DATA.length - 50) + ' zaidi</td></tr>';
+  const head = '<tr><th>#</th><th>Jina</th><th>Darasa</th><th>Muda</th><th>Hisabati</th><th>Kiswahili</th><th>English</th><th>Sayansi</th></tr>';
+  document.getElementById('imp-head').innerHTML = head;
+  let body = ok.slice(0, 50).map((r,i) =>
+    '<tr><td>' + r.rowIndex + '</td><td>' + esc(r.name) + '</td><td>' + esc(r.class) + '</td><td>' + esc(r.term) + '</td>' + SUBS.slice(0,4).map(sub => '<td>' + fmt(r.scores[sub.key]) + '</td>').join('') + '</tr>'
+  ).join('');
+  if (ok.length > 50) body += '<tr class="empty-row"><td colspan="8">...na sahihi ' + (ok.length - 50) + ' zaidi</td></tr>';
+  if (errs.length) {
+    body += '<tr class="empty-row"><td colspan="8" style="color:var(--red);font-weight:700;text-align:left;padding:12px">❌ Mistari yenye makosa (HAITAINGIZWA):</td></tr>';
+    body += errs.slice(0, 50).map(e =>
+      '<tr><td style="color:var(--red)">' + e.rowIndex + '</td><td colspan="7" style="color:var(--red)">' + esc(e.name) + ' — ' + e.errors.map(esc).join('; ') + '</td></tr>'
+    ).join('');
+    if (errs.length > 50) body += '<tr class="empty-row"><td colspan="8">...na makosa ' + (errs.length - 50) + ' zaidi</td></tr>';
   }
+  document.getElementById('imp-body').innerHTML = body;
 
-  // Show errors summary if any
-  if (IMPORT_ERRORS.length > 0) {
-    let errHtml = '<div style="margin-top:12px;padding:12px;background:rgba(239,83,80,.06);border:1px solid rgba(239,83,80,.15);border-radius:10px;font-size:12px;color:var(--red);max-height:120px;overflow-y:auto">';
-    errHtml += '<strong>Makosa yaliyopatikana:</strong><br>';
-    IMPORT_ERRORS.slice(0, 10).forEach(e => {
-      errHtml += '• Row ' + e.row + ' (' + esc(e.name) + '): ' + e.errors.join(', ') + '<br>';
-    });
-    if (IMPORT_ERRORS.length > 10) errHtml += '...na makosa ' + (IMPORT_ERRORS.length - 10) + ' zaidi';
-    errHtml += '</div>';
-    const existing = document.getElementById('import-errors');
-    if (existing) existing.remove();
-    const errDiv = document.createElement('div');
-    errDiv.id = 'import-errors';
-    errDiv.innerHTML = errHtml;
-    document.getElementById('import-section').appendChild(errDiv);
-  }
+  const btn = document.querySelector('#import-section .btn-pri');
+  if (!ok.length) { btn.disabled = true; btn.style.opacity = '.5'; btn.textContent = '🚫 Hakuna Mstari Sahihi'; }
+  else { btn.disabled = false; btn.style.opacity = '1'; btn.textContent = '✅ INGIZA ' + ok.length + ' WANAFUNZI'; }
 }
-
 function confirmImport() {
-  if (!IMPORT_DATA.length) { toast('⚠️','Hakuna data ya kuingiza'); return; }
-  let added = 0, skipped = 0, updated = 0;
-  // Only import rows without errors
-  IMPORT_DATA.filter(r => !r._hasErrors).forEach(bs => {
-    const dup = DATA.findIndex(s => s.name.toLowerCase() === bs.name.toLowerCase() && s.class === bs.class && s.term === bs.term);
-    if (dup !== -1) {
-      // Update existing record instead of skipping
-      DATA[dup] = {...DATA[dup], ...bs, id: DATA[dup].id};
-      updated++;
-    } else {
-      delete bs._hasErrors;
-      DATA.push(bs);
-      added++;
-    }
+  if (!IMPORT_DATA || !IMPORT_DATA.rows.length) { toast('⚠️','Hakuna data sahihi ya kuingiza'); return; }
+  // Atomic: rows were fully validated in parseImportRows — nothing partial gets written.
+  IMPORT_DATA.rows.forEach(bs => {
+    DATA.push({id: newId(), name: bs.name, class: bs.class, term: bs.term, year: bs.year || SETTINGS.year, scores: bs.scores, createdAt: new Date().toISOString(), _dirty: true});
   });
+  const n = IMPORT_DATA.rows.length;
   save();
-  const msg = added + ' wameingizwa!' + (updated ? ' ' + updated + ' wamesasishwa.' : '') + (skipped ? ' ' + skipped + ' wamerukwa.' : '');
-  toast('✅', msg);
+  toast('✅', n + ' wameingizwa!' + (IMPORT_DATA.errors.length ? ' (' + IMPORT_DATA.errors.length + ' mistari ilirukwa kwa makosa)' : ''));
   cancelImport();
   showView('students');
 }
-
 function cancelImport() {
-  IMPORT_DATA = [];
-  IMPORT_ERRORS = [];
+  IMPORT_DATA = null;
   document.getElementById('import-section').style.display = 'none';
   document.getElementById('file-inp').value = '';
-  const errDiv = document.getElementById('import-errors');
-  if (errDiv) errDiv.remove();
 }
-
 function downloadTemplate() {
   const ws = XLSX.utils.json_to_sheet([
     {Jina:'Amina Hassan', Darasa:'7A', Muda:'Term 1', Hisabati:82, Kiswahili:75, English:68, 'Jiografia na Michezo':71, Sayansi:85, 'Historia na Maadili':73},
@@ -1993,8 +1812,6 @@ if (dz) {
   dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); });
 }
 
-/* ========== REPORT CARDS ========== */
-
 function genReport(studentId) {
   const s = DATA.find(x => x.id === studentId);
   if (!s) return;
@@ -2002,7 +1819,6 @@ function genReport(studentId) {
   const positions = computePositions(d);
   buildReportPDF(s, positions[s.id] || 0, d.length);
 }
-
 function genAllReports() {
   const cls = document.getElementById('f-class-rep').value;
   const term = document.getElementById('f-term-rep').value;
@@ -2014,7 +1830,6 @@ function genAllReports() {
   d.forEach(s => buildReportPDF(s, positions[s.id] || 0, d.length, true));
   toast('📄', d.length + ' report cards zimetengenezwa!');
 }
-
 function buildReportPDF(s, pos, total, silent) {
   const {jsPDF} = window.jspdf;
   const doc = new jsPDF();
@@ -2023,9 +1838,9 @@ function buildReportPDF(s, pos, total, silent) {
   const tm = totalMarks(s);
   const maxMarks = SUBS.length * 100;
 
-  doc.setFillColor(239,246,255); doc.rect(0,0,210,42,'F');
-  doc.setTextColor(30,64,175); doc.setFontSize(20); doc.text(school, 14, 18);
-  doc.setTextColor(37,99,235); doc.setFontSize(10); doc.text('REPORT CARD — ' + (s.term || '') + ' ' + (s.year || SETTINGS.year || ''), 14, 28);
+  doc.setFillColor(232,245,233); doc.rect(0,0,210,42,'F');
+  doc.setTextColor(46,125,50); doc.setFontSize(20); doc.text(school, 14, 18);
+  doc.setTextColor(56,142,60); doc.setFontSize(10); doc.text('REPORT CARD — ' + (s.term || '') + ' ' + (s.year || SETTINGS.year || ''), 14, 28);
   doc.text('Mfumo wa Matokeo Platform', 14, 36);
 
   doc.setTextColor(30,30,30); doc.setFontSize(12);
@@ -2039,13 +1854,13 @@ function buildReportPDF(s, pos, total, silent) {
     head: [['Somo','Alama','Gredi','Maelezo']],
     body: SUBS.map(sub => {
       const v = s.scores[sub.key];
-      const g = grade(v);
-      const desc = v === null ? 'Hakuna alama' : v >= 75 ? 'Bora sana' : v >= 60 ? 'Vizuri' : v >= 45 ? 'Wastani' : v >= 30 ? 'Dhaifu' : 'Shindwa';
+      const g = v === null || v === undefined ? '–' : grade(v);
+      const desc = v === null || v === undefined ? 'Hakuna alama' : gDesc(g);
       return [sub.label, fmt(v), g, desc];
     }),
     styles: {fontSize: 10, cellPadding: 5},
-    headStyles: {fillColor: [37,99,235], textColor: [255,255,255], fontStyle: 'bold'},
-    alternateRowStyles: {fillColor: [240,246,255]},
+    headStyles: {fillColor: [76,175,80], textColor: [255,255,255], fontStyle: 'bold'},
+    alternateRowStyles: {fillColor: [240,248,240]},
     columnStyles: {2: {halign: 'center', fontStyle: 'bold'}, 1: {halign: 'center'}},
   });
 
@@ -2060,7 +1875,7 @@ function buildReportPDF(s, pos, total, silent) {
   doc.setTextColor(...hexToRgb(gColor(g)));
   doc.text('Gredi Kuu: ' + g, 110, finalY + 10);
 
-  const comment = a >= 75 ? 'Mwanafunzi bora. Endelea hivyo!' : a >= 60 ? 'Vizuri sana. Unaweza kufanya vizuri zaidi.' : a >= 45 ? 'Wastani. Jitahidi zaidi.' : a >= 30 ? 'Dhaifu. Unahitaji msaada wa ziada.' : 'Shindwa. Tafadhali mzunge mwalimu.';
+  const comment = gComment(grade(a));
   doc.setTextColor(100,100,100); doc.setFontSize(10);
   doc.text('Maoni: ' + comment, 14, finalY + 24);
   doc.text('Sahihi Mwalimu: ___________________', 14, finalY + 38);
@@ -2069,7 +1884,6 @@ function buildReportPDF(s, pos, total, silent) {
   doc.save('report-' + s.name.replace(/\s+/g,'_') + '-' + (s.term||'') + '.pdf');
   if (!silent) toast('📄','Report card imetengenezwa!');
 }
-
 function hexToRgb(hex) {
   const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
   return [r,g,b];
@@ -2093,128 +1907,188 @@ function loadRepStudents() {
   }).join('');
 }
 
-/* ========== SETTINGS ========== */
-
 function refreshSettingsUI() {
   document.getElementById('set-school').value = SETTINGS.schoolName || '';
   document.getElementById('set-year').value = SETTINGS.year || '';
   document.getElementById('set-teacher').value = SETTINGS.teacherName || '';
-  if (FB_CONNECTED) {
-    document.getElementById('fb-config').value = localStorage.getItem('matokeo_fb') || '';
-    document.getElementById('fb-status').className = 'fb-status fb-ok';
-    document.getElementById('fb-status').innerHTML = '<span>🟢</span> <span>Imeunganishwa — data inasync kwenye cloud</span>';
-  }
+  const b = boundaries();
+  ['A','B','C','D'].forEach(g => { const el = document.getElementById('gb-' + g); if (el) el.value = b[g]; });
+  const am = document.getElementById('set-avgmode');
+  if (am) am.value = SETTINGS.avgMode || 'all';
   renderClassTags();
   renderTermTags();
 }
-
+function saveGrading() {
+  if (!IS_ADMIN) return;
+  const gb = {
+    A: Number(document.getElementById('gb-A').value),
+    B: Number(document.getElementById('gb-B').value),
+    C: Number(document.getElementById('gb-C').value),
+    D: Number(document.getElementById('gb-D').value)
+  };
+  const next = {...SETTINGS, gradeBoundaries: gb, avgMode: document.getElementById('set-avgmode').value};
+  const errs = Core.validateSettings(next);
+  if (errs.length) { toast('⚠️', errs[0]); return; }
+  SETTINGS.gradeBoundaries = gb;
+  SETTINGS.avgMode = next.avgMode;
+  localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('⚠️','Grading haziku-sync: ' + (Cloud.state.msg||err.message)));
+  renderDash(); renderTable();
+}
 function renderClassTags() {
+  const t = IS_ADMIN ? ' <span class="tag-rm" onclick="removeClass(INDEX)">×</span>' : '';
   document.getElementById('class-tags').innerHTML = SETTINGS.classes.map((c,i) =>
-    '<span class="tag">' + esc(c) + ' <span class="tag-rm" onclick="removeClass(' + i + ')">×</span></span>'
+    '<span class="tag">' + esc(c) + t.replace('INDEX', i) + '</span>'
   ).join('');
 }
-
 function renderTermTags() {
-  document.getElementById('term-tags').innerHTML = SETTINGS.terms.map((t,i) =>
-    '<span class="tag">' + esc(t) + ' <span class="tag-rm" onclick="removeTerm(' + i + ')">×</span></span>'
+  const t = IS_ADMIN ? ' <span class="tag-rm" onclick="removeTerm(INDEX)">×</span>' : '';
+  document.getElementById('term-tags').innerHTML = SETTINGS.terms.map((t2,i) =>
+    '<span class="tag">' + esc(t2) + t.replace('INDEX', i) + '</span>'
   ).join('');
 }
-
+function pushSettingsChange() {
+  localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+  if (IS_ADMIN) Cloud.pushSettings(SETTINGS).catch(err => toast('⚠️','Settings haziku-sync: ' + (Cloud.state.msg||err.message)));
+}
 function addClass() {
+  if (!IS_ADMIN) { toast('⛔','Madarasa yanabadilishwa na Admin tu.'); return; }
   const inp = document.getElementById('new-class');
   const v = inp.value.trim();
   if (!v) return;
   if (SETTINGS.classes.includes(v)) { toast('⚠️','Darasa lipo tayari'); return; }
   SETTINGS.classes.push(v);
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-  if (FB_CONNECTED) cloudSaveSettings();
+  pushSettingsChange();
   inp.value = '';
   renderClassTags();
   refreshAllSelects();
   toast('✅','Darasa limeongezwa');
 }
-
 function removeClass(i) {
+  if (!IS_ADMIN) return;
   SETTINGS.classes.splice(i, 1);
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-  if (FB_CONNECTED) cloudSaveSettings();
+  pushSettingsChange();
   renderClassTags();
   refreshAllSelects();
 }
-
 function addTerm() {
+  if (!IS_ADMIN) { toast('⛔','Terms zinabadilishwa na Admin tu.'); return; }
   const inp = document.getElementById('new-term');
   const v = inp.value.trim();
   if (!v) return;
   if (SETTINGS.terms.includes(v)) { toast('⚠️','Muda upo tayari'); return; }
   SETTINGS.terms.push(v);
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-  if (FB_CONNECTED) cloudSaveSettings();
+  pushSettingsChange();
   inp.value = '';
   renderTermTags();
   refreshAllSelects();
   toast('✅','Muda umeongezwa');
 }
-
 function removeTerm(i) {
+  if (!IS_ADMIN) return;
   SETTINGS.terms.splice(i, 1);
-  localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS));
-  if (FB_CONNECTED) cloudSaveSettings();
+  pushSettingsChange();
   renderTermTags();
   refreshAllSelects();
 }
 
-/* ========== BACKUP ========== */
+/* ---------- Join code + user management (admin) ---------- */
+function loadJoinCodeUI() {
+  Cloud.listSchoolUsers().catch(()=>{});
+  const el = document.getElementById('joincode-value');
+  if (!el) return;
+  firebase.firestore().collection('schools').doc(Auth.current.schoolId).get()
+    .then(snap => { el.textContent = (snap.exists && snap.data().joinCode) ? snap.data().joinCode : '——'; })
+    .catch(() => { el.textContent = '——'; });
+}
+function regenJoinCode() {
+  if (!IS_ADMIN) return;
+  showConfirm('🔄 Badilisha Join Code', 'Code ya zamani itaacha kutumika. Walimu waliokuwa wamejiunga hawathiriki.', [
+    {label:'Ghairi', cls:'btn-sec'},
+    {label:'Badilisha', cls:'btn-d', fn: () => {
+      Cloud.regenerateJoinCode()
+        .then(code => { SETTINGS.joinCode = code; document.getElementById('joincode-value').textContent = code; toast('✅','Join code mpya: ' + code); })
+        .catch(err => toast('❌','Imeshindikana: ' + err.message));
+    }}
+  ]);
+}
+function loadUsersUI() {
+  const body = document.getElementById('users-body');
+  Cloud.listSchoolUsers().then(users => {
+    if (!users.length) { body.innerHTML = '<tr class="empty-row"><td colspan="4">Hakuna watumiaji</td></tr>'; return; }
+    body.innerHTML = users.map(u => {
+      const isMe = u.uid === Auth.current.uid;
+      const roleBadge = u.role === 'admin'
+        ? '<span class="gb gA">Admin</span>'
+        : '<span class="gb gB">Teacher</span>';
+      let act = '';
+      if (!isMe) {
+        act = u.role === 'teacher'
+          ? '<button class="btn-rc" onclick="changeUserRole(\'' + u.uid + '\',\'admin\')">⬆️ Fanya Admin</button>'
+          : '<button class="btn-e" onclick="changeUserRole(\'' + u.uid + '\',\'teacher\')">⬇️ Fanya Teacher</button>';
+      } else act = '<em style="color:var(--muted);font-size:12px">Wewe</em>';
+      return '<tr><td><strong>' + esc(u.fullName || '') + '</strong></td><td>' + esc(u.email || '') + '</td><td>' + roleBadge + '</td><td>' + act + '</td></tr>';
+    }).join('');
+  }).catch(err => {
+    body.innerHTML = '<tr class="empty-row"><td colspan="4">Imeshindikana kupakia: ' + esc(err.message) + '</td></tr>';
+  });
+}
+function changeUserRole(uid2, role) {
+  showConfirm('👤 Badilisha Jukumu', 'Unahakika unataka kubadilisha jukumu la mtumiaji hku kuwa <strong>' + (role === 'admin' ? 'Admin' : 'Teacher') + '</strong>?', [
+    {label:'Hapana', cls:'btn-sec'},
+    {label:'Ndio', cls:'btn-d', fn: () => {
+      Cloud.setUserRole(uid2, role)
+        .then(() => { toast('✅','Jukumu limebadilishwa'); loadUsersUI(); })
+        .catch(err => toast('❌','Imeshindikana: ' + err.message));
+    }}
+  ]);
+}
 
-function exportAllData() {
-  const backup = {settings: SETTINGS, students: DATA, exportedAt: new Date().toISOString(), version: '3.0'};
+/* ---------- Old-version data import (localStorage scan) ---------- */
+function importOldData() {
+  const found = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (/^matokeo_v2_.*_data$/.test(k) || k === 'matokeo_v2') {
+        try {
+          const arr = JSON.parse(localStorage.getItem(k) || '[]');
+          if (Array.isArray(arr) && arr.length) found.push({key: k, students: arr});
+        } catch(e) {}
+      }
+    }
+  } catch(e) {}
+  if (!found.length) { toast('ℹ️','Hakuna data ya kale iliyopatikana kwenye browser hii'); return; }
+  const total = found.reduce((a,f) => a + f.students.length, 0);
+  showConfirm('🕰️ Leta Data ya Kale',
+    'Nimepata rekodi <strong>' + total + '</strong> za toleo la zamani (browser hii tu). Zitaongezwa kama wanafunzi wapya; zilizopo hazibadilishwi.',
+    [
+      {label:'Ghairi', cls:'btn-sec'},
+      {label:'Leta', cls:'btn-d', fn: () => {
+        let added = 0;
+        found.forEach(f => f.students.forEach(bs => {
+          if (!bs || !bs.name) return;
+          const dup = DATA.some(s => s.name && s.name.toLowerCase() === String(bs.name).toLowerCase() && s.class === bs.class && s.term === bs.term);
+          if (dup) return;
+          DATA.push({id: newId(), name: String(bs.name), class: bs.class || '', term: bs.term || '', year: bs.year || SETTINGS.year, scores: bs.scores || {}, createdAt: new Date().toISOString(), _dirty: true});
+          added++;
+        }));
+        save();
+        renderDash(); renderTable();
+        toast('✅', added + ' za kale zimeletwa!');
+      }}
+    ]);
+}
+
+function exportAllData(silent) {
+  const backup = {settings: SETTINGS, students: DATA, exportedAt: new Date().toISOString(), version: '2.1'};
   const blob = new Blob([JSON.stringify(backup, null, 2)], {type: 'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = 'matokeo-backup-' + new Date().toISOString().slice(0,10) + '.json';
   a.click(); URL.revokeObjectURL(url);
-  toast('📤','Backup imepakuliwa!');
+  if (!silent) toast('📤','Backup imepakuliwa!');
 }
-
-function importBackup(file) {
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const backup = JSON.parse(e.target.result);
-      if (!backup.students || !Array.isArray(backup.students)) { toast('❌','File si backup ya Matokeo'); return; }
-      let added = 0, updated = 0;
-      backup.students.forEach(bs => {
-        const existing = DATA.findIndex(s => s.name === bs.name && s.class === bs.class && s.term === bs.term);
-        if (existing !== -1) { DATA[existing] = {...DATA[existing], ...bs, id: DATA[existing].id}; updated++; }
-        else { if (!bs.id) bs.id = Date.now().toString(36) + Math.random().toString(36).slice(2,6) + added; DATA.push(bs); added++; }
-      });
-      if (backup.settings) { SETTINGS = {...SETTINGS, ...backup.settings}; localStorage.setItem(getUserStorageKey('settings'), JSON.stringify(SETTINGS)); refreshSettingsUI(); refreshAllSelects(); }
-      save();
-      renderDash(); renderTable();
-      toast('✅', added + ' wameongezwa, ' + updated + ' wamesasishwa!');
-    } catch(err) { toast('❌','File si JSON sahihi: ' + err.message); }
-  };
-  reader.readAsText(file);
-  document.getElementById('json-inp').value = '';
-}
-
-/* ========== UTILITIES ========== */
-
-function validateScores(scores) {
-  const errors = [];
-  SUBS.forEach(sub => {
-    const v = scores[sub.key];
-    if (v !== null && v !== undefined && v !== '') {
-      const n = Number(v);
-      if (isNaN(n) || n < 0 || n > 100) errors.push(sub.label + ': ' + v + ' (lazima 0-100)');
-    }
-  });
-  return errors;
-}
-
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function fmt(v) { return v !== null && v !== undefined ? v : '–'; }
 
 function toast(ico, msg) {
   const el = document.getElementById('toast');
@@ -2228,9 +2102,11 @@ function toast(ico, msg) {
   clearTimeout(TOAST_T);
   TOAST_T = setTimeout(() => el.classList.remove('show'), 3500);
 }
+let TOAST_T;
 
-/* ========== SESSION TIMER ========== */
-
+let SESSION_T;
+let SESSION_SEC = 30 * 60;
+let SESSION_WARN = false;
 function startSessionTimer() {
   SESSION_SEC = 30 * 60;
   SESSION_WARN = false;
@@ -2270,21 +2146,58 @@ function showSkeletons(show) {
   }
 }
 
-/* ========== APP INIT ========== */
+function importBackup(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const backup = JSON.parse(e.target.result);
+      if (!backup.students || !Array.isArray(backup.students)) { toast('❌','File si backup ya Matokeo'); return; }
+      const plan = Core.planBackupMerge(DATA, backup.students);
+      const settingsErrors = backup.settings ? Core.validateSettings({...SETTINGS, ...backup.settings}) : [];
+      let body = 'Backup hii ina wanafunzi <strong>' + backup.students.length + '</strong>.<br><br>' +
+        '<span style="color:var(--green)">✔ Wataongezwa wapya: ' + plan.toAdd.length + '</span><br>' +
+        '<span style="color:var(--amber)">✎ Watabadilishwa (sasa hivi: ' + plan.toUpdate.length + '): ' + plan.toUpdate.length + '</span><br><br>' +
+        'Walio wapyo hawajathirika. Ukiendelea, data ya sasa ya walio hapo juu itabadilishwa.';
+      if (settingsErrors.length) body += '<br><br><span style="color:var(--red)">Settings za backup zitarukwa: ' + esc(settingsErrors[0]) + '</span>';
+      showConfirm('📥 Thibitisha Import ya Backup', body, [
+        {label:'Ghairi', cls:'btn-sec'},
+        {label:'Endelea', cls:'btn-d', fn: () => {
+          plan.toUpdate.forEach(u => {
+            DATA[u.index] = {...u.existing, ...u.incoming, id: u.existing.id, updatedAt: new Date().toISOString(), _dirty: true};
+          });
+          plan.toAdd.forEach(bs => {
+            DATA.push({id: bs.id || newId(), name: bs.name, class: bs.class || '', term: bs.term || '', year: bs.year || SETTINGS.year, scores: bs.scores || {}, createdAt: new Date().toISOString(), _dirty: true});
+          });
+          if (backup.settings && !settingsErrors.length) {
+            SETTINGS = {...SETTINGS, ...backup.settings, gradeBoundaries: {...SETTINGS.gradeBoundaries, ...(backup.settings.gradeBoundaries||{})}};
+            localStorage.setItem(cacheKey('settings'), JSON.stringify(SETTINGS));
+          }
+          save();
+          renderDash(); renderTable(); refreshSettingsUI(); refreshAllSelects();
+          toast('✅', plan.toAdd.length + ' wameongezwa, ' + plan.toUpdate.length + ' wamesasishwa!');
+        }}
+      ]);
+    } catch(err) { toast('❌','File si JSON sahihi: ' + err.message); }
+  };
+  reader.readAsText(file);
+  document.getElementById('json-inp').value = '';
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmt(v) { return v !== null && v !== undefined ? v : '–'; }
 
 window.addEventListener('DOMContentLoaded', () => {
-  // Try to initialize Firebase from saved config
-  const fbReady = tryInitFirebase();
+  initFirebase();
 
-  if (fbReady) {
-    // Firebase is configured — use Firebase Auth for session management
-    tryRestoreSession();
-  } else {
-    // No Firebase config — show setup form on login screen
-    document.getElementById('landing-page').style.display = 'block';
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'none';
-  }
+  // Flush pending cloud writes when connectivity returns.
+  window.addEventListener('online', () => { if (Cloud.isDirty()) flushPush(); updateSyncBadge(); });
+  window.addEventListener('offline', () => updateSyncBadge());
+
+  // No session yet -> landing page (Firebase onAuthStateChanged will switch views on sign-in).
+  document.getElementById('landing-page').style.display = 'block';
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'none';
 });
 </script>
 </body>

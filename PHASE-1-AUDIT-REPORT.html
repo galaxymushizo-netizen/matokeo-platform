@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matokeo Platform — Phase 1 Audit Report</title>
+<style>
+:root{--bg:#f8fdf8;--card:#fff;--border:rgba(76,175,80,.12);--text:#1b3a1b;--muted:#6b9a6b;--green:#4caf50;--red:#ef5350;--amber:#ff9800;--blue:#42a5f5;--critical:#d32f2f;--high:#e65100;--medium:#f9a825;--low:#2e7d32}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;padding:32px 24px;max-width:960px;margin:0 auto}
+h1{font-size:28px;margin-bottom:4px;color:#1b5e20}
+h2{font-size:20px;margin:36px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--border);color:#2e7d32}
+h3{font-size:16px;margin:20px 0 8px;color:var(--text)}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:32px}
+.meta{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:32px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:12px}
+.meta div{font-size:13px}
+.meta strong{color:#2e7d32}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:32px}
+.sum-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+.sum-card .num{font-size:32px;font-weight:800}
+.sum-card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-top:4px}
+.critical .num{color:var(--critical)}
+.high .num{color:var(--high)}
+.medium .num{color:var(--medium)}
+.low .num{color:var(--low)}
+.finding{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;border-left:4px solid var(--muted)}
+.finding.crit{border-left-color:var(--critical)}
+.finding.hi{border-left-color:var(--high)}
+.finding.med{border-left-color:var(--medium)}
+.finding.lo{border-left-color:var(--low)}
+.finding-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sev{display:inline-block;padding:2px 10px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#fff}
+.sev-critical{background:var(--critical)}
+.sev-high{background:var(--high)}
+.sev-medium{background:var(--medium);color:#333}
+.sev-low{background:var(--low)}
+.finding h3{margin:0;font-size:15px}
+.finding p{font-size:13.5px;color:#3a5a3a;margin-bottom:6px}
+.finding code{background:rgba(76,175,80,.08);padding:1px 6px;border-radius:4px;font-size:12.5px;color:#2e7d32}
+.finding pre{background:#f1f8e9;padding:12px;border-radius:8px;overflow-x:auto;font-size:12px;margin:8px 0;border:1px solid rgba(76,175,80,.15)}
+.finding ul{margin:6px 0 6px 20px;font-size:13.5px;color:#3a5a3a}
+.finding li{margin-bottom:4px}
+.arch-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.arch-section table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.arch-section th{text-align:left;padding:8px 12px;background:#f1f8e9;color:#2e7d32;font-weight:600;border-bottom:1px solid var(--border)}
+.arch-section td{padding:8px 12px;border-bottom:1px solid rgba(200,230,200,.3)}
+.action-needed{background:#fff3e0;border:1px solid #ffe0b2;border-radius:12px;padding:20px;margin:24px 0}
+.action-needed h3{color:var(--high);margin-bottom:8px}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:32px}
+.toc a{color:#2e7d32;text-decoration:none;font-size:14px;display:block;padding:3px 0}
+.toc a:hover{text-decoration:underline}
+.footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+
+<h1>Matokeo Platform — Phase 1 Audit Report</h1>
+<p class="subtitle">Security, Data Integrity, and Code Quality Inspection</p>
+
+<div class="meta">
+  <div><strong>Repository:</strong> galaxymushizo-netizen/matokeo-platform</div>
+  <div><strong>Date:</strong> 2026-10-14</div>
+  <div><strong>Commit:</strong> 1939eb8 (main)</div>
+  <div><strong>Files:</strong> 3 (index.html, README.md, LICENSE)</div>
+  <div><strong>Total Lines:</strong> 2,067 (all in index.html)</div>
+  <div><strong>Auditor:</strong> AI Code Audit</div>
+</div>
+
+<div class="summary-grid">
+  <div class="sum-card critical"><div class="num">6</div><div class="lbl">Critical</div></div>
+  <div class="sum-card high"><div class="num">5</div><div class="lbl">High</div></div>
+  <div class="sum-card medium"><div class="num">6</div><div class="lbl">Medium</div></div>
+  <div class="sum-card low"><div class="num">4</div><div class="lbl">Low</div></div>
+</div>
+
+<div class="toc">
+  <h3 style="margin-bottom:10px">Table of Contents</h3>
+  <a href="#arch">1. Architecture Overview</a>
+  <a href="#critical">2. Critical Findings (6)</a>
+  <a href="#high">3. High Findings (5)</a>
+  <a href="#medium">4. Medium Findings (6)</a>
+  <a href="#low">5. Low Findings (4)</a>
+  <a href="#calc">6. Academic Calculation Audit</a>
+  <a href="#import">7. Import/Export Audit</a>
+  <a href="#deploy">8. Deployment Audit</a>
+  <a href="#actions">9. Required Actions From You</a>
+  <a href="#next">10. Recommended Next Steps</a>
+</div>
+
+<!-- ============ ARCHITECTURE ============ -->
+<h2 id="arch">1. Architecture Overview</h2>
+
+<div class="arch-section">
+  <h3>Technology Stack</h3>
+  <table>
+    <tr><th>Layer</th><th>Technology</th><th>Notes</th></tr>
+    <tr><td>Frontend</td><td>Single HTML file (121KB)</td><td>All CSS + JS inline, no build step</td></tr>
+    <tr><td>Charts</td><td>Chart.js 4.4.0 (CDN)</td><td>No SRI integrity hash</td></tr>
+    <tr><td>PDF</td><td>jsPDF 2.5.1 + AutoTable 3.8.2 (CDN)</td><td>No SRI integrity hash</td></tr>
+    <tr><td>Excel</td><td>SheetJS (xlsx) 0.18.5 (CDN)</td><td>No SRI integrity hash</td></tr>
+    <tr><td>Backend (optional)</td><td>Firebase Firestore 10.7.1 (CDN)</td><td>User-provided config, NO Firebase Auth</td></tr>
+    <tr><td>Auth</td><td>Client-side JavaScript only</td><td>localStorage + simpleHash (NOT cryptographic)</td></tr>
+    <tr><td>Data Storage</td><td>localStorage (primary), Firestore (optional)</td><td>Per-user namespaced keys</td></tr>
+    <tr><td>Deployment</td><td>GitHub Pages (static)</td><td>No server-side code possible</td></tr>
+    <tr><td>Package Manager</td><td>None</td><td>No package.json, no node_modules</td></tr>
+    <tr><td>Testing</td><td>None</td><td>Zero automated tests</td></tr>
+  </table>
+</div>
+
+<div class="arch-section">
+  <h3>Application Flow</h3>
+  <p style="font-size:13.5px;color:#3a5a3a;margin-top:8px">
+    <strong>Landing Page</strong> (marketing) &rarr; <strong>Login/Signup</strong> (client-side auth via localStorage) &rarr; <strong>App</strong> (Dashboard, Add Student, Students List, Import, Report Cards, Analytics, Settings).
+    Data stored in localStorage keyed by user ID. Optional Firebase sync writes to Firestore using user-provided config. No server-side code exists.
+  </p>
+</div>
+
+<div class="arch-section">
+  <h3>Data Model (localStorage)</h3>
+  <table>
+    <tr><th>Key Pattern</th><th>Content</th></tr>
+    <tr><td><code>matokeo_users</code></td><td>Array of user objects: {id, fullName, username, password (simpleHash), createdAt}</td></tr>
+    <tr><td><code>matokeo_v2_{userId}_data</code></td><td>Array of student records: {id, name, class, term, year, scores: {hisabati, kiswahili, english, jiografia, sayansi, historia}}</td></tr>
+    <tr><td><code>matokeo_v2_{userId}_settings</code></td><td>Settings: {classes[], terms[], year, schoolName, teacherName}</td></tr>
+    <tr><td><code>matokeo_session</code></td><td>Current session: {id, username, fullName}</td></tr>
+    <tr><td><code>matokeo_fb</code></td><td>Firebase config JSON (user-provided)</td></tr>
+  </table>
+</div>
+
+<!-- ============ CRITICAL ============ -->
+<h2 id="critical">2. Critical Findings</h2>
+
+<div class="finding crit">
+  <div class="finding-head"><span class="sev sev-critical">Critical</span><h3>C1: Authentication Is Entirely Client-Side — Trivially Bypassable</h3></div>
+  <p><strong>Evidence:</strong> Lines 1020-1035, 1162-1196. The <code>doLogin()</code> function reads users from <code>localStorage</code>, compares <code>simpleHash(password)</code>, and sets <code>CURRENT_USER</code> in JavaScript. There is no server, no token, no session verification. Any user can open DevTools and run:</p>
+  <pre>CURRENT_USER = {id:'admin', username:'admin', fullName:'Admin'};
+localStorage.setItem('matokeo_session', JSON.stringify(CURRENT_USER));
+location.reload();</pre>
+  <p><strong>Impact:</strong> Complete authentication bypass. Anyone with browser access can impersonate any user and access all student data stored in that user's localStorage namespace.</p>
+  <p><strong>Root Cause:</strong> GitHub Pages is a static host — it cannot perform server-side authentication. The entire auth model is fundamentally incompatible with any real security requirement.</p>
+</div>
+
+<div class="finding crit">
+  <div class="finding-head"><span class="sev sev-critical">Critical</span><h3>C2: Password "Hashing" Uses Non-Cryptographic Algorithms (djb2 + sdbm)</h3></div>
+  <p><strong>Evidence:</strong> Lines 1021-1035. The <code>simpleHash()</code> function combines djb2 and sdbm — both are <strong>non-cryptographic</strong> hash functions designed for hash tables, not security. They are fast, have known collision properties, and can be reversed via brute force in milliseconds.</p>
+  <pre>function simpleHash(str) {
+  let h = 0;
+  for (let i = 0; i &lt; str.length; i++) {
+    h = ((h &lt;&lt; 5) - h) + str.charCodeAt(i);  // djb2
+    h = h &amp; h;
+  }
+  // ... sdbm pass ...
+  return 'h_' + Math.abs(h).toString(36) + '_' + Math.abs(h2).toString(36);
+}</pre>
+  <p><strong>Impact:</strong> Passwords are effectively stored in plaintext. The hash output space is only ~64 bits (two 32-bit ints), and the algorithm has no salt, no stretching, and no memory-hardness. Rainbow tables or brute force can crack any 4-character password instantly.</p>
+  <p><strong>Comment in code admits this:</strong> <code>// Simple hash (not cryptographic, but sufficient for local password storage)</code> — but even for local storage, this provides no real protection against a determined user.</p>
+</div>
+
+<div class="finding crit">
+  <div class="finding-head"><span class="sev sev-critical">Critical</span><h3>C3: No Firebase Authentication — Firestore Has No Identity to Enforce Rules Against</h3></div>
+  <p><strong>Evidence:</strong> Lines 1104-1160. Firebase is initialized with user-provided config (from a textarea), but <strong>Firebase Auth is never used</strong>. The app only uses Firestore's <code>collection('users').doc(CURRENT_USER.id)</code> path, where <code>CURRENT_USER.id</code> is a client-generated string like <code>'u_' + Date.now().toString(36)</code>.</p>
+  <p><strong>Impact:</strong> Firestore security rules cannot distinguish between users because there is no Firebase Auth UID. Any Firestore rules would have to either (a) allow all reads/writes (insecure) or (b) be impossible to write correctly without Auth. Currently, <strong>no Firestore security rules exist</strong> — the project has zero server-side authorization.</p>
+</div>
+
+<div class="finding crit">
+  <div class="finding-head"><span class="sev sev-critical">Critical</span><h3>C4: Firestore Security Rules Missing — All Data Open to Anyone With Config</h3></div>
+  <p><strong>Evidence:</strong> The Firebase config is entered by the user via a textarea (line 967). Once connected, the app reads/writes to <code>/users/{userId}/data/students</code> with no authentication. Anyone who obtains the Firebase config (stored in localStorage, visible in DevTools) can read/write ALL users' data directly via the Firestore API or Firebase Console.</p>
+  <p><strong>Impact:</strong> Complete data exposure. Student records, names, classes, and scores can be read, modified, or deleted by anyone with the Firebase project config. There is no access control whatsoever at the database level.</p>
+</div>
+
+<div class="finding crit">
+  <div class="finding-head"><span class="sev sev-critical">Critical</span><h3>C5: Default Credentials Published in README</h3></div>
+  <p><strong>Evidence:</strong> README.md line 27: <code>Ingia: username `zarem` / password `zarem`</code></p>
+  <p><strong>Impact:</strong> The default admin account credentials are publicly documented. Combined with C1-C4, this means anyone who finds the repository can immediately access the migrated data of the original user.</p>
+</div>
+
+<div class="finding crit">
+  <div class="finding-head"><span class="sev sev-critical">Critical</span><h3>C6: All Users Share the Same Browser — No Multi-Tenant Isolation</h3></div>
+  <p><strong>Evidence:</strong> Lines 1037-1047. All user accounts are stored in a single <code>matokeo_users</code> array in localStorage. Data is namespaced by user ID, but <strong>any JavaScript running on the page can read all users' data</strong> by iterating the <code>matokeo_users</code> array and reading each <code>matokeo_v2_{id}_data</code> key.</p>
+  <p><strong>Impact:</strong> There is no isolation between users on the same browser. A logged-in user can access any other user's student records by simply reading localStorage keys. This violates the fundamental principle of multi-tenant data isolation.</p>
+</div>
+
+<!-- ============ HIGH ============ -->
+<h2 id="high">3. High Findings</h2>
+
+<div class="finding hi">
+  <div class="finding-head"><span class="sev sev-high">High</span><h3>H1: Session Token Stored in localStorage — Vulnerable to XSS</h3></div>
+  <p><strong>Evidence:</strong> Line 1177. <code>localStorage.setItem('matokeo_session', ...)</code>. If any XSS vector exists (and several CDN scripts load without SRI hashes), an attacker can steal the session.</p>
+  <p><strong>Impact:</strong> Session hijacking via XSS. Combined with C1, the session is trivially forgeable anyway, but this compounds the risk.</p>
+</div>
+
+<div class="finding hi">
+  <div class="finding-head"><span class="sev sev-high">High</span><h3>H2: CDN Dependencies Loaded Without Subresource Integrity (SRI) Hashes</h3></div>
+  <p><strong>Evidence:</strong> Lines 15-21. All external scripts (Chart.js, jsPDF, SheetJS, Firebase) are loaded via <code>cdn.jsdelivr.net</code> without <code>integrity</code> or <code>crossorigin</code> attributes.</p>
+  <pre>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"&gt;&lt;/script&gt;</pre>
+  <p><strong>Impact:</strong> If the CDN is compromised (or jsdelivr has a supply-chain incident), malicious code could be injected into every user's browser. This is especially dangerous because the app handles student data.</p>
+</div>
+
+<div class="finding hi">
+  <div class="finding-head"><span class="sev sev-high">High</span><h3>H3: No Role-Based Access Control (RBAC)</h3></div>
+  <p><strong>Evidence:</strong> The user model (line 1246) has only <code>{id, fullName, username, password, createdAt}</code>. There is no <code>role</code> field. All users have identical permissions — there is no distinction between admin, teacher, or viewer.</p>
+  <p><strong>Impact:</strong> Any registered user can perform all operations including deleting all data (<code>confirmClearAll()</code>), changing settings, and accessing all student records.</p>
+</div>
+
+<div class="finding hi">
+  <div class="finding-head"><span class="sev sev-high">High</span><h3>H4: Backup Import Silently Overwrites Existing Records</h3></div>
+  <p><strong>Evidence:</strong> Lines 2003-2006. When importing a JSON backup, if a student with the same name+class+term exists, the existing record is <strong>overwritten</strong> without confirmation:</p>
+  <pre>if (existing !== -1) { DATA[existing] = {...DATA[existing], ...bs, id: DATA[existing].id}; updated++; }</pre>
+  <p><strong>Impact:</strong> Data loss. A corrupted or outdated backup can silently overwrite current data with no warning, no diff preview, and no undo.</p>
+</div>
+
+<div class="finding hi">
+  <div class="finding-head"><span class="sev sev-high">High</span><h3>H5: No Content Security Policy (CSP)</h3></div>
+  <p><strong>Evidence:</strong> No CSP meta tag or header exists. GitHub Pages does not set a restrictive CSP by default for user content.</p>
+  <p><strong>Impact:</strong> Without CSP, any XSS vulnerability (including via imported Excel data or JSON backups) can execute arbitrary JavaScript, steal data, or redirect users.</p>
+</div>
+
+<!-- ============ MEDIUM ============ -->
+<h2 id="medium">4. Medium Findings</h2>
+
+<div class="finding med">
+  <div class="finding-head"><span class="sev sev-medium">Medium</span><h3>M1: Excel Import Silently Converts Invalid Scores to null</h3></div>
+  <p><strong>Evidence:</strong> Lines 1717-1720. When importing Excel data, invalid scores (negative, >100, non-numeric) are silently set to <code>null</code> instead of reporting the error:</p>
+  <pre>if (n !== null && (isNaN(n) || n &lt; 0 || n &gt; 100)) { scores[sub.key] = null; }</pre>
+  <p><strong>Impact:</strong> Data corruption. A teacher importing an Excel file with a typo (e.g., "85" entered as "850") will silently lose that score. The import preview shows the converted value but doesn't flag it as an error.</p>
+</div>
+
+<div class="finding med">
+  <div class="finding-head"><span class="sev sev-medium">Medium</span><h3>M2: Position Calculation Doesn't Handle Ties</h3></div>
+  <p><strong>Evidence:</strong> Lines 1453-1458. <code>computePositions()</code> sorts students by average and assigns positions by array index. Two students with identical averages get different positions (e.g., 3rd and 4th instead of both being 3rd).</p>
+  <pre>sorted.forEach((s, i) => { posMap[s.id] = i + 1; });</pre>
+  <p><strong>Impact:</strong> Incorrect rankings. In Tanzanian schools, tied scores should receive the same position (e.g., 1, 2, 2, 4). This affects report cards and the dashboard.</p>
+</div>
+
+<div class="finding med">
+  <div class="finding-head"><span class="sev sev-medium">Medium</span><h3>M3: Pass Rate Threshold Inconsistent With Grade Boundaries</h3></div>
+  <p><strong>Evidence:</strong> Line 1593 uses <code>avg(s) >= 40</code> for pass rate calculation. But the grade function (line 1438) defines F as <code>&lt; 30</code> and D as <code>30-44</code>. So a student with average 35 gets grade D but is counted as "failing" in the pass rate.</p>
+  <p><strong>Impact:</strong> Misleading statistics. The dashboard pass rate doesn't match the grading system. This could confuse teachers and administrators.</p>
+</div>
+
+<div class="finding med">
+  <div class="finding-head"><span class="sev sev-medium">Medium</span><h3>M4: Average Excludes Null Scores — Inflates Averages for Incomplete Records</h3></div>
+  <p><strong>Evidence:</strong> Lines 1446-1448. The <code>avg()</code> function filters out null/undefined scores before computing the mean. A student with only 1 subject scored (e.g., 90 in Hisabati, all others null) gets average = 90, same as a student who scored 90 in all 6 subjects.</p>
+  <p><strong>Impact:</strong> Unfair rankings. Students with incomplete records can rank higher than students with complete but lower scores. This is especially problematic when importing data with missing columns.</p>
+</div>
+
+<div class="finding med">
+  <div class="finding-head"><span class="sev sev-medium">Medium</span><h3>M5: No Error Handling for Failed Firestore Writes</h3></div>
+  <p><strong>Evidence:</strong> Lines 1080-1083. Cloud save failures are caught but only logged with <code>console.warn</code>. The user sees no indication that their data failed to sync:</p>
+  <pre>catch(e) { console.warn('Cloud save failed:', e); }</pre>
+  <p><strong>Impact:</strong> Data loss risk. A teacher might believe their data is synced to the cloud when it actually isn't. If they switch devices, their data appears missing.</p>
+</div>
+
+<div class="finding med">
+  <div class="finding-head"><span class="sev sev-medium">Medium</span><h3>M6: No Duplicate Detection in Excel Import — ID Collision Possible</h3></div>
+  <p><strong>Evidence:</strong> Line 1722. Each imported row gets a new ID: <code>Date.now().toString(36) + Math.random().toString(36).slice(2,6)</code>. If two rows are processed in the same millisecond, they could theoretically get the same timestamp prefix. More importantly, the duplicate check (line 1744) only compares name+class+term — it doesn't check if the imported student has a different ID but same identity.</p>
+  <p><strong>Impact:</strong> Potential duplicate records or silent data merging.</p>
+</div>
+
+<!-- ============ LOW ============ -->
+<h2 id="low">5. Low Findings</h2>
+
+<div class="finding lo">
+  <div class="finding-head"><span class="sev sev-low">Low</span><h3>L1: Single 121KB HTML File — Maintenance Burden</h3></div>
+  <p><strong>Evidence:</strong> All CSS (~470 lines), HTML (~540 lines), and JavaScript (~1060 lines) are in one file. No module system, no build step.</p>
+  <p><strong>Impact:</strong> Difficult to maintain, test, or review. Any change requires navigating the entire file. Makes automated testing impractical.</p>
+</div>
+
+<div class="finding lo">
+  <div class="finding-head"><span class="sev sev-low">Low</span><h3>L2: No Automated Tests</h3></div>
+  <p><strong>Evidence:</strong> No test files, no test framework, no package.json. Zero test coverage.</p>
+  <p><strong>Impact:</strong> Regressions can only be caught manually. Calculations, imports, and exports have no verification.</p>
+</div>
+
+<div class="finding lo">
+  <div class="finding-head"><span class="sev sev-low">Low</span><h3>L3: Session Timer Resets on Any Mouse Movement — Not a Real Timeout</h3></div>
+  <p><strong>Evidence:</strong> Line 1981. <code>resetSessionTimer()</code> resets the 30-minute countdown on any click, keydown, mousemove, or touchstart. But it resets to exactly 30 minutes regardless of how much time was left. The timer also continues counting down in the background even when the user is active — it only resets the counter, not pauses it.</p>
+  <p><strong>Impact:</strong> The session timeout provides a false sense of security. It's a UX feature, not a security control.</p>
+</div>
+
+<div class="finding lo">
+  <div class="finding-head"><span class="sev sev-low">Low</span><h3>L4: PWA Manifest Uses External Placeholder Icon</h3></div>
+  <p><strong>Evidence:</strong> Line 12. The PWA manifest references <code>via.placeholder.com/192/66bb6a/ffffff?text=MP</code> as the app icon. This external service could go down or serve malicious content.</p>
+  <p><strong>Impact:</strong> PWA install may fail or display incorrectly. Minor reliability issue.</p>
+</div>
+
+<!-- ============ CALCULATIONS ============ -->
+<h2 id="calc">6. Academic Calculation Audit</h2>
+
+<div class="arch-section">
+  <h3>Grading Scale (from code, line 1435-1443)</h3>
+  <table>
+    <tr><th>Grade</th><th>Range</th><th>Description (from PDF)</th></tr>
+    <tr><td>A</td><td>75 - 100</td><td>Bora sana</td></tr>
+    <tr><td>B</td><td>60 - 74</td><td>Vizuri</td></tr>
+    <tr><td>C</td><td>45 - 59</td><td>Wastani</td></tr>
+    <tr><td>D</td><td>30 - 44</td><td>Dhaifu</td></tr>
+    <tr><td>F</td><td>0 - 29</td><td>Shindwa</td></tr>
+  </table>
+  <p style="font-size:13px;color:var(--muted);margin-top:8px"><strong>NOTE:</strong> I'm using the grading rules found in the existing code. Please confirm whether these match the official Tanzania grading rules you want. If different, I need your official rules before implementing changes.</p>
+</div>
+
+<div class="arch-section">
+  <h3>Calculation Issues Found</h3>
+  <table>
+    <tr><th>Operation</th><th>Status</th><th>Issue</th></tr>
+    <tr><td>Total Marks</td><td style="color:var(--medium)">Partial</td><td>Correctly sums non-null scores, but doesn't indicate how many subjects are missing</td></tr>
+    <tr><td>Average</td><td style="color:var(--critical)">Bug</td><td>Divides by count of non-null scores, not total subjects. Inflates average for incomplete records (M4)</td></tr>
+    <tr><td>Grade Assignment</td><td style="color:var(--green)">OK</td><td>Correctly applies boundaries per subject</td></tr>
+    <tr><td>Overall Grade</td><td style="color:var(--medium)">Partial</td><td>Applied to the average, which is inflated for incomplete records</td></tr>
+    <tr><td>Positions</td><td style="color:var(--critical)">Bug</td><td>Doesn't handle ties. Two students with same average get different positions (M2)</td></tr>
+    <tr><td>Pass Rate</td><td style="color:var(--critical)">Bug</td><td>Uses threshold 40, but grade F starts at &lt;30. Inconsistent (M3)</td></tr>
+    <tr><td>Report Card PDF</td><td style="color:var(--green)">OK</td><td>Correctly shows per-subject grades, total, average, position</td></tr>
+    <tr><td>Class Comparison</td><td style="color:var(--medium)">Partial</td><td>Only compares within same class+term filter. No cross-term comparison</td></tr>
+  </table>
+</div>
+
+<!-- ============ IMPORT/EXPORT ============ -->
+<h2 id="import">7. Import/Export Audit</h2>
+
+<div class="arch-section">
+  <h3>Excel Import Issues</h3>
+  <table>
+    <tr><th>Check</th><th>Status</th><th>Details</th></tr>
+    <tr><td>File type validation</td><td style="color:var(--green)">OK</td><td>Accepts .xlsx, .xls, .csv. Checks 5MB limit.</td></tr>
+    <tr><td>Header detection</td><td style="color:var(--medium)">Partial</td><td>Matches by column name (Jina/Name, Darasa/Class, etc.) but doesn't validate all required headers exist</td></tr>
+    <tr><td>Required fields</td><td style="color:var(--critical)">Missing</td><td>No validation that Jina, Darasa, Muda columns exist. Missing name rows are filtered (line 1723) but silently.</td></tr>
+    <tr><td>Score range validation</td><td style="color:var(--critical)">Bug</td><td>Invalid scores silently converted to null instead of reported (M1)</td></tr>
+    <tr><td>Duplicate detection</td><td style="color:var(--medium)">Partial</td><td>Detects by name+class+term (case-insensitive name). Skips duplicates silently — no option to update.</td></tr>
+    <tr><td>Import preview</td><td style="color:var(--green)">OK</td><td>Shows first 50 rows before committing. But doesn't flag invalid scores in preview.</td></tr>
+    <tr><td>Empty file handling</td><td style="color:var(--green)">OK</td><td>Shows toast "Faili haina data"</td></tr>
+    <tr><td>Corrupted file handling</td><td style="color:var(--green)">OK</td><td>Try/catch with error message</td></tr>
+    <tr><td>Atomic import</td><td style="color:var(--critical)">Missing</td><td>Not atomic. If 100 rows are imported and row 50 fails, first 49 are already added. No rollback.</td></tr>
+    <tr><td>Partial failure report</td><td style="color:var(--medium)">Partial</td><td>Reports added/skipped counts but doesn't list which rows failed or why.</td></tr>
+  </table>
+</div>
+
+<div class="arch-section">
+  <h3>Excel Export Issues</h3>
+  <table>
+    <tr><th>Check</th><th>Status</th><th>Details</th></tr>
+    <tr><td>Correct data</td><td style="color:var(--green)">OK</td><td>Exports filtered data with all subjects, average, and position</td></tr>
+    <tr><td>Null handling</td><td style="color:var(--green)">OK</td><td>Null scores exported as empty string</td></tr>
+    <tr><td>File format</td><td style="color:var(--green)">OK</td><td>Valid .xlsx with sheet name "Matokeo"</td></tr>
+  </table>
+</div>
+
+<!-- ============ DEPLOYMENT ============ -->
+<h2 id="deploy">8. Deployment Audit</h2>
+
+<div class="arch-section">
+  <table>
+    <tr><th>Check</th><th>Status</th><th>Details</th></tr>
+    <tr><td>GitHub Pages compatibility</td><td style="color:var(--green)">OK</td><td>Single index.html works with GitHub Pages. No routing issues.</td></tr>
+    <tr><td>Asset paths</td><td style="color:var(--green)">OK</td><td>All assets are CDN or inline. No relative path issues.</td></tr>
+    <tr><td>Secrets in production</td><td style="color:var(--critical)">FAIL</td><td>Default credentials (zarem/zarem) in README. Firebase config stored in localStorage.</td></tr>
+    <tr><td>Environment config</td><td style="color:var(--medium)">Partial</td><td>Firebase config is user-provided at runtime. No build-time env vars.</td></tr>
+    <tr><td>HTTPS</td><td style="color:var(--green)">OK</td><td>GitHub Pages serves over HTTPS. CDN links use HTTPS.</td></tr>
+  </table>
+</div>
+
+<!-- ============ ACTIONS FROM USER ============ -->
+<h2 id="actions">9. Required Actions From You</h2>
+
+<div class="action-needed">
+  <h3>Before I proceed to Phase 2 (Planning) and Phase 3 (Implementation), I need your input on these decisions:</h3>
+
+  <p style="margin-bottom:12px"><strong>1. Authentication Strategy:</strong> Since this is a static site on GitHub Pages, there is no server for traditional auth. Options:</p>
+  <ul style="margin-left:20px;margin-bottom:16px;font-size:13.5px">
+    <li><strong>A) Firebase Authentication</strong> — Add Firebase Auth (email/password or Google sign-in). This gives real server-side auth with UID-based Firestore rules. Free tier is sufficient. <em>(Recommended)</em></li>
+    <li><strong>B) Third-party auth service</strong> — Clerk, Auth0, or Supabase Auth. More features but adds a dependency.</li>
+    <li><strong>C) Keep client-side auth but document it as insecure</strong> — Only suitable if this is a personal tool with no real security needs.</li>
+  </ul>
+
+  <p style="margin-bottom:12px"><strong>2. Grading Rules:</strong> The current code uses: A(75-100), B(60-74), C(45-59), D(30-44), F(0-29). Is this the correct Tanzania grading scale you want? Or do you have official rules?</p>
+
+  <p style="margin-bottom:12px"><strong>3. Pass Threshold:</strong> Should "passing" be >= 30 (grade D or above) or >= 40 (current dashboard logic) or something else?</p>
+
+  <p style="margin-bottom:12px"><strong>4. Tie Handling:</strong> Should students with identical averages share the same position (e.g., 1, 2, 2, 4)? This is standard in Tanzanian schools.</p>
+
+  <p style="margin-bottom:12px"><strong>5. Average Calculation:</strong> Should the average divide by total subjects (6) or only by subjects with scores? Currently it divides by non-null count, which inflates averages for incomplete records.</p>
+
+  <p style="margin-bottom:12px"><strong>6. User Roles:</strong> Do you need role separation (Admin vs Teacher vs Viewer)? Or is a single user type sufficient for now?</p>
+
+  <p style="margin-bottom:12px"><strong>7. Firebase Project:</strong> Do you already have a Firebase project set up for this? Or should I write setup instructions for you to create one?</p>
+</div>
+
+<!-- ============ NEXT STEPS ============ -->
+<h2 id="next">10. Recommended Next Steps</h2>
+
+<div class="arch-section">
+  <h3>Phase 2 Plan (after your answers)</h3>
+  <ol style="margin-left:20px;font-size:13.5px;color:#3a5a3a">
+    <li>Create a <code>security-audit</code> branch for all changes</li>
+    <li>Integrate Firebase Authentication (if approved)</li>
+    <li>Write Firestore security rules using Auth UIDs</li>
+    <li>Fix grading calculations (ties, pass threshold, average)</li>
+    <li>Add import validation with error reporting</li>
+    <li>Add SRI hashes to all CDN scripts</li>
+    <li>Remove default credentials from README</li>
+    <li>Add automated tests for calculations and data operations</li>
+    <li>Extract JavaScript into separate modules (maintainability)</li>
+    <li>Add CSP meta tag</li>
+  </ol>
+</div>
+
+<div class="footer">
+  Matokeo Platform Phase 1 Audit — Generated 2026-10-14 — Confidential
+</div>
+
+</body>
+</html>
